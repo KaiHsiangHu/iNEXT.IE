@@ -1,0 +1,27 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "",
+  fig.path = "README/README-",
+  fig.align = 'center',
+  fig.retina=2, fig.width = 6, fig.height = 4,
+  warning = FALSE,
+  message = FALSE
+)
+options("width"=200)
+
+library(iNEXT.3D)
+library(ggplot2)
+```
+
+qIE (R package)
+
+

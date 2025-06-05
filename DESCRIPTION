@@ -1,0 +1,41 @@
+Package: iNEXT.IE
+Type: Package
+Title: Interpolation and Extrapolation for Inter-specific Encounter
+Version: 1.0.0
+Author: KaiHsiang Hu [aut, cre], Anne Chao [ctb]
+Maintainer: KaiHsiang Hu <river19951224@gmail.com>
+Authors@R: 
+  c(person("KaiHsiang", 
+           "Hu", 
+           role = c("aut","cre"),
+           email = "river19951224@gmail.com"),
+    person("Anne", 
+           "Chao", 
+           role = "ctb",
+           email = "chao@stat.nthu.edu.tw"))
+URL: 
+Description: Biodiversity is a multifaceted concept covering different levels of organization from
+            genes to ecosystems. 'iNEXT.IE' extends 'iNEXT' to incorporate Inter-specific Encounter (IE) 
+            of biodiversity. This package provides functions to compute standardized diversity estimates 
+            with a common sample size or sample coverage. The package features size- and coverage-based 
+            rarefaction and extrapolation sampling curves to facilitate rigorous comparison 
+            across individual assemblages. 
+License: GPL (>= 3)
+Depends: R (>= 4.0)
+Imports:
+    stats,
+    abind,
+    dplyr,
+    ggplot2,
+    reshape2,
+    Rcpp
+Suggests: testthat,
+    knitr,
+    rmarkdown
+BugReports: https://github.com/KaiHsiangHu/iNEXT.3D/issues
+LazyLoad: yes
+RoxygenNote: 7.3.1
+VignetteBuilder: knitr
+ByteCompile: true
+LinkingTo: Rcpp
+Repository: CRAN
