@@ -34,6 +34,7 @@ Suggests: testthat,
 BugReports: https://github.com/KaiHsiangHu/iNEXT.3D/issues
 Encoding: UTF-8
 LazyLoad: yes
+LazyData: true
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 ByteCompile: true
