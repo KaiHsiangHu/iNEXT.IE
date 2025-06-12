@@ -13,7 +13,6 @@ Authors@R:
            "Chao", 
            role = "ctb",
            email = "chao@stat.nthu.edu.tw"))
-URL: 
 Description: Biodiversity is a multifaceted concept covering different levels of organization from
             genes to ecosystems. 'iNEXT.IE' extends 'iNEXT' to incorporate Inter-specific Encounter (IE) 
             of biodiversity. This package provides functions to compute standardized diversity estimates 
@@ -33,6 +32,7 @@ Suggests: testthat,
     knitr,
     rmarkdown
 BugReports: https://github.com/KaiHsiangHu/iNEXT.3D/issues
+Encoding: UTF-8
 LazyLoad: yes
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
