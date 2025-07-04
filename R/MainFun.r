@@ -915,7 +915,7 @@ Asy.IE <- function(x, rho, q) {
   sortx = sort(unique(x))
   tab = table(x)
   
-  q_part2 <- q[!abs(q - round(q)) == 0]
+  q_part2 <- q[!q %in% c(0, 1, 2)]
   if (length(q_part2) > 0) ans <- Dq(ifi = cbind(i = sortx, fi = tab), n = n, qs = q_part2, f1 = f1, A = p1, rho = rho)
   
   sapply(q, qD)
