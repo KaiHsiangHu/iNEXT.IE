@@ -373,7 +373,6 @@ D.m.est = function(x, rho, q, m) {
   N = ceiling(n / rho)
   f1 = sum(x == 1); f2 = sum(x == 2)
   f0 = ifelse(f2 > 0, f1^2 / (n/(n - 1) * 2 * f2 + rho/(1 - rho) * f1), f1*(f1 - 1) / (n/(n - 1) * 2 + rho/(1 - rho) * f1))
-  f0 = ceiling(f0)
   if (is.nan(f0)) f0 = 0
   
   
