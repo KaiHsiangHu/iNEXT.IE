@@ -15,7 +15,7 @@ Coverage = function(x, rho, m) {
     } else {
       
       ms = k - n
-      N1 = 1 + (N - n) * 2 * f2 / (n - 1) / f1
+      N1 = (2 * (N - n + 2) * f2 + (n - 1) * f1) / ((n - 1) * f1 + 2 * f2)
       if (N1 == "NaN") N1 = 0
       
       Chat = 1 - (1 - rho) * f1/n * (1 - ms / (N - n))^N1
