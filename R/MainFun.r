@@ -1017,10 +1017,13 @@ bootstrap <- function(x, rho, nboot) {
   n <- sum(x)
   N = ceiling(n / rho)
   f1 = sum(x == 1); f2 = sum(x == 2)
+  
   f0 = ceiling( ifelse(f2 > 0, f1^2 / (n/(n - 1) * 2 * f2 + rho/(1 - rho) * f1), f1 * (f1 - 1) / (n/(n - 1) * 2 + rho/(1 - rho) * f1)) )
   if (f0 == "NaN") f0 = 0
   
-  C_hat = ifelse(f2 > 0, 1 - f1/n * (1 - rho) * (n - 1) * f1 / ((n - 1)*f1 + 2*f2), 1 - f1/n * (1 - rho) * (n - 1) * (f1 - 1)/((n - 1) * (f1 - 1) + 2))
+  N1 = (2 * (N - n + 2) * f2 + (n - 1) * f1) / ((n - 1) * f1 + 2 * f2)
+  
+  C_hat = 1 - f1 / n * (N - N1 - n) / N
   lamda_hat = (1 - C_hat) / sum((x / n) * (1 - rho)^(x / rho)) 
   
   if (lamda_hat == "NaN") lamda_hat = 0
