@@ -1,11 +1,11 @@
 ---
-title: "A Quick Introduction to qIE via Examples"
+title: "A Quick Introduction to iNEXT.IE via Examples"
 author: "Kai-Hsiang Hu and Anne Chao"
 date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
     vignette: >
-      %\VignetteIndexEntry{A Quick Introduction to qIE via Examples}
+      %\VignetteIndexEntry{A Quick Introduction to iNEXT.IE via Examples}
       %\VignetteEngine{knitr::rmarkdown}
       %\VignetteEncoding{UTF-8}
 ---
@@ -44,7 +44,7 @@ library(iNEXT.IE)
 
 
 ## How to cite
-If you publish your work based on results from `qIE` package, you should make references to the following methodology paper and the package:
+If you publish your work based on results from `iNEXT.IE` package, you should make references to the following methodology paper and the package:
 
 - Hu, K.-H. and Chao, A. (2025). The iNEXT.IE package: INterpolation and EXTrapolation for Inter-specific Encounter. R package available from CRAN.  
 

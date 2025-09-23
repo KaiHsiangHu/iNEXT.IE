@@ -56,8 +56,9 @@ species richness), the asymptotic estimates represent only lower bounds.
 
 ## How to cite
 
-If you publish your work based on results from `qIE` package, you should
-make references to the following methodology paper and the package:
+If you publish your work based on results from `iNEXT.IE` package, you
+should make references to the following methodology paper and the
+package:
 
 -   Hu, K.-H. and Chao, A. (2025). The iNEXT.IE package: INterpolation
     and EXTrapolation for Inter-specific Encounter. R package available
