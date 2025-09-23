@@ -15,7 +15,7 @@ knitr::opts_chunk$set(collapse = TRUE,
                       comment = "", 
                       fig.retina = 2,
                       fig.align = 'center',
-                      fig.width = 6, 
+                      fig.width = 7, 
                       fig.height = 4)
 options("width"=200)
 
@@ -23,7 +23,7 @@ library(iNEXT.IE)
 ```
 
 
-`iNEXT.IE` (INterpolation and EXTrapolation for Inter-specific Encounter). A framework for biodiversity methodology. 
+`iNEXT.IE` (INterpolation and EXTrapolation for Inter-specific Encounter) is a framework for biodiversity methodology. 
 
 `iNEXT.IE` features two statistical analyses (non-asymptotic and asymptotic):
 
@@ -40,7 +40,7 @@ library(iNEXT.IE)
 
 (2) An asymptotic approach to infer asymptotic diversity  
 
-`iNEXT.IE` computes the estimated asymptotic diversity and also plots diversity profiles (q-profiles) for q between 0 and 2, in comparison with the maximum likelihood diversity. Typically, the asymptotic estimates for q $\geq$ 1 are reliable, but for q < 1 (especially for q = 0, species richness), the asymptotic estimates represent only lower bounds. 
+`iNEXT.IE` computes the estimated asymptotic diversity and also plots diversity profiles (q-profiles) for q between 0 and 2, in comparison with the maximum likelihood estimation. Typically, the asymptotic estimates for q $\geq$ 1 are reliable, but for q < 1 (especially for q = 0, species richness), the asymptotic estimates represent only lower bounds. 
 
 
 ## How to cite
@@ -55,7 +55,7 @@ If you publish your work based on results from `qIE` package, you should make re
 
 
 ## HOW TO RUN iNEXT.IE:
-The `iNEXT.IE` package can be downloaded from CRAN or Kai-Hsiang Hu's [iNEXT.IE_github](https://github.com/AnneChao/iNEXT.IE) using the commands below. For a first-time installation, some additional packages must be installed and loaded; see package manual. 
+The `iNEXT.IE` package can be downloaded from CRAN or Kai-Hsiang Hu's [iNEXT.IE_github](https://github.com/KaiHsiangHu/iNEXT.IE) using the commands below. For a first-time installation, some additional packages must be installed and loaded; see package manual. 
 
 
 ```{r eval=FALSE}
@@ -90,7 +90,7 @@ Two functions for point estimation and basic data information
 
 Two functions for asymptotic analysis with graphical displays:
 
-- **MLEAsyIE** computes maximum likelihood and asymptotic diversity estimates of order q between 0 and 2 (in increments of 0.2) for diversity.
+- **MLEAsyIE** computes maximum likelihood estimation and asymptotic diversity estimates of order q between 0 and 2 (in increments of 0.2) for diversity.
 
 - **ggMLEAsyIE** visualizes the output from the function `MLEAsyIE`.
 
@@ -125,7 +125,7 @@ iNEXTIE(data, rho, q = c(0, 1, 2), size = NULL, endpoint = NULL, knots = 40, nbo
 ```
 
 
-The arguments of this function are briefly described below, and will be explained in more details by illustrative examples in later text. This main function computes standardized diversity estimates of order q = 0, 1 and 2, the sample coverage estimates, and related statistics for K (if `knots = K` in the specified argument) evenly-spaced knots (sample sizes) between size 1 and the `endpoint`, where the endpoint is described below. Each knot represents a particular sample size for which diversity estimates will be calculated. By default, `endpoint` = double the reference sample size for abundance data or double the total sampling units for incidence data. For example, if `endpoint = 10`, `knot = 4` is specified, diversity estimates will be computed for a sequence of samples with sizes (1, 4, 7, 10).  
+The arguments of this function are briefly described below, and will be explained in more details by illustrative examples in later text. This main function computes standardized diversity estimates of order q = 0, 1 and 2, the sample coverage estimates, and related statistics for K (if `knots = K` in the specified argument) evenly-spaced knots (sample sizes) between size 1 and the `endpoint`, where the endpoint is described below. Each knot represents a particular sample size for which diversity estimates will be calculated. By default, `endpoint` = double the reference sample size or total individuals. For example, if `endpoint = 10`, `knot = 4` is specified, diversity estimates will be computed for a sequence of samples with sizes (1, 4, 7, 10).  
 
 
 <table style="width:100%;">
@@ -155,13 +155,13 @@ data can be input as a vector of species abundances (for a single assemblage), m
 </tr>
 <tr class="even">
 <td align="center"><code>size</code></td>
-<td align="left">an integer vector of sample sizes (number of individuals or sampling units) for which diversity estimates will be computed.
+<td align="left">an integer vector of sample sizes (number of individuals) for which diversity estimates will be computed.
 If <code>NULL</code>, then diversity estimates will be computed for those sample sizes determined by the specified/default <code>endpoint</code> and <code>knots</code>.</td>
 </tr>
 <tr class="odd">
 <td align="center"><code>endpoint</code></td>
 <td align="left">an integer specifying the sample size that is the <code>endpoint</code> for rarefaction/extrapolation.
-If NULL, then <code>endpoint</code> <code>=</code> double the reference sample size.</td>
+If NULL, then <code>endpoint</code> <code>=</code> double the reference sample size or total individuals.</td>
 </tr>
 <tr class="even">
 <td align="center"><code>knots</code></td>
@@ -189,7 +189,7 @@ The main function `iNEXTIE()` returns the `iNEXTIE` object, which can be further
 
 (2) `$iNextEst` for showing diversity estimates along with related statistics for a series of rarefied and extrapolated samples; there are two data frames (`$size_based` and `$coverage_based`) conditioning on standardized sample size or sample coverage, respectively.
 
-(3) `$AsyEst` for showing asymptotic diversity estimates along with related statistics.
+(3) `$AsyEst` for showing maximum likelihood estimation and asymptotic diversity estimates along with related statistics.
 
 ## <span style="color:red;">FUNCTION ggiNEXTIE(): GRAPHIC DISPLAYS</span>
 
@@ -219,7 +219,7 @@ The `ggiNEXTIE()` function is a wrapper with the package `ggplot2` to create a r
 output_iNEXT <- iNEXTIE(data, rho = 0.3, q = c(0, 1, 2))
 ```
 
-Based on the dataset, the following commands return all numerical results. The first list of the output (`$DataInfo`) returns basic data information including the name of the Assemblage, sample size (`n`), total abundance (`N`), sampling fraction (`rho`), observed species richness (`S.obs`), sample coverage estimate of the reference sample with size n (`SC(n)`), sample coverage estimate of the extrapolated sample with size 2n (`SC(2n)`) as well as the first five species abundance frequency counts in the reference sample (`f1-f5`). If only data information is required, the simpler function `DataInfoIE()` (see later text) can be used to obtain the same output. More information about the maximum likelihood diversity (for any order q between 0 and 2) can be obtained by function `MLEAsyIE()`, which will be introduced later.
+Based on the dataset, the following commands return all numerical results. The first list of the output (`$DataInfo`) returns basic data information including the name of the Assemblage, sample size (`n`), total abundance (`N`), sampling fraction (`rho`), observed species richness (`S.obs`), sample coverage estimate of the reference sample with size n (`SC(n)`), sample coverage estimate of the extrapolated sample with size 2n (`SC(2n)`) as well as the first five species abundance frequency counts in the reference sample (`f1-f5`). If only data information is required, the simpler function `DataInfoIE()` (see later text) can be used to obtain the same output. More information about the maximum likelihood estimation (for any order q between 0 and 2) can be obtained by function `MLEAsyIE()`, which will be introduced later.
 
 ```{r eval=FALSE}
 set.seed(2025)
@@ -270,7 +270,7 @@ output_iNEXT$iNextEst$coverage_based$m       <- round(output_iNEXT$iNextEst$cove
 output_iNEXT$iNextEst$coverage_based[1:6,]
 ```
 
-The third list of the output (`$AsyEst`) includes the name of the Assemblage, diversity order (q = 0, 1, 2), the observed diversity (`IE_MLE`), asymptotic diversity estimate (`IE_asy`) and its estimated bootstrap standard error (`s.e.`) as well as the confidence intervals for asymptotic diversity (`qIE.LCL` and `qIE.UCL`). These statistics are computed only for q = 0, 1 and 2. More detailed information about asymptotic and observed diversity estimates for any order q between 0 and 2 can be obtained from function `MLEAsyIE()`. The output for `$AsyEst` is shown below:
+The third list of the output (`$AsyEst`) includes the name of the Assemblage, diversity order (q = 0, 1, 2), the maximum likelihood estimation estimate (`IE_MLE`), asymptotic diversity estimate (`IE_asy`) and its estimated bootstrap standard error (`s.e.`) as well as the confidence intervals for asymptotic diversity (`qIE.LCL` and `qIE.UCL`). These statistics are computed only for q = 0, 1 and 2. More detailed information about maximum likelihood estimation and asymptotic diversity estimates for any order q between 0 and 2 can be obtained from function `MLEAsyIE()`. The output for `$AsyEst` is shown below:
 
 ```{r, eval=FALSE}
 output_iNEXT$AsyEst
@@ -292,7 +292,7 @@ ggiNEXTIE(output_iNEXT, type = 1)
 
 The following commands return the sample completeness (sample coverage) curve (`type = 2`) in which different colors represent different assemblages. 
 
-```{r}
+```{r fig.width = 5, fig.height = 4}
 # Sample completeness curves for abundance data
 ggiNEXTIE(output_iNEXT, type = 2)
 ```
@@ -314,7 +314,7 @@ The function `DataInfoIE()` provides basic data information for the reference sa
 DataInfoIE(data, rho) 
 ```
 
-All arguments in the above function are the same as those for the main function `iNEXTIE`. Running the `DataInfoIE()` function returns basic data information including sample size, total abundance, sampling fraction, observed species richness, two sample coverage estimates (`SC(n)` and `SC(2n)`) as well as other relevant information in each of the three dimensions of diversity. We use data to demo the function.
+All arguments in the above function are the same as those for the main function `iNEXTIE`. Running the `DataInfoIE()` function returns basic data information including sample size, total abundance, sampling fraction, observed species richness, sample coverage estimates of the reference sample (`SC(n)`), sample coverage estimate for twice the reference sample size (`SC(2n)`). We use data to demo the function.
 
 ### Basic data information for abundance data
 
@@ -340,7 +340,7 @@ Output description:
 
 - `N` = total abundance in the overall assemblage.
 
-- `rho`` = sampling fractions in the reference sample.
+- `rho` = sampling fraction of the reference sample.
 
 - `S.obs` = number of observed species in the reference sample.
 
@@ -353,7 +353,7 @@ Output description:
 
 ## <span style="color:red;">FUNCTION estimateIE(): POINT ESTIMATION</span>
 
-`estimateIE` is used to compute diversity estimates with q = 0, 1, 2 under any specified levels of sample size (when `base = "size"`) and sample coverage values (when `base = "coverage"`) for abundance data. When `base = "size"`, `level` can be specified with a particular vector of sample sizes (greater than 0); if `level = NULL`, this function computes the diversity estimates for the minimum sample size among all samples extrapolated to the double reference sizes. When `base = "coverage"`, `level` can be specified with a particular vector of sample coverage values (between 0 and 1); if `level = NULL`, this function computes the diversity estimates for the minimum sample coverage among all samples extrapolated to the double reference sizes. All arguments in the function are the same as those for the main function `iNEXTIE`.
+`estimateIE` is used to compute diversity estimates with q = 0, 1, 2 under any specified levels of sample size (when `base = "size"`) and sample coverage values (when `base = "coverage"`) for abundance data. When `base = "size"`, `level` can be specified with a particular vector of sample sizes (greater than 0); if `level = NULL`, this function computes the diversity estimates for the minimum sample size among all samples extrapolated to the double reference sizes or total individuals. When `base = "coverage"`, `level` can be specified with a particular vector of sample coverage values (between 0 and 1); if `level = NULL`, this function computes the diversity estimates for the minimum sample coverage among all samples extrapolated to the double reference sizes or total individuals. All arguments in the function are the same as those for the main function `iNEXTIE`.
 
 ```{r eval=FALSE}
 estimateIE(data, rho, q = c(0, 1, 2), base = "coverage", level = NULL, nboot = 50, conf = 0.95) 
@@ -405,13 +405,13 @@ output_est_size
 ```
 
 
-## <span style="color:red;">FUNCTION MLEAsyIE: ASYMPTOTIC AND MAXIMUM LIKELIHOOD DIVERSITY PROFILES</span>
+## <span style="color:red;">FUNCTION MLEAsyIE: MAXIMUM LIKELIHOOD ESTIMATION AND ASYMPTOTIC DIVERSITY PROFILES</span>
 
 ```{r, eval=FALSE}
 MLEAsyIE(data, rho, q = seq(0, 2, 0.2), nboot = 50, conf = 0.95, method = c('Asymptotic', 'MLE'))
 ```
 
-All arguments in the above function are the same as those for the main function `iNEXTIE` (except that the default of `q` here is `seq(0, 2, 0.2)`). The function `MLEAsyIE()` computes observed and asymptotic diversity of order q between 0 and 2 (in increments of 0.2) for diversity; these values with different order q can be used to depict a q-profile in the `ggMLEAsyIE` function. By default, both the observed and asymptotic diversity estimates will be computed.
+All arguments in the above function are the same as those for the main function `iNEXTIE` (except that the default of `q` here is `seq(0, 2, 0.2)`). The function `MLEAsyIE()` computes maximum likelihood estimation and asymptotic diversity of order q between 0 and 2 (in increments of 0.2) for diversity; these values with different order q can be used to depict a q-profile in the `ggMLEAsyIE` function. By default, both the maximum likelihood estimation and asymptotic diversity estimates will be computed.
 
 
 ## <span style="color:red;">FUNCTION ggMLEAsyIE(): GRAPHIC DISPLAYS OF DIVERSITY PROFILES</span>
@@ -420,27 +420,27 @@ All arguments in the above function are the same as those for the main function 
 ggMLEAsyIE(output)
 ```
 
-`ggMLEAsyIE` is a ggplot2 extension for an `MLEAsyIE` object to plot q-profile (which depicts the maximum likelihood diversity and asymptotic diversity estimate with respect to order q) for q between 0 and 2 (in increments of 0.2).
+`ggMLEAsyIE` is a ggplot2 extension for an `MLEAsyIE` object to plot q-profile (which depicts the maximum likelihood estimation and asymptotic diversity estimate with respect to order q) for q between 0 and 2 (in increments of 0.2).
 
-In the plot of profiles, only confidence intervals of the asymptotic diversity will be shown when both the maximum likelihood and asymptotic diversity estimates are computed.
+In the plot of profiles, only confidence intervals of the asymptotic diversity will be shown when both the maximum likelihood estimation and asymptotic diversity estimates are computed.
 
 
 ### Example: q-profiles for abundance data
 
-The following commands returns the observed and asymptotic taxonomic diversity, along with its confidence interval for diversity order q between 0 to 2. Here only the first ten rows of the output are shown.
+The following commands returns the maximum likelihood estimation and asymptotic taxonomic diversity, along with its confidence interval for diversity order q between 0 to 2. Here only the first ten rows of the output are shown.
 
 ```{r, eval=FALSE}
 set.seed(2025)
 data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
             "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-output_ObsAsy <- MLEAsyIE(data, rho = 0.3)
-output_ObsAsy
+output_MLEAsy <- MLEAsyIE(data, rho = 0.3)
+output_MLEAsy
 ```
 
 ```{r, echo=FALSE, cache=TRUE}
-output_ObsAsy <- MLEAsyIE(data, rho = 0.3)
+output_MLEAsy <- MLEAsyIE(data, rho = 0.3)
 
-tmp = output_ObsAsy
+tmp = output_MLEAsy
 tmp[,(3:6)] <- round(tmp[,(3:6)], 3)
 tmp[1:10,]
 ```
@@ -448,14 +448,14 @@ tmp[1:10,]
 The following commands plot the corresponding q-profiles, along with its confidence interval for q between 0 to 2.
 
 ```{r}
-ggMLEAsyIE(output_ObsAsy)
+ggMLEAsyIE(output_MLEAsy)
 ```
 
 
 
 
 ## License
-The qIE package is licensed under the GPLv3. To help refine `qIE`, your comments or feedback would be welcome (please send them to Anne Chao or report an issue on the qIE github). 
+The iNEXT.IE package is licensed under the GPLv3. To help refine `iNEXT.IE`, your comments or feedback would be welcome (please send them to Anne Chao or report an issue on the iNEXT.IE github [iNEXT.IE_github](https://github.com/KaiHsiangHu/iNEXT.IE)). 
 
 ## References
 

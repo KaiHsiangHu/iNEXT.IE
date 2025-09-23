@@ -24,8 +24,8 @@ estimateIE(
 \item{base}{selection of sample-size-based (\code{base = "size"}) or coverage-based (\code{base = "coverage"}) rarefaction and extrapolation.}
 
 \item{level}{A numerical vector specifying the particular sample sizes or sample coverages (between 0 and 1) for which diversity estimates (q = 0, 1 and 2) will be computed. \cr
-If \code{base = "coverage"} (default) and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample coverage among all samples extrapolated to double reference sizes. \cr
-If \code{base = "size"} and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample size among all samples extrapolated to double reference sizes.}
+If \code{base = "coverage"} (default) and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample coverage among all samples extrapolated to double reference sizes or total individuals. \cr
+If \code{base = "size"} and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample size among all samples extrapolated to double reference sizes or total individuals.}
 
 \item{nboot}{a positive integer specifying the number of bootstrap replications when assessing sampling uncertainty and constructing confidence intervals. Enter 0 to skip the bootstrap procedures. Default is 50.}
 
@@ -37,14 +37,14 @@ a data.frame of diversity table including the following arguments: (when \code{b
 \item{Order.q}{the diversity order of q.}
 \item{SC}{the target standardized coverage value.}
 \item{m}{the corresponding sample size for the standardized coverage value.}
-\item{qIE}{the estimated diversity of order q for the target coverage value. The estimate for complete coverage (when \code{base = "coverage"} and \code{level = 1}, or \code{rho = 1}) represents the estimated asymptotic diversity.}
 \item{Method}{Rarefaction, Observed, or Extrapolation, depending on whether the target coverage is less than, equal to, or greater than the coverage of the reference sample.}
+\item{qIE}{the estimated diversity of order q for the target coverage value. The estimate for complete coverage (when \code{base = "coverage"} and \code{level = 1}, or \code{rho = 1}) represents the estimated asymptotic diversity.}
 \item{s.e.}{standard error of diversity estimate.}
 \item{qIE.LCL and qIE.UCL}{the bootstrap lower and upper confidence limits for the diversity of order q at the specified level (with a default value of 0.95).}
 Similar output is obtained for \code{base = "size"}. \cr\cr
 }
 \description{
-\code{estimateIE} computes diversity with a particular set of user-specified levels of sample sizes or sample coverages. If no sample sizes or coverages are specified, this function by default computes diversity estimates for the minimum sample coverage or minimum sample size among all samples extrapolated to double reference sizes.
+\code{estimateIE} computes diversity with a particular set of user-specified levels of sample sizes or sample coverages. If no sample sizes or coverages are specified, this function by default computes diversity estimates for the minimum sample coverage or minimum sample size among all samples extrapolated to double reference sizes or total individuals.
 }
 \examples{
 set.seed(2025)

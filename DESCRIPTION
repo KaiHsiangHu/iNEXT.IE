@@ -15,15 +15,15 @@ Authors@R:
            email = "chao@stat.nthu.edu.tw"))
 Description: Biodiversity is a multifaceted concept covering different levels of organization from
             genes to ecosystems. 'iNEXT.IE' extends 'iNEXT' to incorporate Inter-specific Encounter (IE) 
-            of biodiversity. This package provides functions to compute standardized diversity estimates 
+            of biodiversity, which incorporates species absolute abundance. 
+            This package provides functions to compute standardized diversity estimates 
             with a common sample size or sample coverage. The package features size- and coverage-based 
             rarefaction and extrapolation sampling curves to facilitate rigorous comparison 
-            across individual assemblages. 
+            across individual assemblages. Asymptotic diversity estimates are also provided.
 License: GPL (>= 3)
 Depends: R (>= 4.0)
 Imports:
     stats,
-    abind,
     dplyr,
     ggplot2,
     reshape2,

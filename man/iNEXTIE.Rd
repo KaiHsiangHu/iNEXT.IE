@@ -22,11 +22,11 @@ iNEXTIE(
 
 \item{q}{a numerical vector specifying the diversity orders. Default is \code{c(0, 1, 2)}.}
 
-\item{size}{an integer vector of sample sizes (number of individuals or sampling units) for which diversity estimates will be computed. 
+\item{size}{an integer vector of sample sizes (number of individuals) for which diversity estimates will be computed. 
 If \code{NULL}, then diversity estimates will be computed for those sample sizes determined by the specified/default \code{endpoint} and \code{knots}.}
 
 \item{endpoint}{an integer specifying the sample size that is the \code{endpoint} for rarefaction/extrapolation. 
-If \code{NULL}, then \code{endpoint} \code{=} double reference sample size.}
+If \code{NULL}, then \code{endpoint} \code{=} double reference sample size or total individuals.}
 
 \item{knots}{an integer specifying the number of equally-spaced \code{knots} (say K, default is 40) between size 1 and the \code{endpoint};
 each knot represents a particular sample size for which diversity estimate will be calculated.  
@@ -44,27 +44,27 @@ a list of three objects: \cr\cr
    In \code{"$size_based"}, the output includes:
    \item{Assemblage}{the name of assemblage.} 
    \item{Order.q}{the diversity order of q.}
-   \item{m}{the target sample size (or number of sampling units for incidence data).}
+   \item{m}{the target sample size.}
    \item{Method}{Rarefaction, Observed, or Extrapolation, depending on whether the target sample size is less than, equal to, or greater than the size of the reference sample.}
    \item{qIE}{the estimated diversity estimate.}
    \item{qIE.LCL and qIE.UCL}{the bootstrap lower and upper confidence limits for the diversity of order q at the specified level (with a default value of 0.95).}
    \item{SC}{the standardized coverage value.}
    \item{SC.LCL, SC.UCL}{the bootstrap lower and upper confidence limits for coverage at the specified level (with a default value of 0.95).}
  Similar output is obtained for \code{"$coverage_based"}. \cr\cr
-(3) \code{$AsyEst} for showing asymptotic diversity estimates along with related statistics: 
+(3) \code{$AsyEst} for showing maximum likelihood estimation and asymptotic diversity estimates along with related statistics: 
    \item{Assemblage}{the name of assemblage.} 
    \item{Order.q}{the diversity order of q.}
-   \item{IE_MLE}{the maximum likelihood estimate.}
-   \item{IE_asy}{the asymptotic diversity estimate.}
+   \item{IE_MLE}{the maximum likelihood estimation estimates.}
+   \item{IE_asy}{the asymptotic diversity estimates.}
    \item{s.e.}{standard error of asymptotic diversity.}
    \item{qIE.LCL and qIE.UCL}{the bootstrap lower and upper confidence limits for asymptotic diversity at the specified level (with a default value of 0.95).}
 }
 \description{
 \code{iNEXTIE} mainly computes standardized diversity estimates with a common sample size or sample coverage for orders q = 0, 1 and 2. It also computes relevant information/statistics.\cr\cr 
-Relevant data information is summarized in the output \code{$DataInfoIE}. 
+Relevant data information is summarized in the output \code{$DataInfo}. 
 Diversity estimates for rarefied and extrapolated samples are provided in the output \code{$iNextEst}, which includes two data frames (\code{"$size_based"} and \code{"$coverage_based"}) based on two different standardizations; 
 in the size-based standardization, all samples are standardized to a common target sample size, whereas the in the latter standardization, all samples are standardized to a common target level of sample coverage. 
-The asymptotic diversity estimates for q = 0, 1 and 2 are provided in the list \code{$AsyEst}.\cr\cr
+The maximum likelihood estimation and asymptotic diversity estimates for q = 0, 1 and 2 are provided in the list \code{$AsyEst}.\cr\cr
 }
 \examples{
 # Compute standardized estimates of diversity for abundance data with order q = 0, 1, 2

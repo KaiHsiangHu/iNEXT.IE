@@ -10,19 +10,19 @@ ggMLEAsyIE(output)
 \item{output}{the output of the function \code{MLEAsyIE}.\cr}
 }
 \value{
-a q-profile based on the maximum likelihood diversity and the asymptotic diversity estimate.\cr\cr
+a q-profile based on the maximum likelihood estimation and the asymptotic diversity estimate.\cr\cr
 }
 \description{
-\code{ggMLEAsyIE} is a \code{ggplot2} extension for an \code{MLEAsyIE} object to plot q-profile (which depicts the maximum likelihood diversity and asymptotic diversity estimate with respect to order q) for q between 0 and 2 (in increments of 0.2).\cr\cr 
-In the plot, only confidence intervals of the asymptotic diversity will be shown when both the maximum likelihood and asymptotic diversity estimates are computed.
+\code{ggMLEAsyIE} is a \code{ggplot2} extension for an \code{MLEAsyIE} object to plot q-profile (which depicts the maximum likelihood estimation and asymptotic diversity estimate with respect to order q) for q between 0 and 2 (in increments of 0.2).\cr\cr 
+In the plot, only confidence intervals of the asymptotic diversity will be shown when both the maximum likelihood estimation and asymptotic diversity estimate are computed.
 }
 \examples{
 # Plot diversity for abundance data with order q between 0 and 2 (in increments of 0.2 by default).
 set.seed(2025)
 data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
             "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-output_ObsAsy <- MLEAsyIE(data, rho = 0.3)
-ggMLEAsyIE(output_ObsAsy)
+output_MLEAsy <- MLEAsyIE(data, rho = 0.3)
+ggMLEAsyIE(output_MLEAsy)
 
 
 }

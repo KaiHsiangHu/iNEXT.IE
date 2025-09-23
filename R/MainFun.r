@@ -55,18 +55,18 @@ NULL
 #' iNterpolation and EXTrapolation of biodiversity
 #' 
 #' \code{iNEXTIE} mainly computes standardized diversity estimates with a common sample size or sample coverage for orders q = 0, 1 and 2. It also computes relevant information/statistics.\cr\cr 
-#' Relevant data information is summarized in the output \code{$DataInfoIE}. 
+#' Relevant data information is summarized in the output \code{$DataInfo}. 
 #' Diversity estimates for rarefied and extrapolated samples are provided in the output \code{$iNextEst}, which includes two data frames (\code{"$size_based"} and \code{"$coverage_based"}) based on two different standardizations; 
 #' in the size-based standardization, all samples are standardized to a common target sample size, whereas the in the latter standardization, all samples are standardized to a common target level of sample coverage. 
-#' The asymptotic diversity estimates for q = 0, 1 and 2 are provided in the list \code{$AsyEst}.\cr\cr 
+#' The maximum likelihood estimation and asymptotic diversity estimates for q = 0, 1 and 2 are provided in the list \code{$AsyEst}.\cr\cr 
 #' 
 #' @param data data can be input as a vector of species abundances (for a single assemblage), matrix/data.frame (species by assemblages), or a list of species abundance vectors.
 #' @param rho the sampling fraction can be input as a vector for each assemblage or a numeric common value for all assemblages.
 #' @param q a numerical vector specifying the diversity orders. Default is \code{c(0, 1, 2)}.
-#' @param size an integer vector of sample sizes (number of individuals or sampling units) for which diversity estimates will be computed. 
+#' @param size an integer vector of sample sizes (number of individuals) for which diversity estimates will be computed. 
 #' If \code{NULL}, then diversity estimates will be computed for those sample sizes determined by the specified/default \code{endpoint} and \code{knots}.
 #' @param endpoint an integer specifying the sample size that is the \code{endpoint} for rarefaction/extrapolation. 
-#' If \code{NULL}, then \code{endpoint} \code{=} double reference sample size.
+#' If \code{NULL}, then \code{endpoint} \code{=} double reference sample size or total individuals.
 #' @param knots an integer specifying the number of equally-spaced \code{knots} (say K, default is 40) between size 1 and the \code{endpoint};
 #' each knot represents a particular sample size for which diversity estimate will be calculated.  
 #' If the \code{endpoint} is smaller than the reference sample size, then \code{iNEXTIE()} computes only the rarefaction esimates for approximately K evenly spaced \code{knots}. 
@@ -77,7 +77,6 @@ NULL
 #' @import dplyr
 #' @import ggplot2
 #' @import reshape2
-#' @import abind
 #' @importFrom stats rmultinom
 #' @importFrom stats qnorm
 #' @importFrom stats sd
@@ -92,18 +91,18 @@ NULL
 #'    In \code{"$size_based"}, the output includes:
 #'    \item{Assemblage}{the name of assemblage.} 
 #'    \item{Order.q}{the diversity order of q.}
-#'    \item{m}{the target sample size (or number of sampling units for incidence data).}
+#'    \item{m}{the target sample size.}
 #'    \item{Method}{Rarefaction, Observed, or Extrapolation, depending on whether the target sample size is less than, equal to, or greater than the size of the reference sample.}
 #'    \item{qIE}{the estimated diversity estimate.}
 #'    \item{qIE.LCL and qIE.UCL}{the bootstrap lower and upper confidence limits for the diversity of order q at the specified level (with a default value of 0.95).}
 #'    \item{SC}{the standardized coverage value.}
 #'    \item{SC.LCL, SC.UCL}{the bootstrap lower and upper confidence limits for coverage at the specified level (with a default value of 0.95).}
 #'  Similar output is obtained for \code{"$coverage_based"}. \cr\cr
-#' (3) \code{$AsyEst} for showing asymptotic diversity estimates along with related statistics: 
+#' (3) \code{$AsyEst} for showing maximum likelihood estimation and asymptotic diversity estimates along with related statistics: 
 #'    \item{Assemblage}{the name of assemblage.} 
 #'    \item{Order.q}{the diversity order of q.}
-#'    \item{IE_MLE}{the maximum likelihood estimate.}
-#'    \item{IE_asy}{the asymptotic diversity estimate.}
+#'    \item{IE_MLE}{the maximum likelihood estimation estimates.}
+#'    \item{IE_asy}{the asymptotic diversity estimates.}
 #'    \item{s.e.}{standard error of asymptotic diversity.}
 #'    \item{qIE.LCL and qIE.UCL}{the bootstrap lower and upper confidence limits for asymptotic diversity at the specified level (with a default value of 0.95).}
 #' 
@@ -296,14 +295,14 @@ ggiNEXTIE = function(output, type = 1:3){
 
 #' Compute diversity estimates with a particular set of sample sizes/coverages
 #' 
-#' \code{estimateIE} computes diversity with a particular set of user-specified levels of sample sizes or sample coverages. If no sample sizes or coverages are specified, this function by default computes diversity estimates for the minimum sample coverage or minimum sample size among all samples extrapolated to double reference sizes.
+#' \code{estimateIE} computes diversity with a particular set of user-specified levels of sample sizes or sample coverages. If no sample sizes or coverages are specified, this function by default computes diversity estimates for the minimum sample coverage or minimum sample size among all samples extrapolated to double reference sizes or total individuals.
 #' @param data data can be input as a vector of species abundances (for a single assemblage), matrix/data.frame (species by assemblages), or a list of species abundance vectors.
 #' @param rho the sampling fraction can be input as a vector for each assemblage or a numeric common value for all assemblages.
 #' @param q a numerical vector specifying the diversity orders. Default is \code{c(0, 1, 2)}.
 #' @param base selection of sample-size-based (\code{base = "size"}) or coverage-based (\code{base = "coverage"}) rarefaction and extrapolation.
 #' @param level A numerical vector specifying the particular sample sizes or sample coverages (between 0 and 1) for which diversity estimates (q = 0, 1 and 2) will be computed. \cr
-#' If \code{base = "coverage"} (default) and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample coverage among all samples extrapolated to double reference sizes. \cr
-#' If \code{base = "size"} and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample size among all samples extrapolated to double reference sizes. 
+#' If \code{base = "coverage"} (default) and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample coverage among all samples extrapolated to double reference sizes or total individuals. \cr
+#' If \code{base = "size"} and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample size among all samples extrapolated to double reference sizes or total individuals. 
 #' @param nboot a positive integer specifying the number of bootstrap replications when assessing sampling uncertainty and constructing confidence intervals. Enter 0 to skip the bootstrap procedures. Default is 50.
 #' @param conf a positive number < 1 specifying the level of confidence interval. Default is 0.95.
 #' 
@@ -312,8 +311,8 @@ ggiNEXTIE = function(output, type = 1:3){
 #' \item{Order.q}{the diversity order of q.}
 #' \item{SC}{the target standardized coverage value.}
 #' \item{m}{the corresponding sample size for the standardized coverage value.}
-#' \item{qIE}{the estimated diversity of order q for the target coverage value. The estimate for complete coverage (when \code{base = "coverage"} and \code{level = 1}, or \code{rho = 1}) represents the estimated asymptotic diversity.}
 #' \item{Method}{Rarefaction, Observed, or Extrapolation, depending on whether the target coverage is less than, equal to, or greater than the coverage of the reference sample.}
+#' \item{qIE}{the estimated diversity of order q for the target coverage value. The estimate for complete coverage (when \code{base = "coverage"} and \code{level = 1}, or \code{rho = 1}) represents the estimated asymptotic diversity.}
 #' \item{s.e.}{standard error of diversity estimate.}
 #' \item{qIE.LCL and qIE.UCL}{the bootstrap lower and upper confidence limits for the diversity of order q at the specified level (with a default value of 0.95).}
 #' Similar output is obtained for \code{base = "size"}. \cr\cr
@@ -744,9 +743,9 @@ invSize <- function(data, rho, q, size = NULL, nboot = 0, conf = NULL) {
 
 
 
-#' Asymptotic diversity and maximum likelihood diversity estimates of order q
+#' Maximum likelihood estimation and asymptotic diversity of order q
 #' 
-#' \code{MLEAsyIE} computes maximum likelihood and asymptotic diversity of order q between 0 and 2 (in increments of 0.2); these diversity values with different order q can be used to depict a q-profile in the \code{ggMLEAsyIE} function.\cr\cr 
+#' \code{MLEAsyIE} computes maximum likelihood estimation and asymptotic diversity of order q between 0 and 2 (in increments of 0.2); these diversity values with different order q can be used to depict a q-profile in the \code{ggMLEAsyIE} function.\cr\cr 
 #' 
 #' @param data data can be input as a vector of species abundances (for a single assemblage), matrix/data.frame (species by assemblages), or a list of species abundance vectors.
 #' @param rho the sampling fraction can be input as a vector for each assemblage or a numeric common value for all assemblages.
@@ -758,20 +757,20 @@ invSize <- function(data, rho, q, size = NULL, nboot = 0, conf = NULL) {
 #' @return a data frame including the following information/statistics: 
 #' \item{Assemblage}{the name of assemblage.}
 #' \item{Order.q}{the diversity order of q.}
-#' \item{qIE}{the estimated asymptotic diversity or maximum likelihood diversity of order q.} 
+#' \item{qIE}{the estimated asymptotic diversity or maximum likelihood estimation estimates of order q.} 
 #' \item{s.e.}{standard error of diversity.}
 #' \item{qIE.LCL and qIE.UCL}{the bootstrap lower and upper confidence limits for the diversity of order q at the specified level (with a default value of 0.95).}
-#' \item{Method}{\code{"Asymptotic"} means asymptotic diversity and \code{"MLE"} means maximum likelihood diversity.}
+#' \item{Method}{\code{"Asymptotic"} means asymptotic diversity and \code{"MLE"} means maximum likelihood estimation.}
 #' 
 #' 
 #' @examples
-#' # Compute the maximum likelihood and asymptotic diversity for abundance data
+#' # Compute the maximum likelihood estimation and asymptotic diversity for abundance data
 #' # with order q between 0 and 2 (in increments of 0.2 by default)
 #' set.seed(2025)
 #' data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
 #'             "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-#' output_ObsAsy <- MLEAsyIE(data, rho = 0.3)
-#' output_ObsAsy
+#' output_MLEAsy <- MLEAsyIE(data, rho = 0.3)
+#' output_MLEAsy
 #' 
 #' 
 #' @export
@@ -800,19 +799,19 @@ MLEAsyIE <- function(data, rho, q = seq(0, 2, 0.2), nboot = 50, conf = 0.95, met
 
 #' ggplot2 extension for plotting q-profile
 #'
-#' \code{ggMLEAsyIE} is a \code{ggplot2} extension for an \code{MLEAsyIE} object to plot q-profile (which depicts the maximum likelihood diversity and asymptotic diversity estimate with respect to order q) for q between 0 and 2 (in increments of 0.2).\cr\cr 
-#' In the plot, only confidence intervals of the asymptotic diversity will be shown when both the maximum likelihood and asymptotic diversity estimates are computed.
+#' \code{ggMLEAsyIE} is a \code{ggplot2} extension for an \code{MLEAsyIE} object to plot q-profile (which depicts the maximum likelihood estimation and asymptotic diversity estimate with respect to order q) for q between 0 and 2 (in increments of 0.2).\cr\cr 
+#' In the plot, only confidence intervals of the asymptotic diversity will be shown when both the maximum likelihood estimation and asymptotic diversity estimate are computed.
 #' 
 #' @param output the output of the function \code{MLEAsyIE}.\cr
-#' @return a q-profile based on the maximum likelihood diversity and the asymptotic diversity estimate.\cr\cr
+#' @return a q-profile based on the maximum likelihood estimation and the asymptotic diversity estimate.\cr\cr
 #'
 #' @examples
 #' # Plot diversity for abundance data with order q between 0 and 2 (in increments of 0.2 by default).
 #' set.seed(2025)
 #' data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
 #'             "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-#' output_ObsAsy <- MLEAsyIE(data, rho = 0.3)
-#' ggMLEAsyIE(output_ObsAsy)
+#' output_MLEAsy <- MLEAsyIE(data, rho = 0.3)
+#' ggMLEAsyIE(output_MLEAsy)
 #' 
 #' 
 #' @export
@@ -829,7 +828,7 @@ ggMLEAsyIE <- function(output){
       geom_ribbon(aes(ymin = qIE.LCL, ymax = qIE.UCL, fill = Assemblage), linetype = 0, alpha = 0.2)
     
     if (unique(output$Method == 'Asymptotic')) out = out + labs(x = 'Order q', y = 'Asymptotic inter-specific encounter')
-    if (unique(output$Method == 'MLE')) out = out + labs(x = 'Order q', y = 'Maximum likelihood inter-specific encounter')
+    if (unique(output$Method == 'MLE')) out = out + labs(x = 'Order q', y = 'Maximum likelihood estimation of inter-specific encounter')
     
   } else {
     
