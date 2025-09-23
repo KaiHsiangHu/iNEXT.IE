@@ -24,8 +24,8 @@ users without an R background.
 `iNEXT.IE` features two statistical analyses (non-asymptotic and
 asymptotic):
 
-1.  A non-asymptotic approach based on interpolation and extrapolation
-    for diversity
+1.A non-asymptotic approach based on interpolation and extrapolation for
+diversity
 
 `iNEXT.IE` computes the estimated diversity for standardized samples
 with a common sample size or sample completeness. This approach aims to
@@ -46,7 +46,7 @@ R/E sampling curves:
     varies with sample size. The sample completeness curve provides a
     bridge between the size- and coverage-based R/E sampling curves.
 
-1.  An asymptotic approach to infer asymptotic diversity
+2.An asymptotic approach to infer asymptotic diversity
 
 `iNEXT.IE` computes the estimated asymptotic diversity and also plots
 diversity profiles (q-profiles) for q between 0 and 2, in comparison
