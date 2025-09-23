@@ -85,7 +85,7 @@ Two functions for point estimation and basic data information
 
 - **estimateIE** computes diversity of order q = 0, 1 and 2 with a particular set of user-specified level of sample sizes or sample coverage values.
 
-- **DataInfo** provides basic data information based on the observed data.
+- **DataInfoIE** provides basic data information based on the observed data.
 
 
 Two functions for asymptotic analysis with graphical displays:
@@ -219,7 +219,7 @@ The `ggiNEXTIE()` function is a wrapper with the package `ggplot2` to create a r
 output_iNEXT <- iNEXTIE(data, rho = 0.3, q = c(0, 1, 2))
 ```
 
-Based on the dataset, the following commands return all numerical results. The first list of the output (`$DataInfo`) returns basic data information including the name of the Assemblage, sample size (`n`), total abundance (`N`), sampling fraction (`rho`), observed species richness (`S.obs`), sample coverage estimate of the reference sample with size n (`SC(n)`), sample coverage estimate of the extrapolated sample with size 2n (`SC(2n)`) as well as the first five species abundance frequency counts in the reference sample (`f1-f5`). If only data information is required, the simpler function `DataInfo()` (see later text) can be used to obtain the same output. More information about the maximum likelihood diversity (for any order q between 0 and 2) can be obtained by function `MLEAsyIE()`, which will be introduced later.
+Based on the dataset, the following commands return all numerical results. The first list of the output (`$DataInfo`) returns basic data information including the name of the Assemblage, sample size (`n`), total abundance (`N`), sampling fraction (`rho`), observed species richness (`S.obs`), sample coverage estimate of the reference sample with size n (`SC(n)`), sample coverage estimate of the extrapolated sample with size 2n (`SC(2n)`) as well as the first five species abundance frequency counts in the reference sample (`f1-f5`). If only data information is required, the simpler function `DataInfoIE()` (see later text) can be used to obtain the same output. More information about the maximum likelihood diversity (for any order q between 0 and 2) can be obtained by function `MLEAsyIE()`, which will be introduced later.
 
 ```{r eval=FALSE}
 set.seed(2025)
@@ -306,15 +306,15 @@ ggiNEXTIE(output_iNEXT, type = 3)
 
 
 
-## <span style="color:red;">FUNCTION DataInfo(): DATA INFORMATION</span> 
+## <span style="color:red;">FUNCTION DataInfoIE(): DATA INFORMATION</span> 
 
-The function `DataInfo()` provides basic data information for the reference sample in each assemblage. The function `DataInfo()` with default arguments is shown below:
+The function `DataInfoIE()` provides basic data information for the reference sample in each assemblage. The function `DataInfoIE()` with default arguments is shown below:
  
 ```{r eval=FALSE}
-DataInfo(data, rho) 
+DataInfoIE(data, rho) 
 ```
 
-All arguments in the above function are the same as those for the main function `iNEXTIE`. Running the `DataInfo()` function returns basic data information including sample size, total abundance, sampling fraction, observed species richness, two sample coverage estimates (`SC(n)` and `SC(2n)`) as well as other relevant information in each of the three dimensions of diversity. We use data to demo the function.
+All arguments in the above function are the same as those for the main function `iNEXTIE`. Running the `DataInfoIE()` function returns basic data information including sample size, total abundance, sampling fraction, observed species richness, two sample coverage estimates (`SC(n)` and `SC(2n)`) as well as other relevant information in each of the three dimensions of diversity. We use data to demo the function.
 
 ### Basic data information for abundance data
 
@@ -322,11 +322,11 @@ All arguments in the above function are the same as those for the main function 
 set.seed(2025)
 data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
             "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-DataInfo(data, rho = 0.3)
+DataInfoIE(data, rho = 0.3)
 ```
 
 ```{r echo=FALSE}
-tmp <- DataInfo(data, rho = 0.3)
+tmp <- DataInfoIE(data, rho = 0.3)
 tmp$`SC(n)`  <- round(tmp$`SC(n)`, 3)
 tmp$`SC(2n)` <- round(tmp$`SC(2n)`, 3)
 tmp

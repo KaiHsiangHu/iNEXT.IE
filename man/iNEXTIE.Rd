@@ -39,7 +39,7 @@ If the \code{endpoint} is larger than the reference sample size, then \code{iNEX
 }
 \value{
 a list of three objects: \cr\cr
-(1) \code{$DataInfo} for summarizing data information for q = 0, 1 and 2. Refer to the output of \code{DataInfo} for details. \cr\cr
+(1) \code{$DataInfo} for summarizing data information for q = 0, 1 and 2. Refer to the output of \code{DataInfoIE} for details. \cr\cr
 (2) \code{$iNextEst} for showing diversity estimates for rarefied and extrapolated samples along with related statistics. There are two data frames: \code{"$size_based"} and \code{"$coverage_based"}. \cr\cr
    In \code{"$size_based"}, the output includes:
    \item{Assemblage}{the name of assemblage.} 
@@ -61,7 +61,7 @@ a list of three objects: \cr\cr
 }
 \description{
 \code{iNEXTIE} mainly computes standardized diversity estimates with a common sample size or sample coverage for orders q = 0, 1 and 2. It also computes relevant information/statistics.\cr\cr 
-Relevant data information is summarized in the output \code{$DataInfo}. 
+Relevant data information is summarized in the output \code{$DataInfoIE}. 
 Diversity estimates for rarefied and extrapolated samples are provided in the output \code{$iNextEst}, which includes two data frames (\code{"$size_based"} and \code{"$coverage_based"}) based on two different standardizations; 
 in the size-based standardization, all samples are standardized to a common target sample size, whereas the in the latter standardization, all samples are standardized to a common target level of sample coverage. 
 The asymptotic diversity estimates for q = 0, 1 and 2 are provided in the list \code{$AsyEst}.\cr\cr

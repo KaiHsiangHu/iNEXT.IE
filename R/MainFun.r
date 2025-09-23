@@ -1,6 +1,6 @@
 #' Data information for reference samples
 #' 
-#' \code{DataInfo} provides basic data information for diversity based on a reference sample.
+#' \code{DataInfoIE} provides basic data information for diversity based on a reference sample.
 #' 
 #' @param data data can be input as a vector of species abundances (for a single assemblage), matrix/data.frame (species by assemblages), or a list of species abundance vectors.
 #' @param rho the sampling fraction can be input as a vector for each assemblage or a numeric common value for all assemblages.
@@ -15,11 +15,11 @@
 #' set.seed(2025)
 #' data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
 #'             "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-#' DataInfo(data, rho = 0.3)
+#' DataInfoIE(data, rho = 0.3)
 #' 
 #'
 #' @export
-DataInfo <- function(data, rho) {
+DataInfoIE <- function(data, rho) {
   
   data = check.data(data)
   if (length(rho) == 1) rho = rep(rho, length(data))
@@ -55,7 +55,7 @@ NULL
 #' iNterpolation and EXTrapolation of biodiversity
 #' 
 #' \code{iNEXTIE} mainly computes standardized diversity estimates with a common sample size or sample coverage for orders q = 0, 1 and 2. It also computes relevant information/statistics.\cr\cr 
-#' Relevant data information is summarized in the output \code{$DataInfo}. 
+#' Relevant data information is summarized in the output \code{$DataInfoIE}. 
 #' Diversity estimates for rarefied and extrapolated samples are provided in the output \code{$iNextEst}, which includes two data frames (\code{"$size_based"} and \code{"$coverage_based"}) based on two different standardizations; 
 #' in the size-based standardization, all samples are standardized to a common target sample size, whereas the in the latter standardization, all samples are standardized to a common target level of sample coverage. 
 #' The asymptotic diversity estimates for q = 0, 1 and 2 are provided in the list \code{$AsyEst}.\cr\cr 
@@ -87,7 +87,7 @@ NULL
 #' @importFrom grDevices hcl
 #' 
 #' @return a list of three objects: \cr\cr
-#' (1) \code{$DataInfo} for summarizing data information for q = 0, 1 and 2. Refer to the output of \code{DataInfo} for details. \cr\cr
+#' (1) \code{$DataInfo} for summarizing data information for q = 0, 1 and 2. Refer to the output of \code{DataInfoIE} for details. \cr\cr
 #' (2) \code{$iNextEst} for showing diversity estimates for rarefied and extrapolated samples along with related statistics. There are two data frames: \code{"$size_based"} and \code{"$coverage_based"}. \cr\cr
 #'    In \code{"$size_based"}, the output includes:
 #'    \item{Assemblage}{the name of assemblage.} 
@@ -160,7 +160,7 @@ iNEXTIE <- function(data, rho, q = c(0, 1, 2), size = NULL, endpoint = NULL, kno
   out$size_based$Assemblage <- as.character(out$size_based$Assemblage)
   out$coverage_based$Assemblage <- as.character(out$coverage_based$Assemblage)
   
-  info <- DataInfo(data, rho)
+  info <- DataInfoIE(data, rho)
   
   out <- list("DataInfo" = info, "iNextEst" = out, "AsyEst" = index)
   
