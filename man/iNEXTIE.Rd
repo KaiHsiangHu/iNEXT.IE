@@ -68,10 +68,7 @@ The maximum likelihood estimation and asymptotic diversity estimates for q = 0, 
 }
 \examples{
 # Compute standardized estimates of diversity for abundance data with order q = 0, 1, 2
-set.seed(2025)
-data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-            "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-output_iNEXT <- iNEXTIE(data, rho = 0.3, q = c(0, 1, 2))
+output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0, 1, 2))
 output_iNEXT
 
 

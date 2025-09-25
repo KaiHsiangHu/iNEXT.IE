@@ -104,14 +104,11 @@ For `iNEXT.IE` package, information on species identity (or any unique identific
 
 Individual-based abundance data: Data can be input as a vector of species abundances (for a single assemblage), a species (in rows) by assemblage (in columns) matrix/data.frame, or a list of species abundance vectors. 
 
-For example, we generate an example for illustration. 
+For example, we use "spider" data for illustration. 
 
 
 ```{r}
-set.seed(2025)
-data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-            "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-data
+spider
 ```
 
 
@@ -216,17 +213,13 @@ The `ggiNEXTIE()` function is a wrapper with the package `ggplot2` to create a r
 
 
 ```{r, echo=FALSE, cache = TRUE}
-output_iNEXT <- iNEXTIE(data, rho = 0.3, q = c(0, 1, 2))
+output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0, 1, 2))
 ```
 
 Based on the dataset, the following commands return all numerical results. The first list of the output (`$DataInfo`) returns basic data information including the name of the Assemblage, sample size (`n`), total abundance (`N`), sampling fraction (`rho`), observed species richness (`S.obs`), sample coverage estimate of the reference sample with size n (`SC(n)`), sample coverage estimate of the extrapolated sample with size 2n (`SC(2n)`) as well as the first five species abundance frequency counts in the reference sample (`f1-f5`). If only data information is required, the simpler function `DataInfoIE()` (see later text) can be used to obtain the same output. More information about the maximum likelihood estimation (for any order q between 0 and 2) can be obtained by function `MLEAsyIE()`, which will be introduced later.
 
 ```{r eval=FALSE}
-set.seed(2025)
-data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-            "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-
-output_iNEXT <- iNEXTIE(data, rho = 0.3, q = c(0, 1, 2))
+output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0, 1, 2))
 output_iNEXT$DataInfo
 ```
 
@@ -319,14 +312,11 @@ All arguments in the above function are the same as those for the main function 
 ### Basic data information for abundance data
 
 ```{r eval=FALSE}
-set.seed(2025)
-data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-            "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-DataInfoIE(data, rho = 0.3)
+DataInfoIE(spider, rho = 0.3)
 ```
 
 ```{r echo=FALSE}
-tmp <- DataInfoIE(data, rho = 0.3)
+tmp <- DataInfoIE(spider, rho = 0.3)
 tmp$`SC(n)`  <- round(tmp$`SC(n)`, 3)
 tmp$`SC(2n)` <- round(tmp$`SC(2n)`, 3)
 tmp
@@ -364,16 +354,12 @@ estimateIE(data, rho, q = c(0, 1, 2), base = "coverage", level = NULL, nboot = 5
 The following commands return the estimates with two specified levels of sample coverage (97% and 99%).  
 
 ```{r, eval=FALSE}
-set.seed(2025)
-data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-            "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-
-output_est_cov <- estimateIE(data, rho = 0.3, q = c(0, 1, 2), base = "coverage", level = c(0.97, 0.99))
+output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), base = "coverage", level = c(0.97, 0.99))
 output_est_cov
 ```
 
 ```{r, echo=FALSE}
-output_est_cov <- estimateIE(data, rho = 0.3, q = c(0, 1, 2), base = "coverage", level = c(0.97, 0.99))
+output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), base = "coverage", level = c(0.97, 0.99))
 
 output_est_cov[,c('SC', 'm', 'qIE', 's.e.', 'qIE.LCL', 'qIE.UCL')] = 
   round(output_est_cov[,c('SC', 'm', 'qIE', 's.e.', 'qIE.LCL', 'qIE.UCL')], 3)
@@ -387,16 +373,12 @@ output_est_cov
 The following commands return the estimates with two specified levels of sample sizes (150 and 250).
 
 ```{r, eval=FALSE}
-set.seed(2025)
-data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-            "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-
-output_est_size <- estimateIE(data, rho = 0.3, q = c(0, 1, 2), base = "size", level = c(150, 250))
+output_est_size <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), base = "size", level = c(150, 250))
 output_est_size
 ```
 
 ```{r, echo=FALSE}
-output_est_size <- estimateIE(data, rho = 0.3, q = c(0, 1, 2), base = "size", level = c(150, 250))
+output_est_size <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), base = "size", level = c(150, 250))
 
 output_est_size[,c('m', 'SC', 'qIE', 's.e.', 'qIE.LCL', 'qIE.UCL')] = 
   round(output_est_size[,c('m', 'SC', 'qIE', 's.e.', 'qIE.LCL', 'qIE.UCL')], 3)
@@ -430,15 +412,12 @@ In the plot of profiles, only confidence intervals of the asymptotic diversity w
 The following commands returns the maximum likelihood estimation and asymptotic taxonomic diversity, along with its confidence interval for diversity order q between 0 to 2. Here only the first ten rows of the output are shown.
 
 ```{r, eval=FALSE}
-set.seed(2025)
-data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-            "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-output_MLEAsy <- MLEAsyIE(data, rho = 0.3)
+output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 output_MLEAsy
 ```
 
 ```{r, echo=FALSE, cache=TRUE}
-output_MLEAsy <- MLEAsyIE(data, rho = 0.3)
+output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 
 tmp = output_MLEAsy
 tmp[,(3:6)] <- round(tmp[,(3:6)], 3)
@@ -450,7 +429,6 @@ The following commands plot the corresponding q-profiles, along with its confide
 ```{r}
 ggMLEAsyIE(output_MLEAsy)
 ```
-
 
 
 

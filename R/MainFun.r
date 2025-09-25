@@ -12,10 +12,7 @@
 #'  
 #' 
 #' @examples
-#' set.seed(2025)
-#' data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-#'             "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-#' DataInfoIE(data, rho = 0.3)
+#' DataInfoIE(spider, rho = 0.3)
 #' 
 #'
 #' @export
@@ -109,10 +106,7 @@ NULL
 #' 
 #' @examples
 #' # Compute standardized estimates of diversity for abundance data with order q = 0, 1, 2
-#' set.seed(2025)
-#' data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-#'             "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-#' output_iNEXT <- iNEXTIE(data, rho = 0.3, q = c(0, 1, 2))
+#' output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0, 1, 2))
 #' output_iNEXT
 #' 
 #' 
@@ -180,10 +174,7 @@ iNEXTIE <- function(data, rho, q = c(0, 1, 2), size = NULL, endpoint = NULL, kno
 #' 
 #' @examples
 #' # Plot three types of curves of diversity for abundance data with order q = 0, 1, 2
-#' set.seed(2025)
-#' data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-#'             "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-#' output_iNEXT <- iNEXTIE(data, rho = 0.3, q = c(0, 1, 2))
+#' output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0, 1, 2))
 #' ggiNEXTIE(output_iNEXT)
 #' 
 #' 
@@ -319,14 +310,11 @@ ggiNEXTIE = function(output, type = 1:3){
 #' 
 #' 
 #' @examples
-#' set.seed(2025)
-#' data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-#'             "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-#' output_est_cov <- estimateIE(data, rho = 0.3, q = c(0, 1, 2), 
+#' output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), 
 #'                              base = "coverage", level = c(0.97, 0.99))
 #' output_est_cov
 #' 
-#' output_est_size <- estimateIE(data, rho = 0.3, q = c(0, 1, 2),
+#' output_est_size <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2),
 #'                               base = "size", level = c(150, 250))
 #' output_est_size
 #' 
@@ -766,10 +754,7 @@ invSize <- function(data, rho, q, size = NULL, nboot = 0, conf = NULL) {
 #' @examples
 #' # Compute the maximum likelihood estimation and asymptotic diversity for abundance data
 #' # with order q between 0 and 2 (in increments of 0.2 by default)
-#' set.seed(2025)
-#' data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-#'             "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-#' output_MLEAsy <- MLEAsyIE(data, rho = 0.3)
+#' output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 #' output_MLEAsy
 #' 
 #' 
@@ -807,10 +792,7 @@ MLEAsyIE <- function(data, rho, q = seq(0, 2, 0.2), nboot = 50, conf = 0.95, met
 #'
 #' @examples
 #' # Plot diversity for abundance data with order q between 0 and 2 (in increments of 0.2 by default).
-#' set.seed(2025)
-#' data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-#'             "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-#' output_MLEAsy <- MLEAsyIE(data, rho = 0.3)
+#' output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 #' ggMLEAsyIE(output_MLEAsy)
 #' 
 #' 

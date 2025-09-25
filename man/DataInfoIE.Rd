@@ -21,10 +21,7 @@ the first five species abundance counts (\code{f1}--\code{f5}).\cr
 \code{DataInfoIE} provides basic data information for diversity based on a reference sample.
 }
 \examples{
-set.seed(2025)
-data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-            "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-DataInfoIE(data, rho = 0.3)
+DataInfoIE(spider, rho = 0.3)
 
 
 }

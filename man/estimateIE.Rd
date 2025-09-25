@@ -47,14 +47,11 @@ Similar output is obtained for \code{base = "size"}. \cr\cr
 \code{estimateIE} computes diversity with a particular set of user-specified levels of sample sizes or sample coverages. If no sample sizes or coverages are specified, this function by default computes diversity estimates for the minimum sample coverage or minimum sample size among all samples extrapolated to double reference sizes or total individuals.
 }
 \examples{
-set.seed(2025)
-data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-            "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-output_est_cov <- estimateIE(data, rho = 0.3, q = c(0, 1, 2), 
+output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), 
                              base = "coverage", level = c(0.97, 0.99))
 output_est_cov
 
-output_est_size <- estimateIE(data, rho = 0.3, q = c(0, 1, 2),
+output_est_size <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2),
                               base = "size", level = c(150, 250))
 output_est_size
 
