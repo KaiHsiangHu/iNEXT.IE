@@ -3,7 +3,7 @@
 # iNEXT.IE (R package)
 
 <h5 align="right">
-Latest version: 2025-09-24
+Latest version: 2025-09-25
 </h5>
 <font color="394CAE">
 <h3 color="394CAE" style="font-weight: bold">
@@ -129,18 +129,15 @@ species abundances (for a single assemblage), a species (in rows) by
 assemblage (in columns) matrix/data.frame, or a list of species
 abundance vectors.
 
-For example, we generate an example for illustration.
+For example, we use “spider” data for illustration.
 
 ``` r
-set.seed(2025)
-data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-            "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-data
-$Site_1
- [1]  1  1  1  2  3  2  5  1  4  4  4  9  6  2  6 10  6  7 10  5  8 12  5 13 10 16 13  9 15 10
+spider
+$Girdled
+ [1] 46 22 17 15 15  9  8  6  6  4  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1
 
-$Site_2
- [1]  0  0  0  1  2  3  1  1  2  9  7  4  8  7  7 13  8  8  4  6  7  4 10  6  6  9  8  9 11 13 12  8 14 18  9  8 16 15 12 14
+$Logged
+ [1] 88 22 16 15 13 10  8  8  7  7  7  5  4  4  4  3  3  3  3  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1
 ```
 
 ## <span style="color:red;">MAIN FUNCTION iNEXTIE(): RAREFACTION/EXTRAPOLATION</span>
@@ -337,18 +334,14 @@ about the maximum likelihood estimation (for any order q between 0 and
 later.
 
 ``` r
-set.seed(2025)
-data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-            "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-
-output_iNEXT <- iNEXTIE(data, rho = 0.3, q = c(0, 1, 2))
+output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0, 1, 2))
 output_iNEXT$DataInfo
 ```
 
     $DataInfo
-      Assemblage   n    N rho S.obs SC(n) SC(2n) f1 f2 f3 f4 f5
-    1     Site_1 200  667 0.3    30 0.986  0.999  4  3  1  3  3
-    2     Site_2 300 1000 0.3    37 0.993  0.999  3  2  1  3  0
+      Assemblage   n   N rho S.obs SC(n) SC(2n) f1 f2 f3 f4 f5
+    1    Girdled 168 560 0.3    26 0.950  0.988 12  4  0  1  0
+    2     Logged 252 840 0.3    37 0.961  0.989 14  4  4  3  1
 
 The second list of the output (`$iNextEst`) includes size- and
 coverage-based standardized diversity estimates and related statistics
@@ -376,12 +369,12 @@ output_iNEXT$iNextEst$size_based
 ```
 
       Assemblage Order.q  m      Method    qIE qIE.LCL qIE.UCL    SC SC.LCL SC.UCL
-    1     Site_1       0  1 Rarefaction  0.000   0.000   0.000 0.044  0.039  0.049
-    2     Site_1       0 11 Rarefaction  7.961   7.775   8.147 0.382  0.355  0.410
-    3     Site_1       0 21 Rarefaction 13.241  12.764  13.718 0.590  0.562  0.618
-    4     Site_1       0 32 Rarefaction 17.139  16.375  17.903 0.729  0.705  0.754
-    5     Site_1       0 42 Rarefaction 19.596  18.619  20.573 0.808  0.787  0.830
-    6     Site_1       0 53 Rarefaction 21.544  20.375  22.713 0.863  0.844  0.883
+    1    Girdled       0  1 Rarefaction  0.000   0.000   0.000 0.124  0.101  0.147
+    2    Girdled       0  9 Rarefaction  5.050   4.749   5.350 0.578  0.540  0.616
+    3    Girdled       0 18 Rarefaction  8.178   7.588   8.767 0.736  0.703  0.770
+    4    Girdled       0 27 Rarefaction 10.312   9.470  11.155 0.808  0.777  0.838
+    5    Girdled       0 36 Rarefaction 11.963  10.882  13.043 0.846  0.818  0.875
+    6    Girdled       0 44 Rarefaction 13.198  11.911  14.484 0.868  0.840  0.896
 
 The second data frame (`$coverage_based`) includes the name of
 assemblage (`Assemblage`), the diversity order (`Order.q`), the target
@@ -404,12 +397,12 @@ output_iNEXT$iNextEst$coverage_based
 ```
 
       Assemblage Order.q    SC  m      Method    qIE qIE.LCL qIE.UCL
-    1     Site_1       0 0.044  1 Rarefaction  0.000   0.000   0.101
-    2     Site_1       0 0.382 11 Rarefaction  7.961   7.163   8.760
-    3     Site_1       0 0.590 21 Rarefaction 13.241  12.070  14.411
-    4     Site_1       0 0.729 32 Rarefaction 17.139  15.714  18.564
-    5     Site_1       0 0.808 42 Rarefaction 19.596  17.988  21.203
-    6     Site_1       0 0.863 53 Rarefaction 21.544  19.753  23.334
+    1    Girdled       0 0.124  1 Rarefaction  0.000   0.000   0.183
+    2    Girdled       0 0.578  9 Rarefaction  5.050   4.199   5.900
+    3    Girdled       0 0.736 18 Rarefaction  8.178   6.857   9.499
+    4    Girdled       0 0.808 27 Rarefaction 10.312   8.529  12.095
+    5    Girdled       0 0.846 36 Rarefaction 11.963   9.676  14.250
+    6    Girdled       0 0.868 44 Rarefaction 13.198  10.440  15.956
 
 The third list of the output (`$AsyEst`) includes the name of the
 Assemblage, diversity order (q = 0, 1, 2), the maximum likelihood
@@ -425,13 +418,13 @@ estimates for any order q between 0 and 2 can be obtained from function
 output_iNEXT$AsyEst
 ```
 
-      Assemblage Order.q     IE_MLE     IE_asy    s.e.    qIE.LCL    qIE.UCL
-    1     Site_1       0     29.000     31.066   2.700     25.775     36.357
-    2     Site_1       1   2133.989   2175.579  33.213   2110.483   2240.676
-    3     Site_1       2 211700.000 212433.256 600.370 211256.552 213609.960
-    4     Site_2       0     36.000     37.698   2.013     33.752     41.644
-    5     Site_2       1   3472.033   3519.637  18.734   3482.919   3556.356
-    6     Site_2       2 482644.444 483434.947 513.132 482429.227 484440.667
+      Assemblage Order.q     IE_MLE     IE_asy     s.e.    qIE.LCL    qIE.UCL
+    1    Girdled       0     25.000     35.917    6.968     22.260     49.574
+    2    Girdled       1   1407.199   1459.750   44.878   1371.792   1547.709
+    3    Girdled       2 136800.000 137200.978 1818.409 133636.962 140764.993
+    4     Logged       0     36.000     49.968    6.482     37.263     62.673
+    5     Logged       1   2260.176   2331.295   62.810   2208.190   2454.400
+    6     Logged       2 300622.222 301208.694 4555.370 292280.333 310137.055
 
 The `ggiNEXTIE` function can be used to make graphical displays for
 rarefaction and extrapolation sampling curves. An example for showing
@@ -487,15 +480,12 @@ reference sample size (`SC(2n)`). We use data to demo the function.
 ### Basic data information for abundance data
 
 ``` r
-set.seed(2025)
-data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-            "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-DataInfoIE(data, rho = 0.3)
+DataInfoIE(spider, rho = 0.3)
 ```
 
-      Assemblage   n    N rho S.obs SC(n) SC(2n) f1 f2 f3 f4 f5
-    1     Site_1 200  667 0.3    30 0.986  0.999  4  3  1  3  3
-    2     Site_2 300 1000 0.3    37 0.993  0.999  3  2  1  3  0
+      Assemblage   n   N rho S.obs SC(n) SC(2n) f1 f2 f3 f4 f5
+    1    Girdled 168 560 0.3    26 0.950  0.988 12  4  0  1  0
+    2     Logged 252 840 0.3    37 0.961  0.989 14  4  4  3  1
 
 Output description:
 
@@ -545,27 +535,23 @@ The following commands return the estimates with two specified levels of
 sample coverage (97% and 99%).
 
 ``` r
-set.seed(2025)
-data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-            "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-
-output_est_cov <- estimateIE(data, rho = 0.3, q = c(0, 1, 2), base = "coverage", level = c(0.97, 0.99))
+output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), base = "coverage", level = c(0.97, 0.99))
 output_est_cov
 ```
 
-       Assemblage Order.q   SC       m        Method       qIE      s.e.  qIE.LCL   qIE.UCL
-    1      Site_1       0 0.97 127.729   Rarefaction    27.048     1.655   23.804    30.292
-    2      Site_1       0 0.99 233.636 Extrapolation    29.592     2.788   24.127    35.057
-    3      Site_1       1 0.97 127.729   Rarefaction   414.169    66.938  282.972   545.366
-    4      Site_1       1 0.99 233.636 Extrapolation   760.934   209.753  349.825  1172.042
-    5      Site_1       2 0.97 127.729   Rarefaction  7749.155  2936.694 1993.341 13504.969
-    6      Site_1       2 0.99 233.636 Extrapolation 25919.652 18251.484    0.000 61691.903
-    7      Site_2       0 0.97 136.860   Rarefaction    33.172     0.994   31.224    35.119
-    8      Site_2       0 0.99 241.897   Rarefaction    35.334     1.518   32.359    38.309
-    9      Site_2       1 0.97 136.860   Rarefaction   479.177    32.276  415.918   542.436
-    10     Site_2       1 0.99 241.897   Rarefaction   849.916   172.482  511.857  1187.976
-    11     Site_2       2 0.97 136.860   Rarefaction  9004.228  1243.498 6567.017 11441.440
-    12     Site_2       2 0.99 241.897   Rarefaction 28218.868 13364.014 2025.882 54411.854
+       Assemblage Order.q   SC       m        Method        qIE      s.e.   qIE.LCL    qIE.UCL
+    1     Girdled       0 0.97 238.845 Extrapolation     29.370     5.606    18.381     40.358
+    2     Girdled       0 0.99 350.815 Extrapolation     33.736     7.048    19.923     47.550
+    3     Girdled       1 0.97 238.845 Extrapolation    617.559   143.173   336.946    898.173
+    4     Girdled       1 0.99 350.815 Extrapolation    912.022   183.083   553.186   1270.859
+    5     Girdled       2 0.97 238.845 Extrapolation  24838.324 10535.470  4189.181  45487.466
+    6     Girdled       2 0.99 350.815 Extrapolation  53729.316 19863.392 14797.783  92660.849
+    7      Logged       0 0.97 313.778 Extrapolation     39.194     5.515    28.385     50.002
+    8      Logged       0 0.99 511.083 Extrapolation     46.378     7.166    32.333     60.423
+    9      Logged       1 0.97 313.778 Extrapolation    863.797   158.647   552.855   1174.738
+    10     Logged       1 0.99 511.083 Extrapolation   1414.640   229.081   965.649   1863.631
+    11     Logged       2 0.97 313.778 Extrapolation  41861.601 15948.716 10602.693  73120.509
+    12     Logged       2 0.99 511.083 Extrapolation 111333.509 33561.248 45554.672 177112.345
 
 ### Example: abundance data with two target sample sizes (150 and 250)
 
@@ -573,27 +559,23 @@ The following commands return the estimates with two specified levels of
 sample sizes (150 and 250).
 
 ``` r
-set.seed(2025)
-data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-            "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-
-output_est_size <- estimateIE(data, rho = 0.3, q = c(0, 1, 2), base = "size", level = c(150, 250))
+output_est_size <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), base = "size", level = c(150, 250))
 output_est_size
 ```
 
-       Assemblage Order.q   m        Method    SC       qIE   s.e.   qIE.LCL   qIE.UCL
-    1      Site_1       0 150   Rarefaction 0.977    27.787  1.168    25.496    30.077
-    2      Site_1       0 250 Extrapolation 0.992    29.827  1.865    26.171    33.484
-    3      Site_1       1 150   Rarefaction 0.977   487.187  5.332   476.737   497.637
-    4      Site_1       1 250 Extrapolation 0.992   814.423  9.248   796.297   832.549
-    5      Site_1       2 150   Rarefaction 0.977 10699.361 25.247 10649.878 10748.843
-    6      Site_1       2 250 Extrapolation 0.992 29694.388 70.068 29557.056 29831.719
-    7      Site_2       0 150   Rarefaction 0.975    33.590  0.888    31.850    35.331
-    8      Site_2       0 250   Rarefaction 0.991    35.439  1.089    33.303    37.574
-    9      Site_2       1 150   Rarefaction 0.975   525.625  4.746   516.322   534.927
-    10     Site_2       1 250   Rarefaction 0.991   878.494  7.925   862.960   894.027
-    11     Site_2       2 150   Rarefaction 0.975 10823.181 15.696 10792.417 10853.944
-    12     Site_2       2 250   Rarefaction 0.991 30145.100 43.717 30059.416 30230.784
+       Assemblage Order.q   m        Method    SC       qIE    s.e.   qIE.LCL   qIE.UCL
+    1     Girdled       0 150   Rarefaction 0.944    23.671   2.266    19.229    28.112
+    2     Girdled       0 250 Extrapolation 0.973    29.937   3.768    22.553    37.322
+    3     Girdled       1 150   Rarefaction 0.944   384.433  12.203   360.514   408.351
+    4     Girdled       1 250 Extrapolation 0.973   646.864  21.103   605.502   688.226
+    5     Girdled       2 150   Rarefaction 0.944  9807.998 134.357  9544.664 10071.333
+    6     Girdled       2 250 Extrapolation 0.973 27222.876 372.918 26491.971 27953.782
+    7      Logged       0 150   Rarefaction 0.934    29.327   1.238    26.902    31.753
+    8      Logged       0 250   Rarefaction 0.961    35.889   2.027    31.915    39.862
+    9      Logged       1 150   Rarefaction 0.934   406.734  11.084   385.010   428.459
+    10     Logged       1 250   Rarefaction 0.961   686.424  18.652   649.867   722.982
+    11     Logged       2 150   Rarefaction 0.934  9560.197 168.254  9230.426  9889.968
+    12     Logged       2 250   Rarefaction 0.961 26627.395 468.626 25708.906 27545.885
 
 ## <span style="color:red;">FUNCTION MLEAsyIE: MAXIMUM LIKELIHOOD ESTIMATION AND ASYMPTOTIC DIVERSITY PROFILES</span>
 
@@ -633,24 +615,21 @@ diversity order q between 0 to 2. Here only the first ten rows of the
 output are shown.
 
 ``` r
-set.seed(2025)
-data = list("Site_1" = as.numeric(rmultinom(1, 200, 1:30)), 
-            "Site_2" = as.numeric(rmultinom(1, 300, 1:40)))
-output_MLEAsy <- MLEAsyIE(data, rho = 0.3)
+output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 output_MLEAsy
 ```
 
        Assemblage Order.q       qIE    s.e.   qIE.LCL   qIE.UCL     Method
-    1      Site_1     0.0    31.066   3.855    23.511    38.621 Asymptotic
-    2      Site_1     0.2    71.882   6.644    58.860    84.904 Asymptotic
-    3      Site_1     0.4   165.966   8.227   149.842   182.090 Asymptotic
-    4      Site_1     0.6   385.981  10.572   365.261   406.701 Asymptotic
-    5      Site_1     0.8   909.222  15.139   879.549   938.894 Asymptotic
-    6      Site_1     1.0  2175.579  24.861  2126.852  2224.306 Asymptotic
-    7      Site_1     1.2  5292.347  44.644  5204.846  5379.848 Asymptotic
-    8      Site_1     1.4 13079.456  82.744 12917.281 13241.631 Asymptotic
-    9      Site_1     1.6 32781.407 153.554 32480.447 33082.367 Asymptotic
-    10     Site_1     1.8 83121.052 282.062 82568.221 83673.884 Asymptotic
+    1     Girdled     0.0    35.917   5.591    24.958    46.875 Asymptotic
+    2     Girdled     0.2    68.580   7.964    52.970    84.189 Asymptotic
+    3     Girdled     0.4   136.116  10.509   115.519   156.713 Asymptotic
+    4     Girdled     0.6   284.879  14.570   256.323   313.436 Asymptotic
+    5     Girdled     0.8   629.864  22.262   586.230   673.498 Asymptotic
+    6     Girdled     1.0  1459.750  38.429  1384.431  1535.070 Asymptotic
+    7     Girdled     1.2  3504.825  74.053  3359.683  3649.967 Asymptotic
+    8     Girdled     1.4  8620.532 154.037  8318.624  8922.440 Asymptotic
+    9     Girdled     1.6 21529.984 334.297 20874.773 22185.194 Asymptotic
+    10    Girdled     1.8 54257.185 738.603 52809.550 55704.820 Asymptotic
 
 The following commands plot the corresponding q-profiles, along with its
 confidence interval for q between 0 to 2.
