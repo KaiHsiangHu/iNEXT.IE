@@ -18,6 +18,7 @@ In the plot, only confidence intervals of the asymptotic diversity will be shown
 }
 \examples{
 # Plot diversity for abundance data with order q between 0 and 2 (in increments of 0.2 by default).
+data("spider")
 output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 ggMLEAsyIE(output_MLEAsy)
 

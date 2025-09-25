@@ -34,7 +34,7 @@ iNEXT.IE (R package)
 <i>Institute of Statistics, National Tsing Hua University, Hsin-Chu, Taiwan 30043</i>  
 </h5>
 <br>
-`iNEXT.IE` (INterpolation and EXTrapolation for Inter-specific Encounter) is a framework for biodiversity methodology. An online version "iNEXT.IE Online"
+`iNEXT.IE` (INterpolation and EXTrapolation for Inter-specific Encounter) is a framework for biodiversity methodology. 'iNEXT.IE' extends 'iNEXT' to incorporate Inter-specific Encounter (IE) of biodiversity, which incorporates species absolute abundance. An online version "iNEXT.IE Online"
 (https://kaihsiang-hu.shinyapps.io/iNEXT_IE/) is also available for users without an R background.
 
 `iNEXT.IE` features two statistical analyses (non-asymptotic and asymptotic):
@@ -120,6 +120,7 @@ For example, we use "spider" data for illustration.
 
 
 ```{r}
+data("spider")
 spider
 ```
 
@@ -196,12 +197,14 @@ The `ggiNEXTIE()` function is a wrapper with the package `ggplot2` to create a r
 
 
 ```{r, echo=FALSE, cache = TRUE}
+data("spider")
 output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0, 1, 2))
 ```
 
-Based on the dataset, the following commands return all numerical results. The first list of the output (`$DataInfo`) returns basic data information including the name of the Assemblage, sample size (`n`), total abundance (`N`), sampling fraction (`rho`), observed species richness (`S.obs`), sample coverage estimate of the reference sample with size n (`SC(n)`), sample coverage estimate of the extrapolated sample with size 2n (`SC(2n)`) as well as the first five species abundance frequency counts in the reference sample (`f1-f5`). If only data information is required, the simpler function `DataInfoIE()` (see later text) can be used to obtain the same output. More information about the maximum likelihood estimation (for any order q between 0 and 2) can be obtained by function `MLEAsyIE()`, which will be introduced later.
+Based on the dataset, the following commands return all numerical results. The first list of the output (`$DataInfo`) returns basic data information including the name of the Assemblage, sample size (`n`), total abundance (`N`), sampling fraction (`rho`), observed species richness (`S.obs`), sample coverage estimate of the reference sample with size n (`SC(n)`), sample coverage estimate of the extrapolated sample with size 2n (`SC(2n)`) as well as the first five species abundance frequency counts in the reference sample (`f1-f5`). If only data information is required, the simpler function `DataInfoIE()` (see later text) can be used to obtain the same output. 
 
 ```{r eval=FALSE}
+data("spider")
 output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0, 1, 2))
 output_iNEXT$DataInfo
 ```
@@ -269,7 +272,7 @@ ggiNEXTIE(output_iNEXT, type = 1)
 The following commands return the sample completeness (sample coverage) curve (`type = 2`) in which different colors represent different assemblages. 
 
 ```{r fig.width = 5, fig.height = 4}
-# Sample completeness curves for abundance data
+# Sample completeness curves 
 ggiNEXTIE(output_iNEXT, type = 2)
 ```
 
@@ -290,15 +293,17 @@ The function `DataInfoIE()` provides basic data information for the reference sa
 DataInfoIE(data, rho) 
 ```
 
-All arguments in the above function are the same as those for the main function `iNEXTIE`. Running the `DataInfoIE()` function returns basic data information including sample size, total abundance, sampling fraction, observed species richness, sample coverage estimates of the reference sample (`SC(n)`), sample coverage estimate for twice the reference sample size (`SC(2n)`). We use data to demo the function.
+All arguments in the above function are the same as those for the main function `iNEXTIE`. Running the `DataInfoIE()` function returns basic data information including sample size, total abundance, sampling fraction, observed species richness, sample coverage estimates of the reference sample (`SC(n)`), sample coverage estimate for twice the reference sample size (`SC(2n)`), and the first five species abundance counts (`f1`–`f5`). We use data to demo the function.
 
 ### Basic data information for abundance data
 
 ```{r eval=FALSE}
+data("spider")
 DataInfoIE(spider, rho = 0.3)
 ```
 
 ```{r echo=FALSE}
+data("spider")
 tmp <- DataInfoIE(spider, rho = 0.3)
 tmp$`SC(n)`  <- round(tmp$`SC(n)`, 3)
 tmp$`SC(2n)` <- round(tmp$`SC(2n)`, 3)
@@ -334,15 +339,17 @@ estimateIE(data, rho, q = c(0, 1, 2), base = "coverage", level = NULL, nboot = 5
 
 ### Example: abundance data with two target coverage values (97% and 99%)
 
-The following commands return the estimates with two specified levels of sample coverage (97% and 99%).  
+The following commands return the estimates with two specified levels of sample coverage (94% and 96%).  
 
 ```{r, eval=FALSE}
-output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), base = "coverage", level = c(0.97, 0.99))
+data("spider")
+output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), base = "coverage", level = c(0.94, 0.96))
 output_est_cov
 ```
 
 ```{r, echo=FALSE}
-output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), base = "coverage", level = c(0.97, 0.99))
+data("spider")
+output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), base = "coverage", level = c(0.94, 0.96))
 
 output_est_cov[,c('SC', 'm', 'qIE', 's.e.', 'qIE.LCL', 'qIE.UCL')] = 
   round(output_est_cov[,c('SC', 'm', 'qIE', 's.e.', 'qIE.LCL', 'qIE.UCL')], 3)
@@ -356,11 +363,13 @@ output_est_cov
 The following commands return the estimates with two specified levels of sample sizes (150 and 250).
 
 ```{r, eval=FALSE}
+data("spider")
 output_est_size <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), base = "size", level = c(150, 250))
 output_est_size
 ```
 
 ```{r, echo=FALSE}
+data("spider")
 output_est_size <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), base = "size", level = c(150, 250))
 
 output_est_size[,c('m', 'SC', 'qIE', 's.e.', 'qIE.LCL', 'qIE.UCL')] = 
@@ -395,11 +404,13 @@ In the plot of profiles, only confidence intervals of the asymptotic diversity w
 The following commands returns the maximum likelihood estimation and asymptotic taxonomic diversity, along with its confidence interval for diversity order q between 0 to 2. Here only the first ten rows of the output are shown.
 
 ```{r, eval=FALSE}
+data("spider")
 output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 output_MLEAsy
 ```
 
 ```{r, echo=FALSE, cache=TRUE}
+data("spider")
 output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 
 tmp = output_MLEAsy
@@ -417,7 +428,7 @@ ggMLEAsyIE(output_MLEAsy)
 
 
 ## License
-The iNEXT.IE package is licensed under the GPLv3. To help refine `iNEXT.IE`, your comments or feedback would be welcome (please send them to Anne Chao or report an issue on the iNEXT.IE github [iNEXT.IE_github](https://github.com/KaiHsiangHu/iNEXT.IE)). 
+The iNEXT.IE package is licensed under the GPLv3. To help refine `iNEXT.IE`, your comments or feedback would be welcome (please send them to KaiHsiang Hu or report an issue on the iNEXT.IE github [iNEXT.IE_github](https://github.com/KaiHsiangHu/iNEXT.IE)). 
 
 ## References
 

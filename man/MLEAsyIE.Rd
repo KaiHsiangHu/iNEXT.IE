@@ -41,6 +41,7 @@ a data frame including the following information/statistics:
 \examples{
 # Compute the maximum likelihood estimation and asymptotic diversity for abundance data
 # with order q between 0 and 2 (in increments of 0.2 by default)
+data("spider")
 output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 output_MLEAsy
 

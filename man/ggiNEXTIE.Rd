@@ -20,6 +20,7 @@ a \code{ggplot2} object for sample-size-based rarefaction/extrapolation curve (\
 }
 \examples{
 # Plot three types of curves of diversity for abundance data with order q = 0, 1, 2
+data("spider")
 output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0, 1, 2))
 ggiNEXTIE(output_iNEXT)
 

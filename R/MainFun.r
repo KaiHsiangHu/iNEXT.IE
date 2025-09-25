@@ -12,6 +12,7 @@
 #'  
 #' 
 #' @examples
+#' data("spider")
 #' DataInfoIE(spider, rho = 0.3)
 #' 
 #'
@@ -106,6 +107,7 @@ NULL
 #' 
 #' @examples
 #' # Compute standardized estimates of diversity for abundance data with order q = 0, 1, 2
+#' data("spider")
 #' output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0, 1, 2))
 #' output_iNEXT
 #' 
@@ -174,6 +176,7 @@ iNEXTIE <- function(data, rho, q = c(0, 1, 2), size = NULL, endpoint = NULL, kno
 #' 
 #' @examples
 #' # Plot three types of curves of diversity for abundance data with order q = 0, 1, 2
+#' data("spider")
 #' output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0, 1, 2))
 #' ggiNEXTIE(output_iNEXT)
 #' 
@@ -310,8 +313,9 @@ ggiNEXTIE = function(output, type = 1:3){
 #' 
 #' 
 #' @examples
+#' data("spider")
 #' output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), 
-#'                              base = "coverage", level = c(0.97, 0.99))
+#'                              base = "coverage", level = c(0.94, 0.96))
 #' output_est_cov
 #' 
 #' output_est_size <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2),
@@ -754,6 +758,7 @@ invSize <- function(data, rho, q, size = NULL, nboot = 0, conf = NULL) {
 #' @examples
 #' # Compute the maximum likelihood estimation and asymptotic diversity for abundance data
 #' # with order q between 0 and 2 (in increments of 0.2 by default)
+#' data("spider")
 #' output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 #' output_MLEAsy
 #' 
@@ -792,6 +797,7 @@ MLEAsyIE <- function(data, rho, q = seq(0, 2, 0.2), nboot = 50, conf = 0.95, met
 #'
 #' @examples
 #' # Plot diversity for abundance data with order q between 0 and 2 (in increments of 0.2 by default).
+#' data("spider")
 #' output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 #' ggMLEAsyIE(output_MLEAsy)
 #' 

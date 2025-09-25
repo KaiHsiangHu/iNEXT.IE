@@ -21,6 +21,7 @@ the first five species abundance counts (\code{f1}--\code{f5}).\cr
 \code{DataInfoIE} provides basic data information for diversity based on a reference sample.
 }
 \examples{
+data("spider")
 DataInfoIE(spider, rho = 0.3)
 
 

@@ -8,7 +8,7 @@ Interpolation and Extrapolation for inter-specific encounter diversity
 \description{
 \code{iNEXT.IE} (iNterpolation and EXTrapolation for inter-specific encounter diversity) is a framework for biodiversity methodology. 
 An online version "iNEXT.IE Online"
-(https://chao.shinyapps.io/iNEXT_3D/) is also available for users without an R background.
+(https://kaihsiang-hu.shinyapps.io/iNEXT_IE/) is also available for users without an R background.
 
 \code{iNEXT.IE} features two statistical analyses (non-asymptotic and asymptotic):
 
@@ -22,7 +22,7 @@ An online version "iNEXT.IE Online"
 
 * Sample completeness curve: This curve depicts how sample coverage varies with sample size. The sample completeness curve provides a bridge between the size- and coverage-based R/E sampling curves.
 
-(2) An asymptotic approach to infer asymptotic 3D diversity (i.e., Hill-Chao numbers)
+(2) An asymptotic approach to infer asymptotic diversity 
 
 \code{iNEXT.IE} computes the estimated asymptotic diversity and also plots diversity profiles (q-profiles) for q between 0 and 2, in comparison with the maximum likelihood estimation. Typically, the asymptotic estimates for q \eqn{\geq} 1 are reliable, but for q < 1 (especially for q = 0, species richness), the asymptotic estimates represent only lower bounds. \cr
 

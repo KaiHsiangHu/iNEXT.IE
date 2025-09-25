@@ -31,7 +31,7 @@ Imports:
 Suggests: testthat,
     knitr,
     rmarkdown
-BugReports: https://github.com/KaiHsiangHu/iNEXT.3D/issues
+BugReports: https://github.com/KaiHsiangHu/iNEXT.IE/issues
 Encoding: UTF-8
 LazyLoad: yes
 LazyData: true

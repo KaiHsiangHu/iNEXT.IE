@@ -15,8 +15,8 @@
   $ Logged : num [1:37] 88 22 16 15 13 10 8 8 7 7 ... \cr
 }
 \source{
-  Sackett, T. E., Record, S., Bewick, S., Baiser, B., Sanders, N. J., and Ellison, A. M. (2011). Response of macroarthropod assemblages to the loss of hemlock (Tsuga canadensis), a foundation species. Ecosphere, 2(7), 1-16. \cr\cr
-  Ellison, A. M., Barker‐Plotkin, A. A., Foster, D. R., and Orwig, D. A. (2010). Experimentally testing the role of foundation species in forests: the Harvard Forest Hemlock Removal Experiment. Methods in Ecology and Evolution, 1(2), 168-179. \cr\cr
+Ellison, A. M., Barker‐Plotkin, A. A., Foster, D. R., and Orwig, D. A. (2010). Experimentally testing the role of foundation species in forests: the Harvard Forest Hemlock Removal Experiment. Methods in Ecology and Evolution, 1(2), 168-179. \cr\cr
+Sackett, T. E., Record, S., Bewick, S., Baiser, B., Sanders, N. J., and Ellison, A. M. (2011). Response of macroarthropod assemblages to the loss of hemlock (Tsuga canadensis), a foundation species. Ecosphere, 2(7), 1-16. \cr\cr
 }
 \examples{
   data(spider)

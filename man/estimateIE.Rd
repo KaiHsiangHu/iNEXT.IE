@@ -47,8 +47,9 @@ Similar output is obtained for \code{base = "size"}. \cr\cr
 \code{estimateIE} computes diversity with a particular set of user-specified levels of sample sizes or sample coverages. If no sample sizes or coverages are specified, this function by default computes diversity estimates for the minimum sample coverage or minimum sample size among all samples extrapolated to double reference sizes or total individuals.
 }
 \examples{
+data("spider")
 output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), 
-                             base = "coverage", level = c(0.97, 0.99))
+                             base = "coverage", level = c(0.94, 0.96))
 output_est_cov
 
 output_est_size <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2),
