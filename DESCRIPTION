@@ -2,10 +2,10 @@ Package: iNEXT.IE
 Type: Package
 Title: Interpolation and Extrapolation for Inter-specific Encounter
 Version: 1.0.0
-Author: KaiHsiang Hu [aut, cre], Anne Chao [ctb]
+Author: Kai-Hsiang Hu [aut, cre], Anne Chao [ctb]
 Maintainer: KaiHsiang Hu <river19951224@gmail.com>
 Authors@R: 
-  c(person("KaiHsiang", 
+  c(person("Kai-Hsiang", 
            "Hu", 
            role = c("aut","cre"),
            email = "river19951224@gmail.com"),
