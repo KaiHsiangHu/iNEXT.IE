@@ -4,7 +4,7 @@
 \alias{DataInfoIE}
 \title{Data information for reference samples}
 \usage{
-DataInfoIE(data, rho)
+DataInfoIE(data, rho = NULL)
 }
 \arguments{
 \item{data}{data can be input as a vector of species abundances (for a single assemblage), matrix/data.frame (species by assemblages), or a list of species abundance vectors.}
@@ -12,8 +12,9 @@ DataInfoIE(data, rho)
 \item{rho}{the sampling fraction can be input as a vector for each assemblage or a numeric common value for all assemblages.}
 }
 \value{
-a data.frame including assemblage name (\code{Assemblage}), sample size (\code{n}), 
-total abundance (\code{N}), sampling fraction (\code{rho}), observed species richness (\code{S.obs}), 
+a data.frame including assemblage name (\code{Assemblage}), sample size in the reference sample (\code{n}), 
+total abundance in the overall assemblage (\code{N}), sampling fraction of the reference sample (\code{rho}), 
+observed species richness in the reference sample (\code{S.obs}), 
 sample coverage estimates of the reference sample (\code{SC(n)}), sample coverage estimate for twice the reference sample size (\code{SC(2n)}),
 the first five species abundance counts (\code{f1}--\code{f5}).\cr
 }

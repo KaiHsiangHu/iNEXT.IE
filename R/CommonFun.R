@@ -46,6 +46,19 @@ check.data <- function(data) {
   return(data)
 }
 
+check.rho <- function(data, rho) {
+  
+  if (is.null(rho)) stop('Please set the rho in the function.', call. = FALSE)
+  
+  if (sum((rho < 0) | (rho > 1) | (is.numeric(rho) == F)) > 0) stop('Please enter value between zero and one for sampling fraction (rho).', call. = FALSE)
+  
+  if (length(rho) == 1) rho = rep(rho, length(data))
+  
+  if (length(rho) != length(data)) stop('The length of rho vector does not equal to the number of assemblages. Please check the setting of rho.', call. = FALSE)
+  
+  return(rho)
+}
+
 check.q <- function(q) {
   
   if(!inherits(q, "numeric"))

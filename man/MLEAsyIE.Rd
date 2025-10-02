@@ -6,7 +6,7 @@
 \usage{
 MLEAsyIE(
   data,
-  rho,
+  rho = NULL,
   q = seq(0, 2, 0.2),
   nboot = 50,
   conf = 0.95,

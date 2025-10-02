@@ -6,7 +6,7 @@
 \usage{
 iNEXTIE(
   data,
-  rho,
+  rho = NULL,
   q = c(0, 1, 2),
   size = NULL,
   endpoint = NULL,

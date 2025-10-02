@@ -5,8 +5,9 @@
 #' @param data data can be input as a vector of species abundances (for a single assemblage), matrix/data.frame (species by assemblages), or a list of species abundance vectors.
 #' @param rho the sampling fraction can be input as a vector for each assemblage or a numeric common value for all assemblages.
 #' 
-#' @return a data.frame including assemblage name (\code{Assemblage}), sample size (\code{n}), 
-#' total abundance (\code{N}), sampling fraction (\code{rho}), observed species richness (\code{S.obs}), 
+#' @return a data.frame including assemblage name (\code{Assemblage}), sample size in the reference sample (\code{n}), 
+#' total abundance in the overall assemblage (\code{N}), sampling fraction of the reference sample (\code{rho}), 
+#' observed species richness in the reference sample (\code{S.obs}), 
 #' sample coverage estimates of the reference sample (\code{SC(n)}), sample coverage estimate for twice the reference sample size (\code{SC(2n)}),
 #' the first five species abundance counts (\code{f1}--\code{f5}).\cr
 #'  
@@ -17,10 +18,10 @@
 #' 
 #'
 #' @export
-DataInfoIE <- function(data, rho) {
+DataInfoIE <- function(data, rho = NULL) {
   
   data = check.data(data)
-  if (length(rho) == 1) rho = rep(rho, length(data))
+  rho = check.rho(data, rho)
   
   Fun <- function(x, rho){
     
@@ -113,10 +114,10 @@ NULL
 #' 
 #' 
 #' @export
-iNEXTIE <- function(data, rho, q = c(0, 1, 2), size = NULL, endpoint = NULL, knots = 40, nboot = 50, conf = 0.95) {
+iNEXTIE <- function(data, rho = NULL, q = c(0, 1, 2), size = NULL, endpoint = NULL, knots = 40, nboot = 50, conf = 0.95) {
   
   data = check.data(data)
-  if (length(rho) == 1) rho = rep(rho, length(data))
+  rho = check.rho(data, rho)
   
   q = check.q(q)
   conf = check.conf(conf)
@@ -324,10 +325,10 @@ ggiNEXTIE = function(output, type = 1:3){
 #' 
 #' 
 #' @export
-estimateIE <- function(data, rho, q = c(0, 1, 2), base = "coverage", level = NULL, nboot = 50, conf = 0.95) {
+estimateIE <- function(data, rho = NULL, q = c(0, 1, 2), base = "coverage", level = NULL, nboot = 50, conf = 0.95) {
   
   data = check.data(data)
-  if (length(rho) == 1) rho = rep(rho, length(data))
+  rho = check.rho(data, rho)
   
   q = check.q(q)
   conf = check.conf(conf)
@@ -764,10 +765,10 @@ invSize <- function(data, rho, q, size = NULL, nboot = 0, conf = NULL) {
 #' 
 #' 
 #' @export
-MLEAsyIE <- function(data, rho, q = seq(0, 2, 0.2), nboot = 50, conf = 0.95, method = c('Asymptotic', 'MLE')) {
+MLEAsyIE <- function(data, rho = NULL, q = seq(0, 2, 0.2), nboot = 50, conf = 0.95, method = c('Asymptotic', 'MLE')) {
   
   data = check.data(data)
-  if (length(rho) == 1) rho = rep(rho, length(data))
+  rho = check.rho(data, rho)
   
   q = check.q(q)
   conf = check.conf(conf)

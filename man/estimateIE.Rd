@@ -6,7 +6,7 @@
 \usage{
 estimateIE(
   data,
-  rho,
+  rho = NULL,
   q = c(0, 1, 2),
   base = "coverage",
   level = NULL,

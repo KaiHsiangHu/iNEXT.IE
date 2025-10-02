@@ -293,24 +293,7 @@ The function `DataInfoIE()` provides basic data information for the reference sa
 DataInfoIE(data, rho) 
 ```
 
-All arguments in the above function are the same as those for the main function `iNEXTIE`. Running the `DataInfoIE()` function returns basic data information including sample size, total abundance, sampling fraction, observed species richness, sample coverage estimates of the reference sample (`SC(n)`), sample coverage estimate for twice the reference sample size (`SC(2n)`), and the first five species abundance counts (`f1`–`f5`). We use data to demo the function.
-
-### Basic data information for abundance data
-
-```{r eval=FALSE}
-data("spider")
-DataInfoIE(spider, rho = 0.3)
-```
-
-```{r echo=FALSE}
-data("spider")
-tmp <- DataInfoIE(spider, rho = 0.3)
-tmp$`SC(n)`  <- round(tmp$`SC(n)`, 3)
-tmp$`SC(2n)` <- round(tmp$`SC(2n)`, 3)
-tmp
-```
-
-Output description:
+All arguments in the above function are the same as those for the main function `iNEXTIE`. Running the `DataInfoIE()` function returns basic data information including the following: 
 
 - `Assemblage` = assemblage name. 
 
@@ -327,6 +310,24 @@ Output description:
 - `SC(2n)` = sample coverage estimate of the reference sample with size 2n.
 
 - `f1`-`f5` = the first five species abundance frequency counts in the reference sample.
+
+We use data to demo the function.
+
+### Basic data information for abundance data
+
+```{r eval=FALSE}
+data("spider")
+DataInfoIE(spider, rho = 0.3)
+```
+
+```{r echo=FALSE}
+data("spider")
+tmp <- DataInfoIE(spider, rho = 0.3)
+tmp$`SC(n)`  <- round(tmp$`SC(n)`, 3)
+tmp$`SC(2n)` <- round(tmp$`SC(2n)`, 3)
+tmp
+```
+
 
 
 ## <span style="color:red;">FUNCTION estimateIE(): POINT ESTIMATION</span>

@@ -3,7 +3,7 @@
 # iNEXT.IE (R package)
 
 <h5 align="right">
-Latest version: 2025-09-25
+Latest version: 2025-10-02
 </h5>
 <font color="394CAE">
 <h3 color="394CAE" style="font-weight: bold">
@@ -473,24 +473,7 @@ DataInfoIE(data, rho)
 
 All arguments in the above function are the same as those for the main
 function `iNEXTIE`. Running the `DataInfoIE()` function returns basic
-data information including sample size, total abundance, sampling
-fraction, observed species richness, sample coverage estimates of the
-reference sample (`SC(n)`), sample coverage estimate for twice the
-reference sample size (`SC(2n)`), and the first five species abundance
-counts (`f1`–`f5`). We use data to demo the function.
-
-### Basic data information for abundance data
-
-``` r
-data("spider")
-DataInfoIE(spider, rho = 0.3)
-```
-
-      Assemblage   n   N rho S.obs SC(n) SC(2n) f1 f2 f3 f4 f5
-    1    Girdled 168 560 0.3    26 0.950  0.988 12  4  0  1  0
-    2     Logged 252 840 0.3    37 0.961  0.989 14  4  4  3  1
-
-Output description:
+data information including the following:
 
 -   `Assemblage` = assemblage name.
 
@@ -511,6 +494,19 @@ Output description:
 
 -   `f1`-`f5` = the first five species abundance frequency counts in the
     reference sample.
+
+We use data to demo the function.
+
+### Basic data information for abundance data
+
+``` r
+data("spider")
+DataInfoIE(spider, rho = 0.3)
+```
+
+      Assemblage   n   N rho S.obs SC(n) SC(2n) f1 f2 f3 f4 f5
+    1    Girdled 168 560 0.3    26 0.950  0.988 12  4  0  1  0
+    2     Logged 252 840 0.3    37 0.961  0.989 14  4  4  3  1
 
 ## <span style="color:red;">FUNCTION estimateIE(): POINT ESTIMATION</span>
 
