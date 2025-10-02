@@ -1,6 +1,6 @@
 Package: iNEXT.IE
 Type: Package
-Title: Interpolation and Extrapolation for Inter-specific Encounter
+Title: Interpolation and Extrapolation for Inter-Specific Encounter
 Version: 1.0.0
 Author: Kai-Hsiang Hu [aut, cre], Anne Chao [ctb]
 Maintainer: KaiHsiang Hu <river19951224@gmail.com>
@@ -14,7 +14,7 @@ Authors@R:
            role = "ctb",
            email = "chao@stat.nthu.edu.tw"))
 Description: Biodiversity is a multifaceted concept spanning different levels of organization from
-            genes to ecosystems. 'iNEXT.IE' extends 'iNEXT' by incorporating Inter-specific Encounter (IE), 
+            genes to ecosystems. 'iNEXT.IE' extends 'iNEXT' by incorporating Inter-Specific Encounter (IE), 
             which accounts for species’ absolute abundances. 
             This package provides functions to compute standardized diversity estimates 
             with a common sample size or sample coverage. The package features size- and coverage-based 
