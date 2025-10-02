@@ -14,7 +14,7 @@ Authors@R:
            role = "ctb",
            email = "chao@stat.nthu.edu.tw"))
 Description: Biodiversity is a multifaceted concept spanning different levels of organization from
-            genes to ecosystems. 'iNEXT.IE' extends 'iNEXT' by incorporating Inter-Specific Encounter (IE), 
+            genes to ecosystems. 'iNEXT.IE' extends 'iNEXT' by incorporating inter-specific encounter (IE), 
             which accounts for species’ absolute abundances. 
             This package provides functions to compute standardized diversity estimates 
             with a common sample size or sample coverage. The package features size- and coverage-based 

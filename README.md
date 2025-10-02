@@ -17,7 +17,7 @@ National Tsing Hua University, Hsin-Chu, Taiwan 30043</i>
 
 <br> `iNEXT.IE` (INterpolation and EXTrapolation for Inter-Specific
 Encounter) is a framework for biodiversity methodology. ‘iNEXT.IE’
-extends ‘iNEXT’ to incorporate Inter-Specific Encounter (IE) of
+extends ‘iNEXT’ to incorporate inter-specific encounter (IE) of
 biodiversity, which incorporates species absolute abundance. An online
 version “iNEXT.IE Online”
 (<https://kaihsiang-hu.shinyapps.io/iNEXT_IE/>) is also available for
