@@ -148,7 +148,7 @@ $Logged
 We first describe the main function `iNEXTIE()` with default arguments:
 
 ``` r
-iNEXTIE(data, rho, q = c(0, 1, 2), size = NULL, endpoint = NULL, knots = 40, nboot = 50, conf = 0.95)
+iNEXTIE(data, rho = NULL, q = c(0, 1, 2), size = NULL, endpoint = NULL, knots = 40, nboot = 50, conf = 0.95)
 ```
 
 The arguments of this function are briefly described below, and will be
@@ -468,7 +468,7 @@ reference sample in each assemblage. The function `DataInfoIE()` with
 default arguments is shown below:
 
 ``` r
-DataInfoIE(data, rho) 
+DataInfoIE(data, rho = NULL) 
 ```
 
 All arguments in the above function are the same as those for the main
@@ -525,7 +525,7 @@ total individuals. All arguments in the function are the same as those
 for the main function `iNEXTIE`.
 
 ``` r
-estimateIE(data, rho, q = c(0, 1, 2), base = "coverage", level = NULL, nboot = 50, conf = 0.95) 
+estimateIE(data, rho = NULL, q = c(0, 1, 2), base = "coverage", level = NULL, nboot = 50, conf = 0.95) 
 ```
 
 ### Example: abundance data with two target coverage values (97% and 99%)
@@ -581,7 +581,7 @@ output_est_size
 ## <span style="color:red;">FUNCTION MLEAsyIE: MAXIMUM LIKELIHOOD ESTIMATION AND ASYMPTOTIC DIVERSITY PROFILES</span>
 
 ``` r
-MLEAsyIE(data, rho, q = seq(0, 2, 0.2), nboot = 50, conf = 0.95, method = c('Asymptotic', 'MLE'))
+MLEAsyIE(data, rho = NULL, q = seq(0, 2, 0.2), nboot = 50, conf = 0.95, method = c('Asymptotic', 'MLE'))
 ```
 
 All arguments in the above function are the same as those for the main

@@ -131,7 +131,7 @@ spider
 We first describe the main function `iNEXTIE()` with default arguments: 
 
 ```{r eval=FALSE}
-iNEXTIE(data, rho, q = c(0, 1, 2), size = NULL, endpoint = NULL, knots = 40, nboot = 50, conf = 0.95)
+iNEXTIE(data, rho = NULL, q = c(0, 1, 2), size = NULL, endpoint = NULL, knots = 40, nboot = 50, conf = 0.95)
 ```
 
 
@@ -290,7 +290,7 @@ ggiNEXTIE(output_iNEXT, type = 3)
 The function `DataInfoIE()` provides basic data information for the reference sample in each assemblage. The function `DataInfoIE()` with default arguments is shown below:
  
 ```{r eval=FALSE}
-DataInfoIE(data, rho) 
+DataInfoIE(data, rho = NULL) 
 ```
 
 All arguments in the above function are the same as those for the main function `iNEXTIE`. Running the `DataInfoIE()` function returns basic data information including the following: 
@@ -335,7 +335,7 @@ tmp
 `estimateIE` is used to compute diversity estimates with q = 0, 1, 2 under any specified levels of sample size (when `base = "size"`) and sample coverage values (when `base = "coverage"`) for abundance data. When `base = "size"`, `level` can be specified with a particular vector of sample sizes (greater than 0); if `level = NULL`, this function computes the diversity estimates for the minimum sample size among all samples extrapolated to the double reference sizes or total individuals. When `base = "coverage"`, `level` can be specified with a particular vector of sample coverage values (between 0 and 1); if `level = NULL`, this function computes the diversity estimates for the minimum sample coverage among all samples extrapolated to the double reference sizes or total individuals. All arguments in the function are the same as those for the main function `iNEXTIE`.
 
 ```{r eval=FALSE}
-estimateIE(data, rho, q = c(0, 1, 2), base = "coverage", level = NULL, nboot = 50, conf = 0.95) 
+estimateIE(data, rho = NULL, q = c(0, 1, 2), base = "coverage", level = NULL, nboot = 50, conf = 0.95) 
 ```
 
 ### Example: abundance data with two target coverage values (97% and 99%)
@@ -383,7 +383,7 @@ output_est_size
 ## <span style="color:red;">FUNCTION MLEAsyIE: MAXIMUM LIKELIHOOD ESTIMATION AND ASYMPTOTIC DIVERSITY PROFILES</span>
 
 ```{r, eval=FALSE}
-MLEAsyIE(data, rho, q = seq(0, 2, 0.2), nboot = 50, conf = 0.95, method = c('Asymptotic', 'MLE'))
+MLEAsyIE(data, rho = NULL, q = seq(0, 2, 0.2), nboot = 50, conf = 0.95, method = c('Asymptotic', 'MLE'))
 ```
 
 All arguments in the above function are the same as those for the main function `iNEXTIE` (except that the default of `q` here is `seq(0, 2, 0.2)`). The function `MLEAsyIE()` computes maximum likelihood estimation and asymptotic diversity of order q between 0 and 2 (in increments of 0.2) for diversity; these values with different order q can be used to depict a q-profile in the `ggMLEAsyIE` function. By default, both the maximum likelihood estimation and asymptotic diversity estimates will be computed.
