@@ -15,13 +15,13 @@ Introduction to iNEXT.IE (R package): Excerpt from iNEXT.IE User’s Guide
 National Tsing Hua University, Hsin-Chu, Taiwan 30043</i>
 </h5>
 
-<br> `iNEXT.IE` (INterpolation and EXTrapolation for Inter-specific
+<br> `iNEXT.IE` (INterpolation and EXTrapolation for Inter-Specific
 Encounter) is a framework for biodiversity methodology. ‘iNEXT.IE’
-extends ‘iNEXT’ to incorporate Inter-specific Encounter (IE) of
+extends ‘iNEXT’ to incorporate Inter-Specific Encounter (IE) of
 biodiversity, which incorporates species absolute abundance. An online
 version “iNEXT.IE Online”
 (<https://kaihsiang-hu.shinyapps.io/iNEXT_IE/>) is also available for
-users without an R background.
+users without prior experience in R.
 
 `iNEXT.IE` features two statistical analyses (non-asymptotic and
 asymptotic):
@@ -63,7 +63,7 @@ should make references to the following methodology paper and the
 package:
 
 -   Hu, K.-H. and Chao, A. (2025). The iNEXT.IE package: INterpolation
-    and EXTrapolation for Inter-specific Encounter. R package available
+    and EXTrapolation for Inter-Specific Encounter. R package available
     from CRAN.
 
 ## SOFTWARE NEEDED TO RUN iNEXT.IE IN R
@@ -77,7 +77,7 @@ package:
 The `iNEXT.IE` package can be downloaded from CRAN or Kai-Hsiang Hu’s
 [iNEXT.IE_github](https://github.com/KaiHsiangHu/iNEXT.IE) using the
 commands below. For a first-time installation, some additional packages
-must be installed and loaded; see package manual.
+must be installed and loaded; see the package manual for details.
 
 ``` r
 ## install iNEXT.IE package from CRAN
@@ -190,8 +190,8 @@ species abundance vectors.
 rho
 </td>
 <td style="text-align: left;">
-the sampling fraction can be input as a vector for each assemblage or a
-numeric common value for all assemblages.
+the sampling fraction can be input as a vector for each assemblage, or
+enter a single numeric value to apply to all assemblages.
 </td>
 </tr>
 <tr>

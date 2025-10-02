@@ -14,7 +14,7 @@ An online version "iNEXT.IE Online"
 
 (1) A non-asymptotic approach based on interpolation and extrapolation for diversity 
 
-\code{iNEXT.IE} computes the estimated diversity for standardized samples with a common sample size or sample completeness. This approach aims to compare diversity estimates for equally-large (with a common sample size) or equally-complete (with a common sample coverage) samples; it is based on the seamless rarefaction and extrapolation (R/E) sampling curves of diversity for q = 0, 1 and 2. \code{iNEXT.IE} offers three types of R/E sampling curves:
+\code{iNEXT.IE} computes the estimated diversity for standardized samples with a common sample size or sample completeness. This approach enables comparison of diversity estimates for equally-large (with a common sample size) or equally-complete (with a common sample coverage) samples; it is based on the seamless rarefaction and extrapolation (R/E) sampling curves of diversity for q = 0, 1 and 2. \code{iNEXT.IE} offers three types of R/E sampling curves:
 
 * Sample-size-based (or size-based) R/E sampling curves: This type of sampling curve plots the diversity estimates with respect to sample size.
 
