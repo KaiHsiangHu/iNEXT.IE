@@ -862,7 +862,8 @@ Asy.IE <- function(x, rho, q) {
   n = sum(x)
   f1 = sum(x == 1); f2 = sum(x == 2)
   N = ceiling(n / rho)
-  p1 = ifelse(f2 > 0 | f1 > 0, ((1 - rho) * 2 * f2 + rho * f1) / ((n-1) * f1 + 2 * f2), 0)
+  p1 = ifelse(f2 > 0, ((1 - rho) * 2 * f2 + rho * f1) / ((n-1) * f1 + 2 * f2), 0)
+  p1 = ifelse(f2 > 0, ((1 - rho) * 2 * f2 + rho * f1) / ((n-1) * f1 + 2 * f2), ifelse(f1 > 0, ((1 - rho) * 2 + rho * (f1 - 1)) / ((n-1) * (f1 - 1) + 2), 0))
   
   qD <- function(q) {
     
