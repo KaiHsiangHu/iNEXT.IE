@@ -867,8 +867,6 @@ Asy.IE <- function(x, rho, q) {
   
   qD <- function(q) {
     
-    x = x[x >= q]
-    
     if (q == 0) {
       
       lbd = ifelse(f2 > 0, f1^2 / (n/(n - 1) * 2 * f2 + rho/(1 - rho) * f1), f1 * (f1 - 1) / (n/(n - 1) * 2 + rho/(1 - rho) * f1))
@@ -918,8 +916,6 @@ IE <- function (x, q) {
   x = x[x > 0]
   
   tmp = function(q) {
-    
-    x = x[x >= q]
     
     if (q != 1) {
       
