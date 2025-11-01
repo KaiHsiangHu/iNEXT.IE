@@ -807,7 +807,7 @@ MLEAsyIE <- function(data, rho = NULL, q = seq(0.6, 2, 0.2), nboot = 50, conf = 
 #' @return a q-profile based on the maximum likelihood estimation and the asymptotic diversity estimate.\cr\cr
 #'
 #' @examples
-#' # Plot diversity for abundance data with order q between 0.6 and 2 (in increments of 0.2 by default).
+#' # Plot diversity for data with order q between 0.6 and 2 (in increments of 0.2 by default).
 #' data("spider")
 #' output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 #' ggMLEAsyIE(output_MLEAsy)
