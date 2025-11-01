@@ -7,7 +7,7 @@
 estimateIE(
   data,
   rho = NULL,
-  q = c(0, 1, 2),
+  q = c(0.5, 1, 2),
   base = "coverage",
   level = NULL,
   nboot = 50,
@@ -19,11 +19,11 @@ estimateIE(
 
 \item{rho}{the sampling fraction can be input as a vector for each assemblage, or enter a single numeric value to apply to all assemblages.}
 
-\item{q}{a numerical vector specifying the diversity orders. Default is \code{c(0, 1, 2)}.}
+\item{q}{a numerical vector specifying the diversity orders. Default is \code{c(0.5, 1, 2)}.}
 
 \item{base}{selection of sample-size-based (\code{base = "size"}) or coverage-based (\code{base = "coverage"}) rarefaction and extrapolation.}
 
-\item{level}{A numerical vector specifying the particular sample sizes or sample coverages (between 0 and 1) for which diversity estimates (q = 0, 1 and 2) will be computed. \cr
+\item{level}{A numerical vector specifying the particular sample sizes or sample coverages (between 0 and 1) for which diversity estimates (q = 0.5, 1 and 2) will be computed. \cr
 If \code{base = "coverage"} (default) and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample coverage among all samples extrapolated to double reference sizes or total individuals. \cr
 If \code{base = "size"} and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample size among all samples extrapolated to double reference sizes or total individuals.}
 
@@ -48,11 +48,11 @@ Similar output is obtained for \code{base = "size"}. \cr\cr
 }
 \examples{
 data("spider")
-output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), 
+output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0.5, 1, 2), 
                              base = "coverage", level = c(0.94, 0.96))
 output_est_cov
 
-output_est_size <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2),
+output_est_size <- estimateIE(spider, rho = 0.3, q = c(0.5, 1, 2),
                               base = "size", level = c(150, 250))
 output_est_size
 

@@ -7,7 +7,7 @@
 iNEXTIE(
   data,
   rho = NULL,
-  q = c(0, 1, 2),
+  q = c(0.5, 1, 2),
   size = NULL,
   endpoint = NULL,
   knots = 40,
@@ -20,7 +20,7 @@ iNEXTIE(
 
 \item{rho}{the sampling fraction can be input as a vector for each assemblage, or enter a single numeric value to apply to all assemblages.}
 
-\item{q}{a numerical vector specifying the diversity orders. Default is \code{c(0, 1, 2)}.}
+\item{q}{a numerical vector specifying the diversity orders. Default is \code{c(0.5, 1, 2)}.}
 
 \item{size}{an integer vector of sample sizes (number of individuals) for which diversity estimates will be computed. 
 If \code{NULL}, then diversity estimates will be computed for those sample sizes determined by the specified/default \code{endpoint} and \code{knots}.}
@@ -39,7 +39,7 @@ If the \code{endpoint} is larger than the reference sample size, then \code{iNEX
 }
 \value{
 a list of three objects: \cr\cr
-(1) \code{$DataInfo} for summarizing data information for q = 0, 1 and 2. Refer to the output of \code{DataInfoIE} for details. \cr\cr
+(1) \code{$DataInfo} for summarizing data information for q = 0.5, 1 and 2. Refer to the output of \code{DataInfoIE} for details. \cr\cr
 (2) \code{$iNextEst} for showing diversity estimates for rarefied and extrapolated samples along with related statistics. There are two data frames: \code{"$size_based"} and \code{"$coverage_based"}. \cr\cr
    In \code{"$size_based"}, the output includes:
    \item{Assemblage}{the name of assemblage.} 
@@ -60,16 +60,16 @@ a list of three objects: \cr\cr
    \item{qIE.LCL and qIE.UCL}{the bootstrap lower and upper confidence limits for asymptotic diversity at the specified level (with a default value of 0.95).}
 }
 \description{
-\code{iNEXTIE} mainly computes standardized diversity estimates with a common sample size or sample coverage for orders q = 0, 1 and 2. It also computes relevant information/statistics.\cr\cr 
+\code{iNEXTIE} mainly computes standardized diversity estimates with a common sample size or sample coverage for orders q = 0.5, 1 and 2. It also computes relevant information/statistics.\cr\cr 
 Relevant data information is summarized in the output \code{$DataInfo}. 
 Diversity estimates for rarefied and extrapolated samples are provided in the output \code{$iNextEst}, which includes two data frames (\code{"$size_based"} and \code{"$coverage_based"}) based on two different standardizations; 
 in the size-based standardization, all samples are standardized to a common target sample size, whereas the in the latter standardization, all samples are standardized to a common target level of sample coverage. 
-The maximum likelihood estimation and asymptotic diversity estimates for q = 0, 1 and 2 are provided in the list \code{$AsyEst}.\cr\cr
+The maximum likelihood estimation and asymptotic diversity estimates for q = 0.5, 1 and 2 are provided in the list \code{$AsyEst}.\cr\cr
 }
 \examples{
-# Compute standardized estimates of diversity for abundance data with order q = 0, 1, 2
+# Compute standardized estimates of diversity for abundance data with order q = 0.5, 1, 2
 data("spider")
-output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0, 1, 2))
+output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0.5, 1, 2))
 output_iNEXT
 
 

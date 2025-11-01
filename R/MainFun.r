@@ -53,15 +53,15 @@ NULL
 
 #' iNterpolation and EXTrapolation of biodiversity
 #' 
-#' \code{iNEXTIE} mainly computes standardized diversity estimates with a common sample size or sample coverage for orders q = 0, 1 and 2. It also computes relevant information/statistics.\cr\cr 
+#' \code{iNEXTIE} mainly computes standardized diversity estimates with a common sample size or sample coverage for orders q = 0.5, 1 and 2. It also computes relevant information/statistics.\cr\cr 
 #' Relevant data information is summarized in the output \code{$DataInfo}. 
 #' Diversity estimates for rarefied and extrapolated samples are provided in the output \code{$iNextEst}, which includes two data frames (\code{"$size_based"} and \code{"$coverage_based"}) based on two different standardizations; 
 #' in the size-based standardization, all samples are standardized to a common target sample size, whereas the in the latter standardization, all samples are standardized to a common target level of sample coverage. 
-#' The maximum likelihood estimation and asymptotic diversity estimates for q = 0, 1 and 2 are provided in the list \code{$AsyEst}.\cr\cr 
+#' The maximum likelihood estimation and asymptotic diversity estimates for q = 0.5, 1 and 2 are provided in the list \code{$AsyEst}.\cr\cr 
 #' 
 #' @param data data can be input as a vector of species abundances (for a single assemblage), matrix/data.frame (species by assemblages), or a list of species abundance vectors.
 #' @param rho the sampling fraction can be input as a vector for each assemblage, or enter a single numeric value to apply to all assemblages.
-#' @param q a numerical vector specifying the diversity orders. Default is \code{c(0, 1, 2)}.
+#' @param q a numerical vector specifying the diversity orders. Default is \code{c(0.5, 1, 2)}.
 #' @param size an integer vector of sample sizes (number of individuals) for which diversity estimates will be computed. 
 #' If \code{NULL}, then diversity estimates will be computed for those sample sizes determined by the specified/default \code{endpoint} and \code{knots}.
 #' @param endpoint an integer specifying the sample size that is the \code{endpoint} for rarefaction/extrapolation. 
@@ -85,7 +85,7 @@ NULL
 #' @importFrom grDevices hcl
 #' 
 #' @return a list of three objects: \cr\cr
-#' (1) \code{$DataInfo} for summarizing data information for q = 0, 1 and 2. Refer to the output of \code{DataInfoIE} for details. \cr\cr
+#' (1) \code{$DataInfo} for summarizing data information for q = 0.5, 1 and 2. Refer to the output of \code{DataInfoIE} for details. \cr\cr
 #' (2) \code{$iNextEst} for showing diversity estimates for rarefied and extrapolated samples along with related statistics. There are two data frames: \code{"$size_based"} and \code{"$coverage_based"}. \cr\cr
 #'    In \code{"$size_based"}, the output includes:
 #'    \item{Assemblage}{the name of assemblage.} 
@@ -107,14 +107,14 @@ NULL
 #' 
 #' 
 #' @examples
-#' # Compute standardized estimates of diversity for abundance data with order q = 0, 1, 2
+#' # Compute standardized estimates of diversity for abundance data with order q = 0.5, 1, 2
 #' data("spider")
-#' output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0, 1, 2))
+#' output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0.5, 1, 2))
 #' output_iNEXT
 #' 
 #' 
 #' @export
-iNEXTIE <- function(data, rho = NULL, q = c(0, 1, 2), size = NULL, endpoint = NULL, knots = 40, nboot = 50, conf = 0.95) {
+iNEXTIE <- function(data, rho = NULL, q = c(0.5, 1, 2), size = NULL, endpoint = NULL, knots = 40, nboot = 50, conf = 0.95) {
   
   data = check.data(data)
   rho = check.rho(data, rho)
@@ -140,8 +140,8 @@ iNEXTIE <- function(data, rho = NULL, q = c(0, 1, 2), size = NULL, endpoint = NU
   out <- list(size_based     = do.call(rbind, lapply(out, function(out_) out_[[1]])),
               coverage_based = do.call(rbind, lapply(out, function(out_) out_[[2]])))
   
-  index <- rbind(est(data, rho, c(0, 1, 2), nboot, conf),
-                 emp(data, rho, c(0, 1, 2), nboot, conf))
+  index <- rbind(est(data, rho, c(0.5, 1, 2), nboot, conf),
+                 emp(data, rho, c(0.5, 1, 2), nboot, conf))
   
   LCL <- index$qIE.LCL[index$Method == 'Asymptotic']
   UCL <- index$qIE.UCL[index$Method == 'Asymptotic']
@@ -176,9 +176,9 @@ iNEXTIE <- function(data, rho = NULL, q = c(0, 1, 2), size = NULL, endpoint = NU
 #' 
 #' 
 #' @examples
-#' # Plot three types of curves of diversity for abundance data with order q = 0, 1, 2
+#' # Plot three types of curves of diversity for abundance data with order q = 0.5, 1, 2
 #' data("spider")
-#' output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0, 1, 2))
+#' output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0.5, 1, 2))
 #' ggiNEXTIE(output_iNEXT)
 #' 
 #' 
@@ -293,9 +293,9 @@ ggiNEXTIE = function(output, type = 1:3){
 #' \code{estimateIE} computes diversity with a particular set of user-specified levels of sample sizes or sample coverages. If no sample sizes or coverages are specified, this function by default computes diversity estimates for the minimum sample coverage or minimum sample size among all samples extrapolated to double reference sizes or total individuals.
 #' @param data data can be input as a vector of species abundances (for a single assemblage), matrix/data.frame (species by assemblages), or a list of species abundance vectors.
 #' @param rho the sampling fraction can be input as a vector for each assemblage, or enter a single numeric value to apply to all assemblages.
-#' @param q a numerical vector specifying the diversity orders. Default is \code{c(0, 1, 2)}.
+#' @param q a numerical vector specifying the diversity orders. Default is \code{c(0.5, 1, 2)}.
 #' @param base selection of sample-size-based (\code{base = "size"}) or coverage-based (\code{base = "coverage"}) rarefaction and extrapolation.
-#' @param level A numerical vector specifying the particular sample sizes or sample coverages (between 0 and 1) for which diversity estimates (q = 0, 1 and 2) will be computed. \cr
+#' @param level A numerical vector specifying the particular sample sizes or sample coverages (between 0 and 1) for which diversity estimates (q = 0.5, 1 and 2) will be computed. \cr
 #' If \code{base = "coverage"} (default) and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample coverage among all samples extrapolated to double reference sizes or total individuals. \cr
 #' If \code{base = "size"} and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample size among all samples extrapolated to double reference sizes or total individuals. 
 #' @param nboot a positive integer specifying the number of bootstrap replications when assessing sampling uncertainty and constructing confidence intervals. Enter 0 to skip the bootstrap procedures. Default is 50.
@@ -315,17 +315,17 @@ ggiNEXTIE = function(output, type = 1:3){
 #' 
 #' @examples
 #' data("spider")
-#' output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), 
+#' output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0.5, 1, 2), 
 #'                              base = "coverage", level = c(0.94, 0.96))
 #' output_est_cov
 #' 
-#' output_est_size <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2),
+#' output_est_size <- estimateIE(spider, rho = 0.3, q = c(0.5, 1, 2),
 #'                               base = "size", level = c(150, 250))
 #' output_est_size
 #' 
 #' 
 #' @export
-estimateIE <- function(data, rho = NULL, q = c(0, 1, 2), base = "coverage", level = NULL, nboot = 50, conf = 0.95) {
+estimateIE <- function(data, rho = NULL, q = c(0.5, 1, 2), base = "coverage", level = NULL, nboot = 50, conf = 0.95) {
   
   data = check.data(data)
   rho = check.rho(data, rho)
@@ -492,8 +492,13 @@ D.m.est = function(x, rho, q, m) {
     Sub <- function(m) {
       if (m <= n) {
         
+        # (exp(lgamma(m + 1) - lgamma(q + 1) - lgamma(m - q + 1)) - 
+        #    sum( sapply(1:m, function(k) sum(dhyper(k, x, n-x, m)) * exp(lgamma(k + 1) - lgamma(q + 1) - lgamma(k - q + 1)) ) ) ) / (q - 1)
+        
+        ks = 1:m
+        ks = ks[q < ks + 1]
         (exp(lgamma(m + 1) - lgamma(q + 1) - lgamma(m - q + 1)) - 
-           sum( sapply(1:m, function(k) sum(dhyper(k, x, n-x, m)) * exp(lgamma(k + 1) - lgamma(q + 1) - lgamma(k - q + 1)) ) ) ) / (q - 1)
+            sum( sapply(ks, function(k) sum(dhyper(k, x[q < (x + 1)], n-x[q < (x + 1)], m)) * exp(lgamma(k + 1) - lgamma(q + 1) - lgamma(k - q + 1)) ) ) ) / (q - 1)
         
       } else {
         
@@ -506,8 +511,12 @@ D.m.est = function(x, rho, q, m) {
       }
     }
     
-    obs <- (1 - (q - 1) * IE(x, q) / exp(lgamma(n + 1) - lgamma(q + 1) - lgamma(n - q + 1)) ) ^ (1 / (1 - q))
-    asy <- (1 - (q - 1) * Asy.IE(x, q, rho) / exp(lgamma(N + 1) - lgamma(q + 1) - lgamma(N - q + 1)) ) ^ (1 / (1 - q))
+    # obs <- (1 - (q - 1) * IE(x, q) / exp(lgamma(n + 1) - lgamma(q + 1) - lgamma(n - q + 1)) ) ^ (1 / (1 - q))
+    # asy <- (1 - (q - 1) * Asy.IE(x, q, rho) / exp(lgamma(N + 1) - lgamma(q + 1) - lgamma(N - q + 1)) ) ^ (1 / (1 - q))
+    
+    obs <- (1 - (q - 1) * IE(x, q)^q / exp(lgamma(n + 1) - lgamma(q + 1) - lgamma(n - q + 1)) ) ^ (1 / (1 - q))
+    asy <- (1 - (q - 1) * Asy.IE(x, q, rho)^q / exp(lgamma(N + 1) - lgamma(q + 1) - lgamma(N - q + 1)) ) ^ (1 / (1 - q))
+    
     if (asy < obs) asy = obs
     
     int.m = c(floor(m[m <= n]), ceiling(m[m <= n])) %>% unique %>% sort
@@ -546,7 +555,8 @@ D.m.est = function(x, rho, q, m) {
     else Dq.hat(x, m, q)
   }
   
-  sapply(q, function(i) iNEXT.func(x, i, m)) %>% as.vector
+  # sapply(q, function(i) iNEXT.func(x, i, m)) %>% as.vector
+  sapply(q, function(i) iNEXT.func(x, i, m)^(1 / i)) %>% as.vector
   }
 
 
@@ -738,11 +748,11 @@ invSize <- function(data, rho, q, size = NULL, nboot = 0, conf = NULL) {
 
 #' Maximum likelihood estimation and asymptotic diversity of order q
 #' 
-#' \code{MLEAsyIE} computes maximum likelihood estimation and asymptotic diversity of order q between 0 and 2 (in increments of 0.2); these diversity values with different order q can be used to depict a q-profile in the \code{ggMLEAsyIE} function.\cr\cr 
+#' \code{MLEAsyIE} computes maximum likelihood estimation and asymptotic diversity of order q between 0.6 and 2 (in increments of 0.2); these diversity values with different order q can be used to depict a q-profile in the \code{ggMLEAsyIE} function.\cr\cr 
 #' 
 #' @param data data can be input as a vector of species abundances (for a single assemblage), matrix/data.frame (species by assemblages), or a list of species abundance vectors.
 #' @param rho the sampling fraction can be input as a vector for each assemblage, or enter a single numeric value to apply to all assemblages.
-#' @param q a numerical vector specifying the diversity orders. Default is \code{seq(0, 2, by = 0.2)}.
+#' @param q a numerical vector specifying the diversity orders. Default is \code{seq(0.6, 2, by = 0.2)}.
 #' @param nboot a positive integer specifying the number of bootstrap replications when assessing sampling uncertainty and constructing confidence intervals. Enter 0 to skip the bootstrap procedures. Default is 50.
 #' @param conf a positive number < 1 specifying the level of confidence interval. Default is 0.95.
 #' @param method Select \code{'Asymptotic'} or \code{'MLE'}.
@@ -758,14 +768,14 @@ invSize <- function(data, rho, q, size = NULL, nboot = 0, conf = NULL) {
 #' 
 #' @examples
 #' # Compute the maximum likelihood estimation and asymptotic diversity for abundance data
-#' # with order q between 0 and 2 (in increments of 0.2 by default)
+#' # with order q between 0.6 and 2 (in increments of 0.2 by default)
 #' data("spider")
 #' output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 #' output_MLEAsy
 #' 
 #' 
 #' @export
-MLEAsyIE <- function(data, rho = NULL, q = seq(0, 2, 0.2), nboot = 50, conf = 0.95, method = c('Asymptotic', 'MLE')) {
+MLEAsyIE <- function(data, rho = NULL, q = seq(0.6, 2, 0.2), nboot = 50, conf = 0.95, method = c('Asymptotic', 'MLE')) {
   
   data = check.data(data)
   rho = check.rho(data, rho)
@@ -790,14 +800,14 @@ MLEAsyIE <- function(data, rho = NULL, q = seq(0, 2, 0.2), nboot = 50, conf = 0.
 
 #' ggplot2 extension for plotting q-profile
 #'
-#' \code{ggMLEAsyIE} is a \code{ggplot2} extension for an \code{MLEAsyIE} object to plot q-profile (which depicts the maximum likelihood estimation and asymptotic diversity estimate with respect to order q) for q between 0 and 2 (in increments of 0.2).\cr\cr 
+#' \code{ggMLEAsyIE} is a \code{ggplot2} extension for an \code{MLEAsyIE} object to plot q-profile (which depicts the maximum likelihood estimation and asymptotic diversity estimate with respect to order q) for q between 0.6 and 2 (in increments of 0.2).\cr\cr 
 #' In the plot, only confidence intervals of the asymptotic diversity will be shown when both the maximum likelihood estimation and asymptotic diversity estimate are computed.
 #' 
 #' @param output the output of the function \code{MLEAsyIE}.\cr
 #' @return a q-profile based on the maximum likelihood estimation and the asymptotic diversity estimate.\cr\cr
 #'
 #' @examples
-#' # Plot diversity for abundance data with order q between 0 and 2 (in increments of 0.2 by default).
+#' # Plot diversity for abundance data with order q between 0.6 and 2 (in increments of 0.2 by default).
 #' data("spider")
 #' output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 #' ggMLEAsyIE(output_MLEAsy)
@@ -856,21 +866,22 @@ ggMLEAsyIE <- function(output){
 }
 
 
-Asy.IE <- function(x, rho, q) {
+Asy.IE <- function(x, q, rho) {
   
   x = x[x > 0]
   n = sum(x)
   f1 = sum(x == 1); f2 = sum(x == 2)
   N = ceiling(n / rho)
   p1 = ifelse(f2 > 0, ((1 - rho) * 2 * f2 + rho * f1) / ((n-1) * f1 + 2 * f2), 0)
-  p1 = ifelse(f2 > 0, ((1 - rho) * 2 * f2 + rho * f1) / ((n-1) * f1 + 2 * f2), ifelse(f1 > 0, ((1 - rho) * 2 + rho * (f1 - 1)) / ((n-1) * (f1 - 1) + 2), 0))
+  # p1 = ifelse(f2 > 0, ((1 - rho) * 2 * f2 + rho * f1) / ((n-1) * f1 + 2 * f2), ifelse(f1 > 0, ((1 - rho) * 2 + rho * (f1 - 1)) / ((n-1) * (f1 - 1) + 2), 0))
   
   qD <- function(q) {
     
     if (q == 0) {
       
       lbd = ifelse(f2 > 0, f1^2 / (n/(n - 1) * 2 * f2 + rho/(1 - rho) * f1), f1 * (f1 - 1) / (n/(n - 1) * 2 + rho/(1 - rho) * f1))
-      sum(x > 0) + ifelse(is.nan(lbd), 0, lbd) - 1
+      # sum(x > 0) + ifelse(is.nan(lbd), 0, lbd) - 1
+      ( sum(x > 0) + ifelse(is.nan(lbd), 0, lbd) - 1 )^(1 / 0)
       
     } else if (q == 1) {
       
@@ -886,8 +897,11 @@ Asy.IE <- function(x, rho, q) {
       
     } else if (q == 2) {
       
-      N * (N - 1) / 2 * (1 - (1 - rho) * (sum(x * (x - 1)) + n * rho) / (n^2 - n + n * rho) - 
-                           rho * sum(x * (x - 1) / n / (n - 1)))
+      # N * (N - 1) / 2 * (1 - (1 - rho) * (sum(x * (x - 1)) + n * rho) / (n^2 - n + n * rho) - 
+      #                      rho * sum(x * (x - 1) / n / (n - 1)))
+      
+      ( N * (N - 1) / 2 * (1 - (1 - rho) * (sum(x * (x - 1)) + n * rho) / (n^2 - n + n * rho) - 
+                             rho * sum(x * (x - 1) / n / (n - 1))) )^(1 / 2)
       
     } else {
       
@@ -895,7 +909,8 @@ Asy.IE <- function(x, rho, q) {
       
       MLEpart = sum( exp(lgamma(x + 1) - lgamma(x - q + 1) - lgamma(n + 1) + lgamma(n - q + 1)) )
       
-      exp(lgamma(N + 1) - lgamma(q + 1) - lgamma(N - q + 1)) * (1 - (AB + rho * MLEpart)) / (q - 1)
+      # exp(lgamma(N + 1) - lgamma(q + 1) - lgamma(N - q + 1)) * (1 - (AB + rho * MLEpart)) / (q - 1)
+      ( exp(lgamma(N + 1) - lgamma(q + 1) - lgamma(N - q + 1)) * (1 - (AB + rho * MLEpart)) / (q - 1) )^(1 / q)
       
     }
   }
@@ -917,9 +932,12 @@ IE <- function (x, q) {
   
   tmp = function(q) {
     
+    x = x[q < (x + 1)]
+    
     if (q != 1) {
       
-      (exp(lgamma(N + 1) - lgamma(q + 1) - lgamma(N - q + 1))  - sum( exp(lgamma(x + 1) - lgamma(q + 1) - lgamma(x - q + 1)) ) ) / (q - 1)
+      # (exp(lgamma(N + 1) - lgamma(q + 1) - lgamma(N - q + 1))  - sum( exp(lgamma(x + 1) - lgamma(q + 1) - lgamma(x - q + 1)) ) ) / (q - 1) 
+      ( (exp(lgamma(N + 1) - lgamma(q + 1) - lgamma(N - q + 1))  - sum( exp(lgamma(x + 1) - lgamma(q + 1) - lgamma(x - q + 1)) ) ) / (q - 1) )^(1 / q)
       
     } else {
       
@@ -935,13 +953,13 @@ est = function(data, rho, q, nboot, conf) {
   
   out <- lapply(1:length(data),function(i){
     
-    dq <- Asy.IE(data[[i]], rho[i], q)
+    dq <- Asy.IE(data[[i]], q, rho[i])
     
     if (nboot > 1) {
       
       Abun.Mat <- bootstrap(data[[i]], rho[i], nboot)
       
-      mt = apply(Abun.Mat, 2, function(xb) Asy.IE(xb, rho[i], q))
+      mt = apply(Abun.Mat, 2, function(xb) Asy.IE(xb, q, rho[i]))
       
       if (!is.matrix(mt)) mt = matrix(mt, nrow = 1)
       

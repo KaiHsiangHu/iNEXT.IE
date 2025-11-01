@@ -13,11 +13,11 @@ ggMLEAsyIE(output)
 a q-profile based on the maximum likelihood estimation and the asymptotic diversity estimate.\cr\cr
 }
 \description{
-\code{ggMLEAsyIE} is a \code{ggplot2} extension for an \code{MLEAsyIE} object to plot q-profile (which depicts the maximum likelihood estimation and asymptotic diversity estimate with respect to order q) for q between 0 and 2 (in increments of 0.2).\cr\cr 
+\code{ggMLEAsyIE} is a \code{ggplot2} extension for an \code{MLEAsyIE} object to plot q-profile (which depicts the maximum likelihood estimation and asymptotic diversity estimate with respect to order q) for q between 0.6 and 2 (in increments of 0.2).\cr\cr 
 In the plot, only confidence intervals of the asymptotic diversity will be shown when both the maximum likelihood estimation and asymptotic diversity estimate are computed.
 }
 \examples{
-# Plot diversity for abundance data with order q between 0 and 2 (in increments of 0.2 by default).
+# Plot diversity for abundance data with order q between 0.6 and 2 (in increments of 0.2 by default).
 data("spider")
 output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 ggMLEAsyIE(output_MLEAsy)
