@@ -259,7 +259,7 @@ ggiNEXTIE = function(output, type = 1:3){
       scale_fill_manual(values = cbPalette) +
       scale_colour_manual(values = cbPalette) +
       theme_bw() + 
-      facet_wrap( ~ Order.q, nrow = 1, labeller = labeller(Order.q = c(`0` = "q = 0", `1` = "q = 1",`2` = "q = 2")), scales = "free_y" ) + 
+      facet_wrap( ~ paste("q = ", Order.q, sep = ""), nrow = 1, scales = "free_y" ) + 
       labs(x = xlab_name, y = ylab_name) + 
       ggtitle(title) + 
       theme(legend.position = "bottom", 
