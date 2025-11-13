@@ -378,7 +378,7 @@ D.m.est = function(x, rho, q, m) {
       } else {
         
         ms = m - n
-        N0 = (1/rho - 1) * f1 / f0
+        N0 = (N - n + 1) * f1 / (n * f0 + f1)
         if (N0 == "NaN") N0 = 0
         
         length(x) + f0 * (1 - (1 - ms/(N - n))^N0) - 1
@@ -415,7 +415,7 @@ D.m.est = function(x, rho, q, m) {
       } else {
         
         ms = m - n
-        N0 = (1/rho - 1) * f1 / f0
+        N0 = (N - n + 1) * f1 / (n * f0 + f1)
         if (N0 == "NaN") N0 = 0
         
         m * log(obs + (asy - obs) * (1 - (1 - ms / (N - n))^N0))
@@ -454,10 +454,6 @@ D.m.est = function(x, rho, q, m) {
         choose(m, 2) - sapply(2:m, function(k) sum(dhyper(k, x, n-x, m)) * choose(k, 2) ) %>% sum
         
       } else {
-        
-        ms = m - n
-        N0 = (1/rho - 1) * f1 / f0
-        if (N0 == "NaN") N0 = 0
         
         choose(m, 2) * (1 - (1 - m/N) / m - (m + m/N - 1)/m * p2)
         
@@ -503,7 +499,7 @@ D.m.est = function(x, rho, q, m) {
       } else {
         
         ms = m - n
-        N0 = (1/rho - 1) * f1 / f0
+        N0 = (N - n + 1) * f1 / (n * f0 + f1)
         if (N0 == "NaN") N0 = 0
         
         exp(lgamma(m + 1) - lgamma(q + 1) - lgamma(m - q + 1)) * (1 - (obs + (asy - obs) * (1 - (1 - ms / (N - n) )^N0)) ^ (1 - q)) / (q - 1)
@@ -695,7 +691,7 @@ invC <- function(x, rho, C) {
         
         ms = 0
         
-      } else ms <- (N - n) * (1 - exp(log((1 - cvrg) / (1 - rho) * n / f1) / N1) )
+        } else ms <- log((1 - cvrg) / (1 - rho) * n / f1) / log(1 - N1 / N) - 1
       
       n + ms
     }
