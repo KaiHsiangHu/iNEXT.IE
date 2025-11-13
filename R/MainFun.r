@@ -691,7 +691,7 @@ invC <- function(x, rho, C) {
         
         ms = 0
         
-        } else ms <- log((1 - cvrg) / (1 - rho) * n / f1) / log(1 - N1 / N) - 1
+        } else ms <- log((1 - cvrg) / (1 - rho) * n / f1) / log(1 - N1 / (N - n)) - 1
       
       n + ms
     }
