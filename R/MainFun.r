@@ -461,7 +461,7 @@ D.m.est = function(x, rho, q, m) {
         N0 = (N - n + 1) * f1 / (n * f0 + f1)
         if (N0 == "NaN") N0 = 0
         
-        exp(lgamma(m + 1) - lgamma(q + 1) - lgamma(m - q + 1)) * (1 - (obs + (asy - obs) * (1 - (1 - ms / (N - n) )^N0)) ^ (-1))
+        exp(lgamma(m + 1) - lgamma(3) - lgamma(m - 1)) * (1 - (obs + (asy - obs) * (1 - (1 - ms / (N - n) )^N0)) ^ (-1))
         
       }
     }
