@@ -694,7 +694,7 @@ invC <- function(x, rho, C) {
     } else if (refC < cvrg) {
       
       N1 = (2 * (N - n + 2) * f2 + (n - 1) * f1) / ((n - 1) * f1 + 2 * f2)
-      if (N1 == "NaN") N1 = 0
+      if (N1 == "NaN" | N1 == Inf) N1 = 0
       
       if (N1 == 0 | f1 == 0) {
         
