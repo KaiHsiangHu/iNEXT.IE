@@ -455,22 +455,22 @@ D.m.est = function(x, rho, q, m) {
         
       } else {
         
-        # choose(m, 2) * (1 - (1 - m/N) / m - (m + m/N - 1)/m * p2)
+        choose(m, 2) * (1 - (1 - m/N) / m - (m + m/N - 1)/m * p2)
         
-        ms = m - n
-        N0 = (N - n + 1) * f1 / (n * f0 + f1)
-        if (N0 == "NaN") N0 = 0
-        
-        exp(lgamma(m + 1) - lgamma(3) - lgamma(m - 1)) * (1 - (obs + (asy - obs) * (1 - (1 - ms / (N - n) )^N0)) ^ (-1))
+        # ms = m - n
+        # N0 = (N - n + 1) * f1 / (n * f0 + f1)
+        # if (N0 == "NaN") N0 = 0
+        # 
+        # exp(lgamma(m + 1) - lgamma(3) - lgamma(m - 1)) * (1 - (obs + (asy - obs) * (1 - (1 - ms / (N - n) )^N0)) ^ (-1))
         
       }
     }
     
-    # p2 = (1 - rho) * (sum(x * (x - 1)) + n * rho) / (n^2 - n + n * rho) +
-    #   rho * sum(x * (x - 1) / n / (n - 1))
+    p2 = (1 - rho) * (sum(x * (x - 1)) + n * rho) / (n^2 - n + n * rho) +
+      rho * sum(x * (x - 1) / n / (n - 1))
     
-    obs <- (1 - IE(x, 2)^2 / exp(lgamma(n + 1) - lgamma(3) - lgamma(n - 1)) ) ^ (-1)
-    asy <- (1 - Asy.IE(x, 2, rho)^2 / exp(lgamma(N + 1) - lgamma(3) - lgamma(N - 1)) ) ^ (-1)
+    # obs <- (1 - IE(x, 2)^2 / exp(lgamma(n + 1) - lgamma(3) - lgamma(n - 1)) ) ^ (-1)
+    # asy <- (1 - Asy.IE(x, 2, rho)^2 / exp(lgamma(N + 1) - lgamma(3) - lgamma(N - 1)) ) ^ (-1)
     
     
     int.m = c(floor(m[m <= n]), ceiling(m[m <= n])) %>% unique %>% sort
@@ -905,10 +905,10 @@ Asy.IE <- function(x, q, rho) {
       # N * (N - 1) / 2 * (1 - (1 - rho) * (sum(x * (x - 1)) + n * rho) / (n^2 - n + n * rho) - 
       #                      rho * sum(x * (x - 1) / n / (n - 1)))
       
-      # ( N * (N - 1) / 2 * (1 - (1 - rho) * (sum(x * (x - 1)) + n * rho) / (n^2 - n + n * rho) - 
-      #                        rho * sum(x * (x - 1) / n / (n - 1))) )^(1 / 2)
+      ( N * (N - 1) / 2 * (1 - (1 - rho) * (sum(x * (x - 1)) + n * rho) / (n^2 - n + n * rho) -
+                             rho * sum(x * (x - 1) / n / (n - 1))) )^(1 / 2)
       
-      ( N * (N - 1) / 2 * (1 - sum(x * (x - 1)) / (n * (n - 1))) )^(1 / 2)
+      # ( N * (N - 1) / 2 * (1 - sum(x * (x - 1)) / (n * (n - 1))) )^(1 / 2)
       
     } else {
       
