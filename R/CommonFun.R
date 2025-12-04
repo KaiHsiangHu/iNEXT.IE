@@ -21,8 +21,7 @@ Coverage = function(x, rho, m) {
       Chat = 1 - (1 - rho) * f1/n * (1 - N1 / N)^(ms + 1)
       
       if (rho == 1) Chat = 1
-      
-      if (ms > N - n) Chat = 1
+      if (k >= N) Chat = 1
       
     }
     
