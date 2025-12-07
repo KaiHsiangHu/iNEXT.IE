@@ -3,7 +3,7 @@
 # iNEXT.IE (R package)
 
 <h5 align="right">
-Latest version: 2025-10-02
+Latest version: 2025-12-07
 </h5>
 <font color="394CAE">
 <h3 color="394CAE" style="font-weight: bold">
@@ -23,19 +23,27 @@ version “iNEXT.IE Online”
 (<https://kaihsiang-hu.shinyapps.io/iNEXT_IE/>) is also available for
 users without prior experience in R.
 
+`iNEXT.IE` (INterpolation and EXTrapolation for Inter-Specific
+Encounter) is a framework for biodiversity methodology. ‘iNEXT.IE’
+extends ‘iNEXT’ to incorporate inter-specific encounter (IE) of
+biodiversity, which incorporates species absolute abundance. An online
+version “iNEXT.IE Online”
+(<https://kaihsiang-hu.shinyapps.io/iNEXT_IE/>) is also available for
+users without prior experience in R.
+
 `iNEXT.IE` features two statistical analyses (non-asymptotic and
 asymptotic):
 
-1.A non-asymptotic approach based on interpolation and extrapolation for
-diversity
+1.  A non-asymptotic approach based on interpolation and extrapolation
+    for diversity
 
 `iNEXT.IE` computes the estimated diversity for standardized samples
 with a common sample size or sample completeness. This approach aims to
 compare diversity estimates for equally-large (with a common sample
 size) or equally-complete (with a common sample coverage) samples; it is
 based on the seamless rarefaction and extrapolation (R/E) sampling
-curves of diversity for q = 0, 1 and 2. `iNEXT.IE` offers three types of
-R/E sampling curves:
+curves of diversity for q = 0.5, 1 and 2. `iNEXT.IE` offers three types
+of R/E sampling curves:
 
 -   Sample-size-based (or size-based) R/E sampling curves: This type of
     sampling curve plots the diversity estimates with respect to sample
@@ -48,13 +56,13 @@ R/E sampling curves:
     varies with sample size. The sample completeness curve provides a
     bridge between the size- and coverage-based R/E sampling curves.
 
-2.An asymptotic approach to infer asymptotic diversity
+1.  An asymptotic approach to infer asymptotic diversity
 
 `iNEXT.IE` computes the estimated asymptotic diversity and also plots
-diversity profiles (q-profiles) for q between 0 and 2, in comparison
+diversity profiles (q-profiles) for q between 0.4 and 2, in comparison
 with the maximum likelihood estimation. Typically, the asymptotic
-estimates for q ≥ 1 are reliable, but for q \< 1 (especially for q = 0,
-species richness), the asymptotic estimates represent only lower bounds.
+estimates for q ≥ 1 are reliable, but for q \< 1 (especially for q close
+to zero), the asymptotic estimates represent only lower bounds.
 
 ## How to cite
 
@@ -97,14 +105,14 @@ There are six main functions in this package:
 Two functions for non-asymptotic analysis with graphical displays:
 
 -   **iNEXTIE** computes standardized diversity estimates of order q =
-    0, 1 and 2 for rarefied and extrapolated samples at specified sample
-    coverage values and sample sizes.
+    0.5, 1 and 2 for rarefied and extrapolated samples at specified
+    sample coverage values and sample sizes.
 
 -   **ggiNEXTIE** visualizes the output from the function `iNEXTIE`.
 
 Two functions for point estimation and basic data information
 
--   **estimateIE** computes diversity of order q = 0, 1 and 2 with a
+-   **estimateIE** computes diversity of order q = 0.5, 1 and 2 with a
     particular set of user-specified level of sample sizes or sample
     coverage values.
 
@@ -114,7 +122,7 @@ Two functions for point estimation and basic data information
 Two functions for asymptotic analysis with graphical displays:
 
 -   **MLEAsyIE** computes maximum likelihood estimation and asymptotic
-    diversity estimates of order q between 0 and 2 (in increments of
+    diversity estimates of order q between 0.4 and 2 (in increments of
     0.2) for diversity.
 
 -   **ggMLEAsyIE** visualizes the output from the function `MLEAsyIE`.
@@ -148,20 +156,20 @@ $Logged
 We first describe the main function `iNEXTIE()` with default arguments:
 
 ``` r
-iNEXTIE(data, rho = NULL, q = c(0, 1, 2), size = NULL, endpoint = NULL, knots = 40, nboot = 50, conf = 0.95)
+iNEXTIE(data, rho = NULL, q = c(0.5, 1, 2), size = NULL, endpoint = NULL, knots = 40, nboot = 50, conf = 0.95)
 ```
 
 The arguments of this function are briefly described below, and will be
 explained in more details by illustrative examples in later text. This
-main function computes standardized diversity estimates of order q = 0,
-1 and 2, the sample coverage estimates, and related statistics for K (if
-`knots = K` in the specified argument) evenly-spaced knots (sample
+main function computes standardized diversity estimates of order q =
+0.5, 1 and 2, the sample coverage estimates, and related statistics for
+K (if `knots = K` in the specified argument) evenly-spaced knots (sample
 sizes) between size 1 and the `endpoint`, where the endpoint is
 described below. Each knot represents a particular sample size for which
-diversity estimates will be calculated. By default, `endpoint` = double
-the reference sample size or total individuals. For example, if
-`endpoint = 10`, `knot = 4` is specified, diversity estimates will be
-computed for a sequence of samples with sizes (1, 4, 7, 10).
+diversity estimates will be calculated. By default, `endpoint` = the
+maximum sample sizes (see arguments). For example, if `endpoint = 10`,
+`knot = 4` is specified, diversity estimates will be computed for a
+sequence of samples with sizes (1, 4, 7, 10).
 
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
@@ -200,18 +208,7 @@ q
 </td>
 <td style="text-align: left;">
 a numerical vector specifying the diversity orders. Default is
-<code>c(0, 1, 2)</code>.
-</td>
-</tr>
-<tr>
-<td style="text-align: left;">
-datatype
-</td>
-<td style="text-align: left;">
-data type of input data: individual-based abundance data (<code>datatype
-= ‘abundance’</code>), or species by sampling-units incidence/occurrence
-matrix (<code>datatype = ‘incidence_raw’</code>) with all entries being
-0 (non-detection) or 1 (detection).
+<code>c(0.5, 1, 2)</code>.
 </td>
 </tr>
 <tr>
@@ -231,8 +228,11 @@ endpoint
 </td>
 <td style="text-align: left;">
 an integer specifying the sample size that is the <code>endpoint</code>
-for rarefaction/extrapolation. If NULL, then <code>endpoint</code>
-<code>=</code> double the reference sample size or total individuals.
+for rarefaction/extrapolation. If <code>NULL</code>, then
+<code>endpoint</code> <code>=</code> the maximum sample sizes, which is
+set to double the reference sample size when rho is less than 0.2;
+triple the reference sample size when rho is between 0.2 and 0.4; and
+the total number of individuals when rho exceeds 0.4.
 </td>
 </tr>
 <tr>
@@ -297,7 +297,7 @@ The function `ggiNEXTIE()`, which extends `ggplot2` with default
 arguments, is described as follows:
 
 ``` r
-ggiNEXTIE(output, type = 1:3)  
+ggiNEXTIE(output, type = 1:3, log2 = FALSE)  
 ```
 
 Here `output` is the `iNEXTIE()` object. Three types of curves are
@@ -313,10 +313,12 @@ allowed for diversity:
     diversity estimates with confidence intervals as a function of
     sample coverage.
 
-The `ggiNEXTIE()` function is a wrapper with the package `ggplot2` to
-create a rarefaction/extrapolation sampling curve in a single line of
-code. The figure object is of class `"ggplot"`, so it can be manipulated
-by using the `ggplot2` tools.
+The setting `log2` represents whether to apply a log2 transformation to
+diversity or not. (only for `type = 1` or `3`) The `ggiNEXTIE()`
+function is a wrapper with the package `ggplot2` to create a
+rarefaction/extrapolation sampling curve in a single line of code. The
+figure object is of class `"ggplot"`, so it can be manipulated by using
+the `ggplot2` tools.
 
 ## <span style="color:blue;">RAREFACTION/EXTRAPOLATION VIA EXAMPLES</span>
 
@@ -335,14 +337,14 @@ later text) can be used to obtain the same output.
 
 ``` r
 data("spider")
-output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0, 1, 2))
+output_iNEXT <- iNEXTIE(spider, rho = 0.3, q = c(0.5, 1, 2))
 output_iNEXT$DataInfo
 ```
 
     $DataInfo
       Assemblage   n   N rho S.obs SC(n) SC(2n) f1 f2 f3 f4 f5
-    1    Girdled 168 560 0.3    26 0.950  0.988 12  4  0  1  0
-    2     Logged 252 840 0.3    37 0.961  0.989 14  4  4  3  1
+    1    Girdled 168 560 0.3    26 0.950  0.977 12  4  0  1  0
+    2     Logged 252 840 0.3    37 0.961  0.981 14  4  4  3  1
 
 The second list of the output (`$iNextEst`) includes size- and
 coverage-based standardized diversity estimates and related statistics
@@ -369,13 +371,13 @@ first six rows of the `$size_based` output are displayed:
 output_iNEXT$iNextEst$size_based
 ```
 
-      Assemblage Order.q  m      Method    qIE qIE.LCL qIE.UCL    SC SC.LCL SC.UCL
-    1    Girdled       0  1 Rarefaction  0.000   0.000   0.000 0.124  0.104  0.144
-    2    Girdled       0  9 Rarefaction  5.050   4.736   5.363 0.578  0.531  0.624
-    3    Girdled       0 18 Rarefaction  8.178   7.462   8.894 0.736  0.691  0.782
-    4    Girdled       0 27 Rarefaction 10.312   9.209  11.416 0.808  0.765  0.851
-    5    Girdled       0 36 Rarefaction 11.963  10.492  13.433 0.846  0.807  0.886
-    6    Girdled       0 44 Rarefaction 13.198  11.418  14.978 0.868  0.831  0.905
+      Assemblage Order.q  m      Method      qIE  qIE.LCL  qIE.UCL    SC SC.LCL SC.UCL
+    1    Girdled     0.5  1 Rarefaction    0.000    0.000    0.000 0.124  0.101  0.147
+    2    Girdled     0.5  9 Rarefaction  117.346  104.834  129.859 0.578  0.538  0.618
+    3    Girdled     0.5 18 Rarefaction  400.897  350.404  451.390 0.736  0.700  0.772
+    4    Girdled     0.5 27 Rarefaction  756.481  651.516  861.446 0.808  0.775  0.840
+    5    Girdled     0.5 36 Rarefaction 1155.808  984.019 1327.597 0.846  0.816  0.877
+    6    Girdled     0.5 44 Rarefaction 1538.593 1298.878 1778.307 0.868  0.839  0.896
 
 The second data frame (`$coverage_based`) includes the name of
 assemblage (`Assemblage`), the diversity order (`Order.q`), the target
@@ -397,35 +399,35 @@ diversity estimate.)
 output_iNEXT$iNextEst$coverage_based
 ```
 
-      Assemblage Order.q    SC  m      Method    qIE qIE.LCL qIE.UCL
-    1    Girdled       0 0.124  1 Rarefaction  0.000   0.000   0.166
-    2    Girdled       0 0.578  9 Rarefaction  5.050   4.074   6.025
-    3    Girdled       0 0.736 18 Rarefaction  8.178   6.522   9.834
-    4    Girdled       0 0.808 27 Rarefaction 10.312   7.974  12.651
-    5    Girdled       0 0.846 36 Rarefaction 11.963   8.923  15.003
-    6    Girdled       0 0.868 44 Rarefaction 13.198   9.549  16.846
+      Assemblage Order.q    SC  m      Method      qIE qIE.LCL  qIE.UCL
+    1    Girdled     0.5 0.124  1 Rarefaction    0.000   0.000    0.028
+    2    Girdled     0.5 0.578  9 Rarefaction  117.346  73.180  161.513
+    3    Girdled     0.5 0.736 18 Rarefaction  400.897 251.149  550.644
+    4    Girdled     0.5 0.808 27 Rarefaction  756.481 448.678 1064.284
+    5    Girdled     0.5 0.846 36 Rarefaction 1155.808 640.110 1671.506
+    6    Girdled     0.5 0.868 44 Rarefaction 1538.593 804.825 2272.360
 
 The third list of the output (`$AsyEst`) includes the name of the
-Assemblage, diversity order (q = 0, 1, 2), the maximum likelihood
+Assemblage, diversity order (q = 0.5, 1, 2), the maximum likelihood
 estimation estimate (`IE_MLE`), asymptotic diversity estimate (`IE_asy`)
 and its estimated bootstrap standard error (`s.e.`) as well as the
 confidence intervals for asymptotic diversity (`qIE.LCL` and `qIE.UCL`).
-These statistics are computed only for q = 0, 1 and 2. More detailed
+These statistics are computed only for q = 0.5, 1 and 2. More detailed
 information about maximum likelihood estimation and asymptotic diversity
-estimates for any order q between 0 and 2 can be obtained from function
-`MLEAsyIE()`. The output for `$AsyEst` is shown below:
+estimates for any order q between 0.4 and 2 can be obtained from
+function `MLEAsyIE()`. The output for `$AsyEst` is shown below:
 
 ``` r
 output_iNEXT$AsyEst
 ```
 
-      Assemblage Order.q     IE_MLE     IE_asy     s.e.    qIE.LCL    qIE.UCL
-    1    Girdled       0     25.000     35.917    6.355     23.461     48.372
-    2    Girdled       1   1407.199   1459.750   43.538   1374.418   1545.083
-    3    Girdled       2 136800.000 137200.978 1830.089 133614.069 140787.887
-    4     Logged       0     36.000     49.968    8.129     34.036     65.901
-    5     Logged       1   2260.176   2331.295   69.651   2194.781   2467.809
-    6     Logged       2 300622.222 301208.694 4987.624 291433.130 310984.258
+      Assemblage Order.q    IE_MLE    IE_asy      s.e.   qIE.LCL    qIE.UCL
+    1    Girdled     0.5 29157.412 38234.978  5597.541 27264.000  49205.956
+    2    Girdled     1.0  1407.199  1459.750    42.060  1377.314   1542.187
+    3    Girdled     2.0   369.865   370.407     2.321   365.857    374.956
+    4     Logged     0.5 65623.287 82938.079 10431.371 62492.966 103383.191
+    5     Logged     1.0  2260.176  2331.295    84.909  2164.876   2497.714
+    6     Logged     2.0   548.290   548.825     5.799   537.459    560.191
 
 The `ggiNEXTIE` function can be used to make graphical displays for
 rarefaction and extrapolation sampling curves. An example for showing
@@ -505,27 +507,30 @@ DataInfoIE(spider, rho = 0.3)
 ```
 
       Assemblage   n   N rho S.obs SC(n) SC(2n) f1 f2 f3 f4 f5
-    1    Girdled 168 560 0.3    26 0.950  0.988 12  4  0  1  0
-    2     Logged 252 840 0.3    37 0.961  0.989 14  4  4  3  1
+    1    Girdled 168 560 0.3    26 0.950  0.977 12  4  0  1  0
+    2     Logged 252 840 0.3    37 0.961  0.981 14  4  4  3  1
 
 ## <span style="color:red;">FUNCTION estimateIE(): POINT ESTIMATION</span>
 
-`estimateIE` is used to compute diversity estimates with q = 0, 1, 2
+`estimateIE` is used to compute diversity estimates with q = 0.5, 1, 2
 under any specified levels of sample size (when `base = "size"`) and
 sample coverage values (when `base = "coverage"`) for abundance data.
 When `base = "size"`, `level` can be specified with a particular vector
 of sample sizes (greater than 0); if `level = NULL`, this function
 computes the diversity estimates for the minimum sample size among all
-samples extrapolated to the double reference sizes or total individuals.
-When `base = "coverage"`, `level` can be specified with a particular
-vector of sample coverage values (between 0 and 1); if `level = NULL`,
-this function computes the diversity estimates for the minimum sample
-coverage among all samples extrapolated to the double reference sizes or
-total individuals. All arguments in the function are the same as those
-for the main function `iNEXTIE`.
+samples extrapolated to the maximum sample sizes. When
+`base = "coverage"`, `level` can be specified with a particular vector
+of sample coverage values (between 0 and 1); if `level = NULL`, this
+function computes the diversity estimates for the minimum sample
+coverage among all samples extrapolated to the maximum sample sizes.
+Specifically, the maximum extrapolation limit is set to double the
+reference sample size when rho is less than 0.2; triple the reference
+sample size when rho is between 0.2 and 0.4; and the total number of
+individuals when rho exceeds 0.4. All arguments in the function are the
+same as those for the main function `iNEXTIE`.
 
 ``` r
-estimateIE(data, rho = NULL, q = c(0, 1, 2), base = "coverage", level = NULL, nboot = 50, conf = 0.95) 
+estimateIE(data, rho = NULL, q = c(0.5, 1, 2), base = "coverage", level = NULL, nboot = 50, conf = 0.95) 
 ```
 
 ### Example: abundance data with two target coverage values (97% and 99%)
@@ -535,23 +540,23 @@ sample coverage (94% and 96%).
 
 ``` r
 data("spider")
-output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), base = "coverage", level = c(0.94, 0.96))
+output_est_cov <- estimateIE(spider, rho = 0.3, q = c(0.5, 1, 2), base = "coverage", level = c(0.94, 0.96))
 output_est_cov
 ```
 
        Assemblage Order.q   SC       m        Method       qIE     s.e.  qIE.LCL   qIE.UCL
-    1     Girdled       0 0.94 138.409   Rarefaction    22.765    3.242   16.411    29.119
-    2     Girdled       0 0.96 200.690 Extrapolation    27.185    4.280   18.797    35.573
-    3     Girdled       1 0.94 138.409   Rarefaction   353.853   66.526  223.465   484.242
-    4     Girdled       1 0.96 200.690 Extrapolation   517.474  104.463  312.731   722.217
-    5     Girdled       2 0.94 138.409   Rarefaction  8346.195 2440.470 3562.962 13129.427
-    6     Girdled       2 0.96 200.690 Extrapolation 17508.483 6020.086 5709.331 29307.635
-    7      Logged       0 0.94 164.121   Rarefaction    30.420    3.134   24.278    36.562
-    8      Logged       0 0.96 244.422   Rarefaction    35.576    4.042   27.654    43.497
-    9      Logged       1 0.94 164.121   Rarefaction   446.173   63.931  320.870   571.476
-    10     Logged       1 0.96 244.422   Rarefaction   670.800  111.518  452.229   889.371
-    11     Logged       2 0.94 164.121   Rarefaction 11451.641 3079.173 5416.573 17486.710
-    12     Logged       2 0.96 244.422   Rarefaction 25450.293 8411.575 8963.908 41936.677
+    1     Girdled     0.5 0.94 138.409   Rarefaction  7307.102 2105.546 3180.307 11433.896
+    2     Girdled     0.5 0.96 215.651 Extrapolation 13041.560 4169.428 4869.632 21213.488
+    3     Girdled     1.0 0.94 138.409   Rarefaction   353.853   70.716  215.253   492.454
+    4     Girdled     1.0 0.96 215.651 Extrapolation   557.961  126.226  310.562   805.360
+    5     Girdled     2.0 0.94 138.409   Rarefaction    91.358   17.104   57.835   124.880
+    6     Girdled     2.0 0.96 215.651 Extrapolation   142.233   30.988   81.499   202.968
+    7      Logged     0.5 0.94 164.121   Rarefaction 12286.794 3943.472 4557.731 20015.857
+    8      Logged     0.5 0.96 244.422   Rarefaction 20305.097 8174.550 4283.273 36326.921
+    9      Logged     1.0 0.94 164.121   Rarefaction   446.173   90.395  269.001   623.345
+    10     Logged     1.0 0.96 244.422   Rarefaction   670.800  174.906  327.991  1013.609
+    11     Logged     2.0 0.94 164.121   Rarefaction   107.012   19.345   69.096   144.928
+    12     Logged     2.0 0.96 244.422   Rarefaction   159.531   38.397   84.275   234.788
 
 ### Example: abundance data with two target sample sizes (150 and 250)
 
@@ -560,49 +565,50 @@ sample sizes (150 and 250).
 
 ``` r
 data("spider")
-output_est_size <- estimateIE(spider, rho = 0.3, q = c(0, 1, 2), base = "size", level = c(150, 250))
+output_est_size <- estimateIE(spider, rho = 0.3, q = c(0.5, 1, 2), base = "size", level = c(150, 250))
 output_est_size
 ```
 
-       Assemblage Order.q   m        Method    SC       qIE    s.e.   qIE.LCL   qIE.UCL
-    1     Girdled       0 150   Rarefaction 0.944    23.671   1.782    20.178    27.163
-    2     Girdled       0 250 Extrapolation 0.973    29.937   2.741    24.564    35.310
-    3     Girdled       1 150   Rarefaction 0.944   384.433  12.924   359.102   409.763
-    4     Girdled       1 250 Extrapolation 0.973   646.864  21.821   604.095   689.633
-    5     Girdled       2 150   Rarefaction 0.944  9807.998 138.080  9537.367 10078.630
-    6     Girdled       2 250 Extrapolation 0.973 27222.876 383.252 26471.717 27974.036
-    7      Logged       0 150   Rarefaction 0.934    29.327   1.878    25.646    33.008
-    8      Logged       0 250   Rarefaction 0.961    35.889   2.946    30.116    41.662
-    9      Logged       1 150   Rarefaction 0.934   406.734  11.490   384.214   429.255
-    10     Logged       1 250   Rarefaction 0.961   686.424  19.930   647.362   725.486
-    11     Logged       2 150   Rarefaction 0.934  9560.197 170.036  9226.932  9893.462
-    12     Logged       2 250   Rarefaction 0.961 26627.395 473.591 25699.174 27555.616
+       Assemblage Order.q   m        Method    SC       qIE     s.e.   qIE.LCL   qIE.UCL
+    1     Girdled     0.5 150   Rarefaction 0.944  8129.064 1052.324  6066.547 10191.581
+    2     Girdled     0.5 250 Extrapolation 0.966 15704.204 2148.569 11493.085 19915.322
+    3     Girdled     1.0 150   Rarefaction 0.944   384.433   15.339   354.369   414.496
+    4     Girdled     1.0 250 Extrapolation 0.966   648.699   26.167   597.412   699.985
+    5     Girdled     2.0 150   Rarefaction 0.944    99.035    0.786    97.495   100.576
+    6     Girdled     2.0 250 Extrapolation 0.966   164.994    1.310   162.427   167.560
+    7      Logged     0.5 150   Rarefaction 0.934 10944.269  812.031  9352.717 12535.821
+    8      Logged     0.5 250   Rarefaction 0.961 20883.770 1700.436 17550.977 24216.563
+    9      Logged     1.0 150   Rarefaction 0.934   406.734   10.834   385.500   427.968
+    10     Logged     1.0 250   Rarefaction 0.961   686.424   18.358   650.443   722.406
+    11     Logged     2.0 150   Rarefaction 0.934    97.776    0.788    96.231    99.321
+    12     Logged     2.0 250   Rarefaction 0.961   163.179    1.316   160.600   165.758
 
 ## <span style="color:red;">FUNCTION MLEAsyIE: MAXIMUM LIKELIHOOD ESTIMATION AND ASYMPTOTIC DIVERSITY PROFILES</span>
 
 ``` r
-MLEAsyIE(data, rho = NULL, q = seq(0, 2, 0.2), nboot = 50, conf = 0.95, method = c('Asymptotic', 'MLE'))
+MLEAsyIE(data, rho = NULL, q = seq(0.4, 2, 0.2), nboot = 50, conf = 0.95, method = c('Asymptotic', 'MLE'))
 ```
 
 All arguments in the above function are the same as those for the main
 function `iNEXTIE` (except that the default of `q` here is
-`seq(0, 2, 0.2)`). The function `MLEAsyIE()` computes maximum likelihood
-estimation and asymptotic diversity of order q between 0 and 2 (in
-increments of 0.2) for diversity; these values with different order q
-can be used to depict a q-profile in the `ggMLEAsyIE` function. By
-default, both the maximum likelihood estimation and asymptotic diversity
-estimates will be computed.
+`seq(0.4, 2, 0.2)`). The function `MLEAsyIE()` computes maximum
+likelihood estimation and asymptotic diversity of order q between 0.4
+and 2 (in increments of 0.2) for diversity; these values with different
+order q can be used to depict a q-profile in the `ggMLEAsyIE` function.
+By default, both the maximum likelihood estimation and asymptotic
+diversity estimates will be computed.
 
 ## <span style="color:red;">FUNCTION ggMLEAsyIE(): GRAPHIC DISPLAYS OF DIVERSITY PROFILES</span>
 
 ``` r
-ggMLEAsyIE(output)
+ggMLEAsyIE(output, log2 = FALSE)
 ```
 
 `ggMLEAsyIE` is a ggplot2 extension for an `MLEAsyIE` object to plot
 q-profile (which depicts the maximum likelihood estimation and
-asymptotic diversity estimate with respect to order q) for q between 0
-and 2 (in increments of 0.2).
+asymptotic diversity estimate with respect to order q) for q between 0.4
+and 2 (in increments of 0.2) in default. The setting `log2` represents
+whether to apply a log2 transformation to diversity or not.
 
 In the plot of profiles, only confidence intervals of the asymptotic
 diversity will be shown when both the maximum likelihood estimation and
@@ -634,10 +640,11 @@ output_MLEAsy
     10    Girdled     1.8 54257.185 913.331 52467.090 56047.281 Asymptotic
 
 The following commands plot the corresponding q-profiles, along with its
-confidence interval for q between 0 to 2.
+confidence interval for q between 0 to 2 with log2 transformation to
+diversity.
 
 ``` r
-ggMLEAsyIE(output_MLEAsy)
+ggMLEAsyIE(output_MLEAsy, log2 = TRUE)
 ```
 
 <img src="README/README-unnamed-chunk-30-1.png" style="display: block; margin: auto;" />
@@ -646,7 +653,7 @@ ggMLEAsyIE(output_MLEAsy)
 
 The iNEXT.IE package is licensed under the GPLv3. To help refine
 `iNEXT.IE`, your comments or feedback would be welcome (please send them
-to KaiHsiang Hu or report an issue on the iNEXT.IE github
+to Kai-Hsiang Hu or report an issue on the iNEXT.IE github
 [iNEXT.IE_github](https://github.com/KaiHsiangHu/iNEXT.IE)).
 
 ## References

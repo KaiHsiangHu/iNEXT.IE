@@ -22,7 +22,7 @@ In the plot, only confidence intervals of the asymptotic diversity will be shown
 # Plot diversity for data with order q between 0.4 and 2 (in increments of 0.2 by default).
 data("spider")
 output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
-ggMLEAsyIE(output_MLEAsy)
+ggMLEAsyIE(output_MLEAsy, log2 = TRUE)
 
 
 }

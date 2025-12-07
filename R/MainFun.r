@@ -842,7 +842,7 @@ MLEAsyIE <- function(data, rho = NULL, q = seq(0.4, 2, 0.2), nboot = 50, conf = 
 #' # Plot diversity for data with order q between 0.4 and 2 (in increments of 0.2 by default).
 #' data("spider")
 #' output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
-#' ggMLEAsyIE(output_MLEAsy)
+#' ggMLEAsyIE(output_MLEAsy, log2 = TRUE)
 #' 
 #' 
 #' @export
