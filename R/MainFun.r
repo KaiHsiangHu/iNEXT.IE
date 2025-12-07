@@ -393,6 +393,7 @@ D.m.est = function(x, rho, q, m) {
     
     RFD_m = Sub(n - 1) + 1
     beta <- (obs - RFD_m) / (asy - RFD_m) * (N - n)
+    if (is.nan(beta)) beta = 0
     
     int.m = c(floor(m[m <= n]), ceiling(m[m <= n])) %>% unique %>% sort
     
@@ -437,6 +438,7 @@ D.m.est = function(x, rho, q, m) {
     
     RFD_m = exp(Sub(n - 1) / (n - 1))
     beta <- (obs - RFD_m) / (asy - RFD_m) * (N - n)
+    if (is.nan(beta)) beta = 0
     
     int.m = c(floor(m[m <= n]), ceiling(m[m <= n])) %>% unique %>% sort
     
@@ -537,6 +539,7 @@ D.m.est = function(x, rho, q, m) {
     
     RFD_m = (1 - (q - 1) * Sub(n - 1) / exp(lgamma(n) - lgamma(q + 1) - lgamma(n - q)) ) ^ (1 / (1 - q))
     beta <- (obs - RFD_m) / (asy - RFD_m) * (N - n)
+    if (is.nan(beta)) beta = 0
     
     int.m = c(floor(m[m <= n]), ceiling(m[m <= n])) %>% unique %>% sort
     
