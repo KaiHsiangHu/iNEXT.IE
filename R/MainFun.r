@@ -387,10 +387,6 @@ D.m.est = function(x, rho, q, m) {
       }
     }
     
-    obs <- length(x)
-    asy <- length(x) + f0
-    if (asy < obs) asy = obs
-    
     RFD_m = Sub(n - 1) + 1
     beta <- (obs - RFD_m) / (asy - RFD_m) * (N - n)
     if (is.nan(beta)) beta = 0
@@ -931,7 +927,7 @@ Asy.IE <- function(x, q, rho) {
       
       AB = ans[which(q_part2 == q)]
       
-      MLEpart = sum( exp(lgamma(x + 1) - lgamma(x - q + 1) - lgamma(n + 1) + lgamma(n - q + 1)) )
+      MLEpart = sum( exp(lgamma(x[q < (x + 1)] + 1) - lgamma(x[q < (x + 1)] - q + 1) - lgamma(n + 1) + lgamma(n - q + 1)) )
       
       # exp(lgamma(N + 1) - lgamma(q + 1) - lgamma(N - q + 1)) * (1 - (AB + rho * MLEpart)) / (q - 1)
       ( exp(lgamma(N + 1) - lgamma(q + 1) - lgamma(N - q + 1)) * (1 - (AB + rho * MLEpart)) / (q - 1) )^(1 / q)
