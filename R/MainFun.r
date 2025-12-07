@@ -382,10 +382,14 @@ D.m.est = function(x, rho, q, m) {
         # if (N0 == "NaN") N0 = 0
         
         # length(x) + f0 * (1 - (1 - ms/(N - n))^N0) - 1
-        length(x) + f0 * (1 - (1 - ms/(N - n))^beta) - 1
+        obs + (asy - obs) * (1 - (1 - ms / (N - n) )^beta) - 1
         
       }
     }
+    
+    obs <- length(x)
+    asy <- length(x) + f0
+    if (asy < obs) asy = obs
     
     RFD_m = Sub(n - 1) + 1
     beta <- (obs - RFD_m) / (asy - RFD_m) * (N - n)
