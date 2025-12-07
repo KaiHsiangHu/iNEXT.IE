@@ -105,7 +105,11 @@ check.size <- function(data, rho, size, endpoint, knots) {
     
     if (is.null(endpoint)) {
       
-      endpoint <- sapply(1:length(data), function(i) min(sum(data[[i]]) / rho[i], 2*sum(data[[i]])))
+      endpoint <- sapply(1:length(data), function(i) {
+        
+        index = ifelse(rho[i] < 0.2, 2, 3)
+        min(sum(data[[i]]) / rho[i], index * sum(data[[i]]))
+      })
       
     } else {
       
@@ -156,15 +160,17 @@ check.size <- function(data, rho, size, endpoint, knots) {
 
 check.level <- function(data, rho, base, level) {
   
+  index = sapply(rho, function(i) ifelse(i < 0.2, 2, 3))
+  
   if (is.null(level) & base == 'size') {
     
-    level <- sapply(1:length(data), function(i) min(2 * sum(data[[i]]), sum(data[[i]]) / rho[i]))
+    level <- sapply(1:length(data), function(i) min(index[i] * sum(data[[i]]), sum(data[[i]]) / rho[i]))
     
     level <- min(level)
     
   } else if (is.null(level) & base == 'coverage') {
     
-    level <- sapply(1:length(data), function(i) Coverage(data[[i]], rho = rho[i], m = 2 * sum(data[[i]])))
+    level <- sapply(1:length(data), function(i) Coverage(data[[i]], rho = rho[i], m = index[i] * sum(data[[i]])))
     
     level <- min(level)
   }

@@ -26,11 +26,11 @@ iNEXTIE(
 If \code{NULL}, then diversity estimates will be computed for those sample sizes determined by the specified/default \code{endpoint} and \code{knots}.}
 
 \item{endpoint}{an integer specifying the sample size that is the \code{endpoint} for rarefaction/extrapolation. 
-If \code{NULL}, then \code{endpoint} \code{=} double reference sample size or total individuals.}
+If \code{NULL}, then \code{endpoint} \code{=} the maximum sample sizes, which is set to double the reference sample size when rho is less than 0.2; triple the reference sample size when rho is between 0.2 and 0.4; and the total number of individuals when rho exceeds 0.4.}
 
 \item{knots}{an integer specifying the number of equally-spaced \code{knots} (say K, default is 40) between size 1 and the \code{endpoint};
-each knot represents a particular sample size for which diversity estimate will be calculated.  
-If the \code{endpoint} is smaller than the reference sample size, then \code{iNEXTIE()} computes only the rarefaction esimates for approximately K evenly spaced \code{knots}. 
+each knot represents a particular sample size for which diversity estimate will be calculated. \cr 
+If the \code{endpoint} is smaller than the reference sample size, then \code{iNEXTIE()} computes only the rarefaction esimates for approximately K evenly spaced \code{knots}. \cr
 If the \code{endpoint} is larger than the reference sample size, then \code{iNEXTIE()} computes rarefaction estimates for approximately K/2 evenly spaced \code{knots} between sample size 1 and the reference sample size, and computes extrapolation estimates for approximately K/2 evenly spaced \code{knots} between the reference sample size and the \code{endpoint}.}
 
 \item{nboot}{a positive integer specifying the number of bootstrap replications when assessing sampling uncertainty and constructing confidence intervals. Enter 0 to skip the bootstrap procedures. Default is 50.}

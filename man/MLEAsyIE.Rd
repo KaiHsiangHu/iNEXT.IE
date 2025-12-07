@@ -7,7 +7,7 @@
 MLEAsyIE(
   data,
   rho = NULL,
-  q = seq(0.6, 2, 0.2),
+  q = seq(0.4, 2, 0.2),
   nboot = 50,
   conf = 0.95,
   method = c("Asymptotic", "MLE")
@@ -18,7 +18,7 @@ MLEAsyIE(
 
 \item{rho}{the sampling fraction can be input as a vector for each assemblage, or enter a single numeric value to apply to all assemblages.}
 
-\item{q}{a numerical vector specifying the diversity orders. Default is \code{seq(0.6, 2, by = 0.2)}.}
+\item{q}{a numerical vector specifying the diversity orders. Default is \code{seq(0.4, 2, by = 0.2)}.}
 
 \item{nboot}{a positive integer specifying the number of bootstrap replications when assessing sampling uncertainty and constructing confidence intervals. Enter 0 to skip the bootstrap procedures. Default is 50.}
 
@@ -36,11 +36,11 @@ a data frame including the following information/statistics:
 \item{Method}{\code{"Asymptotic"} means asymptotic diversity and \code{"MLE"} means maximum likelihood estimation.}
 }
 \description{
-\code{MLEAsyIE} computes maximum likelihood estimation and asymptotic diversity of order q between 0.6 and 2 (in increments of 0.2); these diversity values with different order q can be used to depict a q-profile in the \code{ggMLEAsyIE} function.\cr\cr
+\code{MLEAsyIE} computes maximum likelihood estimation and asymptotic diversity of order q between 0.4 and 2 (in increments of 0.2); these diversity values with different order q can be used to depict a q-profile in the \code{ggMLEAsyIE} function.\cr\cr
 }
 \examples{
 # Compute the maximum likelihood estimation and asymptotic diversity for abundance data
-# with order q between 0.6 and 2 (in increments of 0.2 by default)
+# with order q between 0.4 and 2 (in increments of 0.2 by default)
 data("spider")
 output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 output_MLEAsy

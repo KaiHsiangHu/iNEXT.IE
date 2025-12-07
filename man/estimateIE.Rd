@@ -24,8 +24,9 @@ estimateIE(
 \item{base}{selection of sample-size-based (\code{base = "size"}) or coverage-based (\code{base = "coverage"}) rarefaction and extrapolation.}
 
 \item{level}{A numerical vector specifying the particular sample sizes or sample coverages (between 0 and 1) for which diversity estimates (q = 0.5, 1 and 2) will be computed. \cr
-If \code{base = "coverage"} (default) and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample coverage among all samples extrapolated to double reference sizes or total individuals. \cr
-If \code{base = "size"} and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample size among all samples extrapolated to double reference sizes or total individuals.}
+If \code{base = "coverage"} (default) and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample coverage among all samples extrapolated to the maximum sample sizes. \cr
+If \code{base = "size"} and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample size among all samples extrapolated to the maximum sample sizes. \cr
+Specifically, the maximum extrapolation limit is set to double the reference sample size when rho is less than 0.2; triple the reference sample size when rho is between 0.2 and 0.4; and the total number of individuals when rho exceeds 0.4.}
 
 \item{nboot}{a positive integer specifying the number of bootstrap replications when assessing sampling uncertainty and constructing confidence intervals. Enter 0 to skip the bootstrap procedures. Default is 50.}
 
@@ -44,7 +45,7 @@ a data.frame of diversity table including the following arguments: (when \code{b
 Similar output is obtained for \code{base = "size"}. \cr\cr
 }
 \description{
-\code{estimateIE} computes diversity with a particular set of user-specified levels of sample sizes or sample coverages. If no sample sizes or coverages are specified, this function by default computes diversity estimates for the minimum sample coverage or minimum sample size among all samples extrapolated to double reference sizes or total individuals.
+\code{estimateIE} computes diversity with a particular set of user-specified levels of sample sizes or sample coverages. If no sample sizes or coverages are specified, this function by default computes diversity estimates for the minimum sample coverage or minimum sample size among all samples extrapolated to the maximum sample sizes (see arguments).
 }
 \examples{
 data("spider")

@@ -4,13 +4,15 @@
 \alias{ggiNEXTIE}
 \title{ggplot2 extension for an iNEXTIE object}
 \usage{
-ggiNEXTIE(output, type = 1:3)
+ggiNEXTIE(output, type = 1:3, log2 = FALSE)
 }
 \arguments{
 \item{output}{an \code{iNEXTIE} object computed by \code{iNEXTIE}.}
 
 \item{type}{three types of plots: sample-size-based rarefaction/extrapolation curve (\code{type = 1}); 
 sample completeness curve (\code{type = 2}); coverage-based rarefaction/extrapolation curve (\code{type = 3}).}
+
+\item{log2}{whether to apply a log2 transformation to diversity or not. (only for type = 1 or 3)\cr}
 }
 \value{
 a \code{ggplot2} object for sample-size-based rarefaction/extrapolation curve (\code{type = 1}), sample completeness curve (\code{type = 2}), and coverage-based rarefaction/extrapolation curve (\code{type = 3}).

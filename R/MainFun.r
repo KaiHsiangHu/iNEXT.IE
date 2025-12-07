@@ -65,10 +65,10 @@ NULL
 #' @param size an integer vector of sample sizes (number of individuals) for which diversity estimates will be computed. 
 #' If \code{NULL}, then diversity estimates will be computed for those sample sizes determined by the specified/default \code{endpoint} and \code{knots}.
 #' @param endpoint an integer specifying the sample size that is the \code{endpoint} for rarefaction/extrapolation. 
-#' If \code{NULL}, then \code{endpoint} \code{=} double reference sample size or total individuals.
+#' If \code{NULL}, then \code{endpoint} \code{=} the maximum sample sizes, which is set to double the reference sample size when rho is less than 0.2; triple the reference sample size when rho is between 0.2 and 0.4; and the total number of individuals when rho exceeds 0.4.
 #' @param knots an integer specifying the number of equally-spaced \code{knots} (say K, default is 40) between size 1 and the \code{endpoint};
-#' each knot represents a particular sample size for which diversity estimate will be calculated.  
-#' If the \code{endpoint} is smaller than the reference sample size, then \code{iNEXTIE()} computes only the rarefaction esimates for approximately K evenly spaced \code{knots}. 
+#' each knot represents a particular sample size for which diversity estimate will be calculated. \cr 
+#' If the \code{endpoint} is smaller than the reference sample size, then \code{iNEXTIE()} computes only the rarefaction esimates for approximately K evenly spaced \code{knots}. \cr
 #' If the \code{endpoint} is larger than the reference sample size, then \code{iNEXTIE()} computes rarefaction estimates for approximately K/2 evenly spaced \code{knots} between sample size 1 and the reference sample size, and computes extrapolation estimates for approximately K/2 evenly spaced \code{knots} between the reference sample size and the \code{endpoint}.
 #' @param nboot a positive integer specifying the number of bootstrap replications when assessing sampling uncertainty and constructing confidence intervals. Enter 0 to skip the bootstrap procedures. Default is 50.
 #' @param conf a positive number < 1 specifying the level of confidence interval. Default is 0.95.
@@ -172,6 +172,7 @@ iNEXTIE <- function(data, rho = NULL, q = c(0.5, 1, 2), size = NULL, endpoint = 
 #' @param output an \code{iNEXTIE} object computed by \code{iNEXTIE}.
 #' @param type three types of plots: sample-size-based rarefaction/extrapolation curve (\code{type = 1}); 
 #' sample completeness curve (\code{type = 2}); coverage-based rarefaction/extrapolation curve (\code{type = 3}).            
+#' @param log2 whether to apply a log2 transformation to diversity or not. (only for type = 1 or 3)\cr
 #' @return a \code{ggplot2} object for sample-size-based rarefaction/extrapolation curve (\code{type = 1}), sample completeness curve (\code{type = 2}), and coverage-based rarefaction/extrapolation curve (\code{type = 3}).
 #' 
 #' 
@@ -183,7 +184,7 @@ iNEXTIE <- function(data, rho = NULL, q = c(0.5, 1, 2), size = NULL, endpoint = 
 #' 
 #' 
 #' @export
-ggiNEXTIE = function(output, type = 1:3){
+ggiNEXTIE = function(output, type = 1:3, log2 = FALSE) {
   
   x_list = output$iNextEst
   
@@ -196,6 +197,8 @@ ggiNEXTIE = function(output, type = 1:3){
     if (i == 1) {
       
       output <- x_list$size_based
+      if (log2) output = output %>% mutate(qIE = log2(qIE), qIE.LCL = log2(qIE.LCL), qIE.UCL = log2(qIE.UCL))
+      
       output$y.lwr <- output$qIE.LCL
       output$y.upr <- output$qIE.UCL
       id <- match(c("m", "Method", "qIE", "qIE.LCL", "qIE.UCL", "Assemblage", "Order.q"), names(output), nomatch = 0)
@@ -207,6 +210,7 @@ ggiNEXTIE = function(output, type = 1:3){
     } else if (i == 2) {
       
       output <- x_list$size_based
+      
       if (length(unique(output$Order.q)) > 1) output <- subset(output, Order.q == unique(output$Order.q)[1])
       output$y.lwr <- output$SC.LCL
       output$y.upr <- output$SC.UCL
@@ -219,6 +223,8 @@ ggiNEXTIE = function(output, type = 1:3){
     } else if (i == 3) {
       
       output <- x_list$coverage_based %>% tibble
+      if (log2) output = output %>% mutate(qIE = log2(qIE), qIE.LCL = log2(qIE.LCL), qIE.UCL = log2(qIE.UCL))
+      
       output$y.lwr <- output$qIE.LCL
       output$y.upr <- output$qIE.UCL
       id <- match(c("SC", "Method", "qIE", "qIE.LCL", "qIE.UCL", "Assemblage", "Order.q", "m"), names(output), nomatch = 0)
@@ -277,6 +283,8 @@ ggiNEXTIE = function(output, type = 1:3){
     
     if (i == 2) g <- g + theme(strip.background = element_blank(), strip.text.x = element_blank())
     
+    if ((i != 2) & log2) g = g + labs(y = expression(paste(log[2], '(Inter-specific encounter)')))
+    
     return(g)
     })
   
@@ -290,14 +298,15 @@ ggiNEXTIE = function(output, type = 1:3){
 
 #' Compute diversity estimates with a particular set of sample sizes/coverages
 #' 
-#' \code{estimateIE} computes diversity with a particular set of user-specified levels of sample sizes or sample coverages. If no sample sizes or coverages are specified, this function by default computes diversity estimates for the minimum sample coverage or minimum sample size among all samples extrapolated to double reference sizes or total individuals.
+#' \code{estimateIE} computes diversity with a particular set of user-specified levels of sample sizes or sample coverages. If no sample sizes or coverages are specified, this function by default computes diversity estimates for the minimum sample coverage or minimum sample size among all samples extrapolated to the maximum sample sizes (see arguments).
 #' @param data data can be input as a vector of species abundances (for a single assemblage), matrix/data.frame (species by assemblages), or a list of species abundance vectors.
 #' @param rho the sampling fraction can be input as a vector for each assemblage, or enter a single numeric value to apply to all assemblages.
 #' @param q a numerical vector specifying the diversity orders. Default is \code{c(0.5, 1, 2)}.
 #' @param base selection of sample-size-based (\code{base = "size"}) or coverage-based (\code{base = "coverage"}) rarefaction and extrapolation.
 #' @param level A numerical vector specifying the particular sample sizes or sample coverages (between 0 and 1) for which diversity estimates (q = 0.5, 1 and 2) will be computed. \cr
-#' If \code{base = "coverage"} (default) and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample coverage among all samples extrapolated to double reference sizes or total individuals. \cr
-#' If \code{base = "size"} and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample size among all samples extrapolated to double reference sizes or total individuals. 
+#' If \code{base = "coverage"} (default) and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample coverage among all samples extrapolated to the maximum sample sizes. \cr
+#' If \code{base = "size"} and \code{level = NULL}, then this function computes the diversity estimates for the minimum sample size among all samples extrapolated to the maximum sample sizes. \cr
+#' Specifically, the maximum extrapolation limit is set to double the reference sample size when rho is less than 0.2; triple the reference sample size when rho is between 0.2 and 0.4; and the total number of individuals when rho exceeds 0.4. 
 #' @param nboot a positive integer specifying the number of bootstrap replications when assessing sampling uncertainty and constructing confidence intervals. Enter 0 to skip the bootstrap procedures. Default is 50.
 #' @param conf a positive number < 1 specifying the level of confidence interval. Default is 0.95.
 #' 
@@ -770,11 +779,11 @@ invSize <- function(data, rho, q, size = NULL, nboot = 0, conf = NULL) {
 
 #' Maximum likelihood estimation and asymptotic diversity of order q
 #' 
-#' \code{MLEAsyIE} computes maximum likelihood estimation and asymptotic diversity of order q between 0.6 and 2 (in increments of 0.2); these diversity values with different order q can be used to depict a q-profile in the \code{ggMLEAsyIE} function.\cr\cr 
+#' \code{MLEAsyIE} computes maximum likelihood estimation and asymptotic diversity of order q between 0.4 and 2 (in increments of 0.2); these diversity values with different order q can be used to depict a q-profile in the \code{ggMLEAsyIE} function.\cr\cr 
 #' 
 #' @param data data can be input as a vector of species abundances (for a single assemblage), matrix/data.frame (species by assemblages), or a list of species abundance vectors.
 #' @param rho the sampling fraction can be input as a vector for each assemblage, or enter a single numeric value to apply to all assemblages.
-#' @param q a numerical vector specifying the diversity orders. Default is \code{seq(0.6, 2, by = 0.2)}.
+#' @param q a numerical vector specifying the diversity orders. Default is \code{seq(0.4, 2, by = 0.2)}.
 #' @param nboot a positive integer specifying the number of bootstrap replications when assessing sampling uncertainty and constructing confidence intervals. Enter 0 to skip the bootstrap procedures. Default is 50.
 #' @param conf a positive number < 1 specifying the level of confidence interval. Default is 0.95.
 #' @param method Select \code{'Asymptotic'} or \code{'MLE'}.
@@ -790,14 +799,14 @@ invSize <- function(data, rho, q, size = NULL, nboot = 0, conf = NULL) {
 #' 
 #' @examples
 #' # Compute the maximum likelihood estimation and asymptotic diversity for abundance data
-#' # with order q between 0.6 and 2 (in increments of 0.2 by default)
+#' # with order q between 0.4 and 2 (in increments of 0.2 by default)
 #' data("spider")
 #' output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 #' output_MLEAsy
 #' 
 #' 
 #' @export
-MLEAsyIE <- function(data, rho = NULL, q = seq(0.6, 2, 0.2), nboot = 50, conf = 0.95, method = c('Asymptotic', 'MLE')) {
+MLEAsyIE <- function(data, rho = NULL, q = seq(0.4, 2, 0.2), nboot = 50, conf = 0.95, method = c('Asymptotic', 'MLE')) {
   
   data = check.data(data)
   rho = check.rho(data, rho)
@@ -822,24 +831,26 @@ MLEAsyIE <- function(data, rho = NULL, q = seq(0.6, 2, 0.2), nboot = 50, conf = 
 
 #' ggplot2 extension for plotting q-profile
 #'
-#' \code{ggMLEAsyIE} is a \code{ggplot2} extension for an \code{MLEAsyIE} object to plot q-profile (which depicts the maximum likelihood estimation and asymptotic diversity estimate with respect to order q) for q between 0.6 and 2 (in increments of 0.2).\cr\cr 
+#' \code{ggMLEAsyIE} is a \code{ggplot2} extension for an \code{MLEAsyIE} object to plot q-profile (which depicts the maximum likelihood estimation and asymptotic diversity estimate with respect to order q) for q between 0.4 and 2 (in increments of 0.2).\cr\cr 
 #' In the plot, only confidence intervals of the asymptotic diversity will be shown when both the maximum likelihood estimation and asymptotic diversity estimate are computed.
 #' 
 #' @param output the output of the function \code{MLEAsyIE}.\cr
+#' @param log2 whether to apply a log2 transformation to diversity or not.\cr
 #' @return a q-profile based on the maximum likelihood estimation and the asymptotic diversity estimate.\cr\cr
 #'
 #' @examples
-#' # Plot diversity for data with order q between 0.6 and 2 (in increments of 0.2 by default).
+#' # Plot diversity for data with order q between 0.4 and 2 (in increments of 0.2 by default).
 #' data("spider")
 #' output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 #' ggMLEAsyIE(output_MLEAsy)
 #' 
 #' 
 #' @export
-ggMLEAsyIE <- function(output){
+ggMLEAsyIE <- function(output, log2 = FALSE) {
   
   if (sum(unique(output$Method) %in% c("Asymptotic", "MLE")) == 0) stop("Please use the output from specified function 'MLEAsyIE'")
   
+  if (log2) output = output %>% mutate(qIE = log2(qIE), qIE.LCL = log2(qIE.LCL), qIE.UCL = log2(qIE.UCL))
   
   out = ggplot(output, aes(x = Order.q, y = qIE, colour = Assemblage, fill = Assemblage))
   
@@ -884,6 +895,8 @@ ggMLEAsyIE <- function(output){
           plot.margin = unit(c(5.5, 5.5, 5.5, 5.5), "pt")) +
     guides(linetype = guide_legend(keywidth = 2.5))
   
+  if (log2) out = out + labs(y = expression(paste(log[2], '(Inter-specific encounter)')))
+  
   return(out)
 }
 
@@ -894,8 +907,8 @@ Asy.IE <- function(x, q, rho) {
   n = sum(x)
   f1 = sum(x == 1); f2 = sum(x == 2)
   N = ceiling(n / rho)
-  p1 = ifelse(f2 > 0, ((1 - rho) * 2 * f2 + rho * f1) / ((n-1) * f1 + 2 * f2), 0)
-  # p1 = ifelse(f2 > 0, ((1 - rho) * 2 * f2 + rho * f1) / ((n-1) * f1 + 2 * f2), ifelse(f1 > 0, ((1 - rho) * 2 + rho * (f1 - 1)) / ((n-1) * (f1 - 1) + 2), 0))
+  # p1 = ifelse(f2 > 0, ((1 - rho) * 2 * f2 + rho * f1) / ((n-1) * f1 + 2 * f2), 0)
+  p1 = ifelse(f2 > 0, ((1 - rho) * 2 * f2 + rho * f1) / ((n-1) * f1 + 2 * f2), ifelse(f1 > 0, ((1 - rho) * 2 + rho * (f1 - 1)) / ((n-1) * (f1 - 1) + 2), 0))
   
   qD <- function(q) {
     
