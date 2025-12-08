@@ -23,14 +23,14 @@ library(iNEXT.IE)
 ```
 
 
-`iNEXT.IE` (INterpolation and EXTrapolation for Inter-Specific Encounter) is a framework for biodiversity methodology. 'iNEXT.IE' extends 'iNEXT' to incorporate inter-specific encounter (IE) of biodiversity, which incorporates species absolute abundance. An online version "iNEXT.IE Online"
+`iNEXT.IE` (INterpolation and EXTrapolation for Inter-Specific Encounter) is a framework for biodiversity methodology. 'iNEXT.IE' extends 'iNEXT' to incorporate inter-specific encounter (IE) of biodiversity, which incorporates absolute species abundance. An online version "iNEXT.IE Online"
 (https://kaihsiang-hu.shinyapps.io/iNEXT_IE/) is also available for users without prior experience in R.
 
 `iNEXT.IE` features two statistical analyses (non-asymptotic and asymptotic):
 
 (1) A non-asymptotic approach based on interpolation and extrapolation for diversity 
 
-`iNEXT.IE` computes the estimated diversity for standardized samples with a common sample size or sample completeness. This approach aims to compare diversity estimates for equally-large (with a common sample size) or equally-complete (with a common sample coverage) samples; it is based on the seamless rarefaction and extrapolation (R/E) sampling curves of diversity for q = 0.5, 1 and 2. `iNEXT.IE` offers three types of R/E sampling curves:
+`iNEXT.IE` computes the estimated diversity for standardized samples with a common sample size or sample completeness. This approach aims to compare diversity estimates for equally-large (with a common sample size) or equally-complete (with a common sample coverage) samples using seamless rarefaction and extrapolation (R/E) sampling curves for q = 0.5, 1, and 2. `iNEXT.IE` offers three types of R/E sampling curves:
 
 
 * Sample-size-based (or size-based) R/E sampling curves: This type of sampling curve plots the diversity estimates with respect to sample size.
@@ -41,11 +41,11 @@ library(iNEXT.IE)
 
 (2) An asymptotic approach to infer asymptotic diversity  
 
-`iNEXT.IE` computes the estimated asymptotic diversity and also plots diversity profiles (q-profiles) for q between 0.4 and 2, in comparison with the maximum likelihood estimation. Typically, the asymptotic estimates for q $\geq$ 1 are reliable, but for q < 1 (especially for q close to zero), the asymptotic estimates represent only lower bounds. 
+`iNEXT.IE` computes the estimated asymptotic diversity and also plots diversity profiles (q-profiles) for q between 0.4 and 2, in comparison with the maximum likelihood estimation. Typically, the asymptotic estimates for q $\geq$ 1 are reliable, but for q < 1 (especially when q is near zero), they represent lower bounds only.. 
 
 
 ## How to cite
-If you publish your work based on results from `iNEXT.IE` package, you should make references to the following methodology paper and the package:
+If you use results from the iNEXT.IE package in a publication, please cite the following methodology paper and the package:
 
 - Hu, K.-H. and Chao, A. (2025). The iNEXT.IE package: INterpolation and EXTrapolation for Inter-Specific Encounter. R package available from CRAN.  
 
@@ -60,7 +60,7 @@ The `iNEXT.IE` package can be downloaded from CRAN or Kai-Hsiang Hu's [iNEXT.IE_
 
 
 ```{r eval=FALSE}
-## install iNEXT.IE package from CRAN
+## install the iNEXT.IE package from CRAN
 install.packages("iNEXT.IE")  
 
 ## or install the latest version from github
@@ -146,7 +146,7 @@ data can be input as a vector of species abundances (for a single assemblage), m
 </tr>
 <tr class="even">
 <td align="center"><code>rho</code></td>
-<td align="left">the sampling fraction can be input as a vector for each assemblage, or enter a single numeric value to apply to all assemblages.</td>
+<td align="left">the sampling fraction can be input as a vector for each assemblage, or specify a single numeric value to apply to all assemblages.</td>
 </tr>
 <tr class="odd">
 <td align="center"><code>q</code></td>
@@ -235,7 +235,7 @@ output_iNEXT[1]
 
 The second list of the output (`$iNextEst`) includes size- and coverage-based standardized diversity estimates and related statistics computed for 40 knots by default. There are two data frames (`$size_based` and `$coverage_based`). 
 
-The first data frame (`$size_based`) includes the name of the assemblage (`Assemblage`), diversity order (`Order.q`), the target sample size (`m`), the `Method` (`Rarefaction`, `Observed`, or `Extrapolation`, depending on whether the size `m` is less than, equal to, or greater than the reference sample size), the diversity estimate of order q (`qIE`), the lower and upper confidence limits of diversity (`qIE.LCL` and `qIE.UCL`) conditioning on the sample size, and the corresponding sample coverage estimate (`SC`) along with the lower and upper confidence limits of sample coverage (`SC.LCL` and `SC.UCL`). These sample coverage estimates with confidence intervals are used for plotting the sample completeness curve. If the argument `nboot` is greater than zero, then a bootstrap method is applied to obtain the confidence intervals for the diversity and sample coverage estimates. Otherwise, all confidence intervals will not be computed. Here only the first six rows of the `$size_based` output are displayed:
+The first data frame (`$size_based`) includes the name of the assemblage (`Assemblage`), diversity order (`Order.q`), the target sample size (`m`), the `Method` (`Rarefaction`, `Observed`, or `Extrapolation`, depending on whether the size `m` is less than, equal to, or greater than the reference sample size), the diversity estimate of order q (`qIE`), the lower and upper confidence limits of diversity (`qIE.LCL` and `qIE.UCL`) conditioning on the sample size, and the corresponding sample coverage estimate (`SC`) along with the lower and upper confidence limits of sample coverage (`SC.LCL` and `SC.UCL`). These sample coverage estimates and their confidence intervals are used to construct the sample completeness curve. If the argument `nboot` is greater than zero, then a bootstrap method is applied to obtain the confidence intervals for the diversity and sample coverage estimates. Otherwise, all confidence intervals will not be computed. Only the first six rows of the `$size_based` output are displayed below.
 
 ```{r eval=FALSE}
 output_iNEXT$iNextEst$size_based
@@ -251,7 +251,7 @@ output_iNEXT$iNextEst$size_based$SC.UCL  <- round(output_iNEXT$iNextEst$size_bas
 output_iNEXT$iNextEst$size_based[1:6,]
 ```
 
-The second data frame (`$coverage_based`) includes the name of assemblage (`Assemblage`), the diversity order (`Order.q`), the target sample coverage value (`SC`), the corresponding sample size (`m`), the `Method` (`Rarefaction`, `Observed`, or `Extrapolation`, depending on whether the coverage `SC` is less than, equal to, or greater than the reference sample coverage), the diversity estimate of order q (`qIE`), the lower and upper confidence limits of diversity (`qIE.LCL` and `qIE.UCL`) conditioning on the target sample coverage value. Here only the first six rows of the `$coverage_based` output are displayed below: (Note for a fixed coverage value, the confidence interval in the `$coverage_based` table is wider than the corresponding interval in the `$size_based` table. This is because, for a given coverage value, the sample size needed to attain a fixed coverage value varies with bootstrap replication, leading to higher uncertainty on the resulting diversity estimate.)
+The second data frame (`$coverage_based`) includes the name of assemblage (`Assemblage`), the diversity order (`Order.q`), the target sample coverage value (`SC`), the corresponding sample size (`m`), the `Method` (`Rarefaction`, `Observed`, or `Extrapolation`, depending on whether the coverage `SC` is less than, equal to, or greater than the reference sample coverage), the diversity estimate of order q (`qIE`), the lower and upper confidence limits of diversity (`qIE.LCL` and `qIE.UCL`) conditioning on the target sample coverage value. Only the first six rows of the `$coverage_based output` are displayed below. (Note for a fixed coverage value, the confidence interval in the `$coverage_based` table is wider than the corresponding interval in the `$size_based` table. This is because, for a given coverage value, the sample size needed to attain a fixed coverage value varies with bootstrap replication, leading to higher uncertainty on the resulting diversity estimate.)
 
 
 ```{r, eval=FALSE}

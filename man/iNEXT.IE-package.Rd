@@ -24,7 +24,7 @@ An online version "iNEXT.IE Online"
 
 (2) An asymptotic approach to infer asymptotic diversity 
 
-\code{iNEXT.IE} computes the estimated asymptotic diversity and also plots diversity profiles (q-profiles) for q between 0.4 and 2, in comparison with the maximum likelihood estimation. Typically, the asymptotic estimates for q \eqn{\geq} 1 are reliable, but for q < 1 (especially for q close to zero), the asymptotic estimates represent only lower bounds. \cr
+\code{iNEXT.IE} computes the estimated asymptotic diversity and also plots diversity profiles (q-profiles) for q between 0.4 and 2, in comparison with the maximum likelihood estimation. Typically, the asymptotic estimates for q \eqn{\geq} 1 are reliable, but for q < 1 (especially when q is near zero), they represent lower bounds only. \cr
 
 There are six main functions in this package: \cr
 

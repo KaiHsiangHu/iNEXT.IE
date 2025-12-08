@@ -3,7 +3,7 @@
 #' \code{DataInfoIE} provides basic data information for diversity based on a reference sample.
 #' 
 #' @param data data can be input as a vector of species abundances (for a single assemblage), matrix/data.frame (species by assemblages), or a list of species abundance vectors.
-#' @param rho the sampling fraction can be input as a vector for each assemblage, or enter a single numeric value to apply to all assemblages.
+#' @param rho the sampling fraction can be input as a vector for each assemblage, or specify a single numeric value to apply to all assemblages.
 #' 
 #' @return a data.frame including assemblage name (\code{Assemblage}), sample size in the reference sample (\code{n}), 
 #' total abundance in the overall assemblage (\code{N}), sampling fraction of the reference sample (\code{rho}), 
@@ -60,7 +60,7 @@ NULL
 #' The maximum likelihood estimation and asymptotic diversity estimates for q = 0.5, 1 and 2 are provided in the list \code{$AsyEst}.\cr\cr 
 #' 
 #' @param data data can be input as a vector of species abundances (for a single assemblage), matrix/data.frame (species by assemblages), or a list of species abundance vectors.
-#' @param rho the sampling fraction can be input as a vector for each assemblage, or enter a single numeric value to apply to all assemblages.
+#' @param rho the sampling fraction can be input as a vector for each assemblage, or specify a single numeric value to apply to all assemblages.
 #' @param q a numerical vector specifying the diversity orders. Default is \code{c(0.5, 1, 2)}.
 #' @param size an integer vector of sample sizes (number of individuals) for which diversity estimates will be computed. 
 #' If \code{NULL}, then diversity estimates will be computed for those sample sizes determined by the specified/default \code{endpoint} and \code{knots}.
@@ -300,7 +300,7 @@ ggiNEXTIE = function(output, type = 1:3, log2 = FALSE) {
 #' 
 #' \code{estimateIE} computes diversity with a particular set of user-specified levels of sample sizes or sample coverages. If no sample sizes or coverages are specified, this function by default computes diversity estimates for the minimum sample coverage or minimum sample size among all samples extrapolated to the maximum sample sizes (see arguments).
 #' @param data data can be input as a vector of species abundances (for a single assemblage), matrix/data.frame (species by assemblages), or a list of species abundance vectors.
-#' @param rho the sampling fraction can be input as a vector for each assemblage, or enter a single numeric value to apply to all assemblages.
+#' @param rho the sampling fraction can be input as a vector for each assemblage, or specify a single numeric value to apply to all assemblages.
 #' @param q a numerical vector specifying the diversity orders. Default is \code{c(0.5, 1, 2)}.
 #' @param base selection of sample-size-based (\code{base = "size"}) or coverage-based (\code{base = "coverage"}) rarefaction and extrapolation.
 #' @param level A numerical vector specifying the particular sample sizes or sample coverages (between 0 and 1) for which diversity estimates (q = 0.5, 1 and 2) will be computed. \cr
@@ -782,7 +782,7 @@ invSize <- function(data, rho, q, size = NULL, nboot = 0, conf = NULL) {
 #' \code{MLEAsyIE} computes maximum likelihood estimation and asymptotic diversity of order q between 0.4 and 2 (in increments of 0.2); these diversity values with different order q can be used to depict a q-profile in the \code{ggMLEAsyIE} function.\cr\cr 
 #' 
 #' @param data data can be input as a vector of species abundances (for a single assemblage), matrix/data.frame (species by assemblages), or a list of species abundance vectors.
-#' @param rho the sampling fraction can be input as a vector for each assemblage, or enter a single numeric value to apply to all assemblages.
+#' @param rho the sampling fraction can be input as a vector for each assemblage, or specify a single numeric value to apply to all assemblages.
 #' @param q a numerical vector specifying the diversity orders. Default is \code{seq(0.4, 2, by = 0.2)}.
 #' @param nboot a positive integer specifying the number of bootstrap replications when assessing sampling uncertainty and constructing confidence intervals. Enter 0 to skip the bootstrap procedures. Default is 50.
 #' @param conf a positive number < 1 specifying the level of confidence interval. Default is 0.95.

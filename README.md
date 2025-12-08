@@ -3,7 +3,7 @@
 # iNEXT.IE (R package)
 
 <h5 align="right">
-Latest version: 2025-12-07
+Latest version: 2025-12-08
 </h5>
 <font color="394CAE">
 <h3 color="394CAE" style="font-weight: bold">
@@ -18,15 +18,7 @@ National Tsing Hua University, Hsin-Chu, Taiwan 30043</i>
 <br> `iNEXT.IE` (INterpolation and EXTrapolation for Inter-Specific
 Encounter) is a framework for biodiversity methodology. ‘iNEXT.IE’
 extends ‘iNEXT’ to incorporate inter-specific encounter (IE) of
-biodiversity, which incorporates species absolute abundance. An online
-version “iNEXT.IE Online”
-(<https://kaihsiang-hu.shinyapps.io/iNEXT_IE/>) is also available for
-users without prior experience in R.
-
-`iNEXT.IE` (INterpolation and EXTrapolation for Inter-Specific
-Encounter) is a framework for biodiversity methodology. ‘iNEXT.IE’
-extends ‘iNEXT’ to incorporate inter-specific encounter (IE) of
-biodiversity, which incorporates species absolute abundance. An online
+biodiversity, which incorporates absolute species abundance. An online
 version “iNEXT.IE Online”
 (<https://kaihsiang-hu.shinyapps.io/iNEXT_IE/>) is also available for
 users without prior experience in R.
@@ -40,10 +32,9 @@ asymptotic):
 `iNEXT.IE` computes the estimated diversity for standardized samples
 with a common sample size or sample completeness. This approach aims to
 compare diversity estimates for equally-large (with a common sample
-size) or equally-complete (with a common sample coverage) samples; it is
-based on the seamless rarefaction and extrapolation (R/E) sampling
-curves of diversity for q = 0.5, 1 and 2. `iNEXT.IE` offers three types
-of R/E sampling curves:
+size) or equally-complete (with a common sample coverage) samples using
+seamless rarefaction and extrapolation (R/E) sampling curves for q =
+0.5, 1, and 2. `iNEXT.IE` offers three types of R/E sampling curves:
 
 -   Sample-size-based (or size-based) R/E sampling curves: This type of
     sampling curve plots the diversity estimates with respect to sample
@@ -61,14 +52,13 @@ of R/E sampling curves:
 `iNEXT.IE` computes the estimated asymptotic diversity and also plots
 diversity profiles (q-profiles) for q between 0.4 and 2, in comparison
 with the maximum likelihood estimation. Typically, the asymptotic
-estimates for q ≥ 1 are reliable, but for q \< 1 (especially for q close
-to zero), the asymptotic estimates represent only lower bounds.
+estimates for q ≥ 1 are reliable, but for q \< 1 (especially when q is
+near zero), they represent lower bounds only..
 
 ## How to cite
 
-If you publish your work based on results from `iNEXT.IE` package, you
-should make references to the following methodology paper and the
-package:
+If you use results from the iNEXT.IE package in a publication, please
+cite the following methodology paper and the package:
 
 -   Hu, K.-H. and Chao, A. (2025). The iNEXT.IE package: INterpolation
     and EXTrapolation for Inter-Specific Encounter. R package available
@@ -360,24 +350,24 @@ than the reference sample size), the diversity estimate of order q
 and `qIE.UCL`) conditioning on the sample size, and the corresponding
 sample coverage estimate (`SC`) along with the lower and upper
 confidence limits of sample coverage (`SC.LCL` and `SC.UCL`). These
-sample coverage estimates with confidence intervals are used for
-plotting the sample completeness curve. If the argument `nboot` is
+sample coverage estimates and their confidence intervals are used to
+construct the sample completeness curve. If the argument `nboot` is
 greater than zero, then a bootstrap method is applied to obtain the
 confidence intervals for the diversity and sample coverage estimates.
-Otherwise, all confidence intervals will not be computed. Here only the
-first six rows of the `$size_based` output are displayed:
+Otherwise, all confidence intervals will not be computed. Only the first
+six rows of the `$size_based` output are displayed below.
 
 ``` r
 output_iNEXT$iNextEst$size_based
 ```
 
       Assemblage Order.q  m      Method      qIE  qIE.LCL  qIE.UCL    SC SC.LCL SC.UCL
-    1    Girdled     0.5  1 Rarefaction    0.000    0.000    0.000 0.124  0.103  0.144
-    2    Girdled     0.5  9 Rarefaction  117.346  105.676  129.016 0.578  0.537  0.619
-    3    Girdled     0.5 18 Rarefaction  400.897  351.712  450.081 0.736  0.697  0.776
-    4    Girdled     0.5 27 Rarefaction  756.481  651.142  861.820 0.808  0.771  0.845
-    5    Girdled     0.5 36 Rarefaction 1155.808  979.272 1332.344 0.846  0.812  0.881
-    6    Girdled     0.5 44 Rarefaction 1538.593 1287.728 1789.457 0.868  0.834  0.901
+    1    Girdled     0.5  1 Rarefaction    0.000    0.000    0.000 0.124  0.100  0.148
+    2    Girdled     0.5  9 Rarefaction  117.346  104.407  130.285 0.578  0.535  0.621
+    3    Girdled     0.5 18 Rarefaction  400.897  348.152  453.641 0.736  0.695  0.778
+    4    Girdled     0.5 27 Rarefaction  756.481  645.530  867.432 0.808  0.771  0.845
+    5    Girdled     0.5 36 Rarefaction 1155.808  972.798 1338.818 0.846  0.812  0.881
+    6    Girdled     0.5 44 Rarefaction 1538.593 1281.986 1795.199 0.868  0.836  0.900
 
 The second data frame (`$coverage_based`) includes the name of
 assemblage (`Assemblage`), the diversity order (`Order.q`), the target
@@ -386,8 +376,8 @@ sample coverage value (`SC`), the corresponding sample size (`m`), the
 whether the coverage `SC` is less than, equal to, or greater than the
 reference sample coverage), the diversity estimate of order q (`qIE`),
 the lower and upper confidence limits of diversity (`qIE.LCL` and
-`qIE.UCL`) conditioning on the target sample coverage value. Here only
-the first six rows of the `$coverage_based` output are displayed below:
+`qIE.UCL`) conditioning on the target sample coverage value. Only the
+first six rows of the `$coverage_based output` are displayed below.
 (Note for a fixed coverage value, the confidence interval in the
 `$coverage_based` table is wider than the corresponding interval in the
 `$size_based` table. This is because, for a given coverage value, the
@@ -401,11 +391,11 @@ output_iNEXT$iNextEst$coverage_based
 
       Assemblage Order.q    SC  m      Method      qIE qIE.LCL  qIE.UCL
     1    Girdled     0.5 0.124  1 Rarefaction    0.000   0.000    0.034
-    2    Girdled     0.5 0.578  9 Rarefaction  117.346  73.619  161.074
-    3    Girdled     0.5 0.736 18 Rarefaction  400.897 232.797  568.996
-    4    Girdled     0.5 0.808 27 Rarefaction  756.481 388.529 1124.433
-    5    Girdled     0.5 0.846 36 Rarefaction 1155.808 508.477 1803.139
-    6    Girdled     0.5 0.868 44 Rarefaction 1538.593 595.433 2481.753
+    2    Girdled     0.5 0.578  9 Rarefaction  117.346  69.718  164.974
+    3    Girdled     0.5 0.736 18 Rarefaction  400.897 223.681  578.113
+    4    Girdled     0.5 0.808 27 Rarefaction  756.481 387.101 1125.861
+    5    Girdled     0.5 0.846 36 Rarefaction 1155.808 525.622 1785.994
+    6    Girdled     0.5 0.868 44 Rarefaction 1538.593 618.810 2458.375
 
 The third list of the output (`$AsyEst`) includes the name of the
 Assemblage, diversity order (q = 0.5, 1, 2), the maximum likelihood
@@ -422,12 +412,12 @@ output_iNEXT$AsyEst
 ```
 
       Assemblage Order.q    IE_MLE    IE_asy     s.e.   qIE.LCL    qIE.UCL
-    1    Girdled     0.5 29157.412 38234.978 5121.237 28197.537  48272.419
-    2    Girdled     1.0  1407.199  1459.750   44.302  1372.919   1546.582
-    3    Girdled     2.0   369.865   370.407    2.583   365.343    375.470
-    4     Logged     0.5 65623.287 82938.079 8925.383 65444.651 100431.507
-    5     Logged     1.0  2260.176  2331.295   73.911  2186.432   2476.158
-    6     Logged     2.0   548.290   548.825    5.188   538.656    558.994
+    1    Girdled     0.5 29157.412 38234.978 5379.820 27690.724  48779.232
+    2    Girdled     1.0  1407.199  1459.750   49.738  1362.265   1557.236
+    3    Girdled     2.0   369.865   370.407    2.409   365.685    375.128
+    4     Logged     0.5 65623.287 82938.079 9065.532 65169.962 100706.195
+    5     Logged     1.0  2260.176  2331.295   81.155  2172.235   2490.355
+    6     Logged     2.0   548.290   548.825    5.409   538.224    559.426
 
 The `ggiNEXTIE` function can be used to make graphical displays for
 rarefaction and extrapolation sampling curves. An example for showing
@@ -545,18 +535,18 @@ output_est_cov
 ```
 
        Assemblage Order.q   SC       m        Method       qIE     s.e.  qIE.LCL   qIE.UCL
-    1     Girdled     0.5 0.94 138.409   Rarefaction  7307.102 2626.050 2160.139 12454.065
-    2     Girdled     0.5 0.96 215.651 Extrapolation 13041.560 5383.357 2490.374 23592.745
-    3     Girdled     1.0 0.94 138.409   Rarefaction   353.853   84.277  188.674   519.033
-    4     Girdled     1.0 0.96 215.651 Extrapolation   557.961  155.594  253.003   862.919
-    5     Girdled     2.0 0.94 138.409   Rarefaction    91.358   19.684   52.778   129.937
-    6     Girdled     2.0 0.96 215.651 Extrapolation   142.233   36.879   69.951   214.515
-    7      Logged     0.5 0.94 164.121   Rarefaction 12286.794 2575.230 7239.437 17334.151
-    8      Logged     0.5 0.96 244.422   Rarefaction 20305.097 5979.938 8584.634 32025.561
-    9      Logged     1.0 0.94 164.121   Rarefaction   446.173   60.638  327.324   565.021
-    10     Logged     1.0 0.96 244.422   Rarefaction   670.800  135.058  406.092   935.508
-    11     Logged     2.0 0.94 164.121   Rarefaction   107.012   13.251   81.040   132.984
-    12     Logged     2.0 0.96 244.422   Rarefaction   159.531   29.830  101.066   217.997
+    1     Girdled     0.5 0.94 138.409   Rarefaction  7307.102 2078.097 3234.107 11380.097
+    2     Girdled     0.5 0.96 215.651 Extrapolation 13041.560 3943.163 5313.102 20770.017
+    3     Girdled     1.0 0.94 138.409   Rarefaction   353.853   71.510  213.696   494.011
+    4     Girdled     1.0 0.96 215.651 Extrapolation   557.961  123.074  316.740   799.182
+    5     Girdled     2.0 0.94 138.409   Rarefaction    91.358   16.849   58.334   124.381
+    6     Girdled     2.0 0.96 215.651 Extrapolation   142.233   29.579   84.260   200.206
+    7      Logged     0.5 0.94 164.121   Rarefaction 12286.794 3755.476 4926.197 19647.392
+    8      Logged     0.5 0.96 244.422   Rarefaction 20305.097 7836.336 4946.161 35664.033
+    9      Logged     1.0 0.94 164.121   Rarefaction   446.173   85.988  277.639   614.706
+    10     Logged     1.0 0.96 244.422   Rarefaction   670.800  167.078  343.333   998.267
+    11     Logged     2.0 0.94 164.121   Rarefaction   107.012   18.714   70.333   143.691
+    12     Logged     2.0 0.96 244.422   Rarefaction   159.531   36.874   87.260   231.803
 
 ### Example: abundance data with two target sample sizes (150 and 250)
 
@@ -570,18 +560,18 @@ output_est_size
 ```
 
        Assemblage Order.q   m        Method    SC       qIE     s.e.   qIE.LCL   qIE.UCL
-    1     Girdled     0.5 150   Rarefaction 0.944  8129.064  801.405  6558.339  9699.789
-    2     Girdled     0.5 250 Extrapolation 0.966 15704.204 1903.852 11972.721 19435.686
-    3     Girdled     1.0 150   Rarefaction 0.944   384.433   11.149   362.580   406.285
-    4     Girdled     1.0 250 Extrapolation 0.966   648.699   19.589   610.305   687.093
-    5     Girdled     2.0 150   Rarefaction 0.944    99.035    0.646    97.769   100.302
-    6     Girdled     2.0 250 Extrapolation 0.966   164.994    1.077   162.883   167.104
-    7      Logged     0.5 150   Rarefaction 0.934 10944.269 1087.144  8813.506 13075.032
-    8      Logged     0.5 250   Rarefaction 0.961 20883.770 2232.695 16507.768 25259.772
-    9      Logged     1.0 150   Rarefaction 0.934   406.734   14.407   378.497   434.972
-    10     Logged     1.0 250   Rarefaction 0.961   686.424   24.682   638.049   734.800
-    11     Logged     2.0 150   Rarefaction 0.934    97.776    0.888    96.035    99.517
-    12     Logged     2.0 250   Rarefaction 0.961   163.179    1.482   160.274   166.084
+    1     Girdled     0.5 150   Rarefaction 0.944  8129.064 1079.497  6013.288 10244.840
+    2     Girdled     0.5 250 Extrapolation 0.966 15704.204 2306.331 11183.878 20224.529
+    3     Girdled     1.0 150   Rarefaction 0.944   384.433   15.635   353.788   415.077
+    4     Girdled     1.0 250 Extrapolation 0.966   648.699   27.017   595.747   701.651
+    5     Girdled     2.0 150   Rarefaction 0.944    99.035    0.799    97.470   100.601
+    6     Girdled     2.0 250 Extrapolation 0.966   164.994    1.330   162.386   167.601
+    7      Logged     0.5 150   Rarefaction 0.934 10944.269 1030.468  8924.589 12963.948
+    8      Logged     0.5 250   Rarefaction 0.961 20883.770 2185.764 16599.752 25167.788
+    9      Logged     1.0 150   Rarefaction 0.934   406.734   12.952   381.349   432.120
+    10     Logged     1.0 250   Rarefaction 0.961   686.424   22.235   642.844   730.005
+    11     Logged     2.0 150   Rarefaction 0.934    97.776    0.848    96.114    99.438
+    12     Logged     2.0 250   Rarefaction 0.961   163.179    1.415   160.406   165.952
 
 ## <span style="color:red;">FUNCTION MLEAsyIE: MAXIMUM LIKELIHOOD ESTIMATION AND ASYMPTOTIC DIVERSITY PROFILES</span>
 
@@ -627,17 +617,17 @@ output_MLEAsy <- MLEAsyIE(spider, rho = 0.3)
 output_MLEAsy
 ```
 
-       Assemblage Order.q        qIE      s.e.    qIE.LCL    qIE.UCL     Method
-    1     Girdled     0.4 216158.530 53215.369 111858.322 320458.737 Asymptotic
-    2     Girdled     0.6  12333.930  1518.755   9357.225  15310.635 Asymptotic
-    3     Girdled     0.8   3155.430   216.354   2731.384   3579.476 Asymptotic
-    4     Girdled     1.0   1459.750    60.747   1340.689   1578.812 Asymptotic
-    5     Girdled     1.2    899.267    24.562    851.125    947.408 Asymptotic
-    6     Girdled     1.4    647.285    12.359    623.062    671.509 Asymptotic
-    7     Girdled     1.6    510.684     7.122    496.725    524.643 Asymptotic
-    8     Girdled     1.8    426.829     4.467    418.075    435.583 Asymptotic
-    9     Girdled     2.0    370.407     2.953    364.619    376.194 Asymptotic
-    10     Logged     0.4 551765.980 92157.128 371141.328 732390.633 Asymptotic
+       Assemblage Order.q        qIE       s.e.    qIE.LCL    qIE.UCL     Method
+    1     Girdled     0.4 216158.530  44577.692 128787.859 303529.200 Asymptotic
+    2     Girdled     0.6  12333.930   1181.261  10018.701  14649.159 Asymptotic
+    3     Girdled     0.8   3155.430    157.828   2846.093   3464.767 Asymptotic
+    4     Girdled     1.0   1459.750     42.632   1376.193   1543.308 Asymptotic
+    5     Girdled     1.2    899.267     17.278    865.403    933.131 Asymptotic
+    6     Girdled     1.4    647.285      8.902    629.838    664.733 Asymptotic
+    7     Girdled     1.6    510.684      5.286    500.323    521.045 Asymptotic
+    8     Girdled     1.8    426.829      3.404    420.156    433.502 Asymptotic
+    9     Girdled     2.0    370.407      2.296    365.906    374.907 Asymptotic
+    10     Logged     0.4 551765.980 113709.472 328899.510 774632.450 Asymptotic
 
 The following commands plot the corresponding q-profiles, along with its
 confidence interval for q between 0 to 2 with log2 transformation to

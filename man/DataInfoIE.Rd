@@ -9,7 +9,7 @@ DataInfoIE(data, rho = NULL)
 \arguments{
 \item{data}{data can be input as a vector of species abundances (for a single assemblage), matrix/data.frame (species by assemblages), or a list of species abundance vectors.}
 
-\item{rho}{the sampling fraction can be input as a vector for each assemblage, or enter a single numeric value to apply to all assemblages.}
+\item{rho}{the sampling fraction can be input as a vector for each assemblage, or specify a single numeric value to apply to all assemblages.}
 }
 \value{
 a data.frame including assemblage name (\code{Assemblage}), sample size in the reference sample (\code{n}), 
