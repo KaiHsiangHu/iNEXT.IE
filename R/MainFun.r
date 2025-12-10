@@ -1060,18 +1060,21 @@ bootstrap <- function(x, rho, nboot) {
   x <- x[x != 0]
   n <- sum(x)
   N = ceiling(n / rho)
-  f1 = sum(x == 1); f2 = sum(x == 2)
-  
+  f1 = sum(x == 1)
+  f2 = sum(x == 2)
   f0 = ceiling( ifelse(f2 > 0, f1^2 / (n/(n - 1) * 2 * f2 + rho/(1 - rho) * f1), f1 * (f1 - 1) / (n/(n - 1) * 2 + rho/(1 - rho) * f1)) )
   if (f0 == "NaN") f0 = 0
   
-  C_hat = 1 - f1 / n * (1 - rho)
-  lamda_hat = (1 - C_hat) / sum((x / n) * (1 - rho)^(x / rho)) 
+  N1 = (2 * (N - n + 2) * f2 + (n - 1) * f1) / ((n - 1) * f1 + 2 * f2)
+  if (N1 == "NaN" | N1 == Inf) N1 = 0
+  Chat = 1 - (1 - rho) * f1/n * (1 - N1 / N)
+  
+  lamda_hat = (1 - Chat) / sum((x / n) * (1 - rho)^(x / rho)) 
   
   if (lamda_hat == "NaN") lamda_hat = 0
   
   Ni_det = (x / rho)*(1 - lamda_hat * (1 - rho)^(x / rho)) 
-  Ni_undet = N * (1 - C_hat) / f0
+  Ni_undet = N * (1 - Chat) / f0
   
   if (Ni_undet == "NaN") Ni_undet = 0 else if (Ni_undet < 1 & Ni_undet > 0) Ni_undet = 1
   
