@@ -387,22 +387,22 @@ D.m.est = function(x, rho, q, m) {
       } else {
         
         ms = m - n
-        # N0 = (N - n + 1) * f1 / (n * f0 + f1)
-        # if (N0 == "NaN") N0 = 0
+        N0 = (N - n + 1) * f1 / (n * f0 + f1)
+        if (N0 == "NaN") N0 = 0
         
-        # length(x) + f0 * (1 - (1 - ms/(N - n))^N0) - 1
-        obs + (asy - obs) * (1 - (1 - ms / (N - n) )^beta) - 1
+        length(x) + f0 * (1 - (1 - ms/(N - n))^N0) - 1
+        # obs + (asy - obs) * (1 - (1 - ms / (N - n) )^beta) - 1
         
       }
     }
     
-    obs <- length(x)
-    asy <- length(x) + f0
-    if (asy < obs) asy = obs
-    
-    RFD_m = Sub(n - 1) + 1
-    beta <- (obs - RFD_m) / (asy - RFD_m) * (N - n)
-    if (is.nan(beta)) beta = 0
+    # obs <- length(x)
+    # asy <- length(x) + f0
+    # if (asy < obs) asy = obs
+    # 
+    # RFD_m = Sub(n - 1) + 1
+    # beta <- (obs - RFD_m) / (asy - RFD_m) * (N - n)
+    # if (is.nan(beta)) beta = 0
     
     int.m = c(floor(m[m <= n]), ceiling(m[m <= n])) %>% unique %>% sort
     
@@ -433,11 +433,11 @@ D.m.est = function(x, rho, q, m) {
       } else {
         
         ms = m - n
-        # N0 = (N - n + 1) * f1 / (n * f0 + f1)
-        # if (N0 == "NaN") N0 = 0
+        N0 = (N - n + 1) * f1 / (n * f0 + f1)
+        if (N0 == "NaN") N0 = 0
         
-        # m * log(obs + (asy - obs) * (1 - (1 - ms / (N - n))^N0))
-        m * log(obs + (asy - obs) * (1 - (1 - ms / (N - n))^beta))
+        m * log(obs + (asy - obs) * (1 - (1 - ms / (N - n))^N0))
+        # m * log(obs + (asy - obs) * (1 - (1 - ms / (N - n))^beta))
       }
     }
     
@@ -445,9 +445,9 @@ D.m.est = function(x, rho, q, m) {
     asy <- exp(Asy.IE(x, q = 1, rho) / N)
     if (asy < obs) asy = obs
     
-    RFD_m = exp(Sub(n - 1) / (n - 1))
-    beta <- (obs - RFD_m) / (asy - RFD_m) * (N - n)
-    if (is.nan(beta)) beta = 0
+    # RFD_m = exp(Sub(n - 1) / (n - 1))
+    # beta <- (obs - RFD_m) / (asy - RFD_m) * (N - n)
+    # if (is.nan(beta)) beta = 0
     
     int.m = c(floor(m[m <= n]), ceiling(m[m <= n])) %>% unique %>% sort
     
@@ -530,11 +530,11 @@ D.m.est = function(x, rho, q, m) {
       } else {
         
         ms = m - n
-        # N0 = (N - n + 1) * f1 / (n * f0 + f1)
-        # if (N0 == "NaN") N0 = 0
+        N0 = (N - n + 1) * f1 / (n * f0 + f1)
+        if (N0 == "NaN") N0 = 0
         
-        # exp(lgamma(m + 1) - lgamma(q + 1) - lgamma(m - q + 1)) * (1 - (obs + (asy - obs) * (1 - (1 - ms / (N - n) )^N0)) ^ (1 - q)) / (q - 1)
-        exp(lgamma(m + 1) - lgamma(q + 1) - lgamma(m - q + 1)) * (1 - (obs + (asy - obs) * (1 - (1 - ms / (N - n) )^beta)) ^ (1 - q)) / (q - 1)
+        exp(lgamma(m + 1) - lgamma(q + 1) - lgamma(m - q + 1)) * (1 - (obs + (asy - obs) * (1 - (1 - ms / (N - n) )^N0)) ^ (1 - q)) / (q - 1)
+        # exp(lgamma(m + 1) - lgamma(q + 1) - lgamma(m - q + 1)) * (1 - (obs + (asy - obs) * (1 - (1 - ms / (N - n) )^beta)) ^ (1 - q)) / (q - 1)
         
       }
     }
@@ -546,9 +546,9 @@ D.m.est = function(x, rho, q, m) {
     asy <- (1 - (q - 1) * Asy.IE(x, q, rho)^q / exp(lgamma(N + 1) - lgamma(q + 1) - lgamma(N - q + 1)) ) ^ (1 / (1 - q))
     if (asy < obs) asy = obs
     
-    RFD_m = (1 - (q - 1) * Sub(n - 1) / exp(lgamma(n) - lgamma(q + 1) - lgamma(n - q)) ) ^ (1 / (1 - q))
-    beta <- (obs - RFD_m) / (asy - RFD_m) * (N - n)
-    if (is.nan(beta)) beta = 0
+    # RFD_m = (1 - (q - 1) * Sub(n - 1) / exp(lgamma(n) - lgamma(q + 1) - lgamma(n - q)) ) ^ (1 / (1 - q))
+    # beta <- (obs - RFD_m) / (asy - RFD_m) * (N - n)
+    # if (is.nan(beta)) beta = 0
     
     int.m = c(floor(m[m <= n]), ceiling(m[m <= n])) %>% unique %>% sort
     
@@ -726,7 +726,8 @@ invC <- function(x, rho, C) {
         
         ms = 0
         
-        } else ms <- log((1 - cvrg) / (1 - rho) * n / f1) / log(1 - N1 / N) - 1
+      } else ms <- (N - n) * (1 - exp(log((1 - cvrg) / (1 - rho) * n / f1) / N1) )
+      # } else ms <- log((1 - cvrg) / (1 - rho) * n / f1) / log(1 - N1 / N) - 1
       
       n + ms
     }
@@ -1065,9 +1066,11 @@ bootstrap <- function(x, rho, nboot) {
   f0 = ceiling( ifelse(f2 > 0, f1^2 / (n/(n - 1) * 2 * f2 + rho/(1 - rho) * f1), f1 * (f1 - 1) / (n/(n - 1) * 2 + rho/(1 - rho) * f1)) )
   if (f0 == "NaN") f0 = 0
   
-  N1 = (2 * (N - n + 2) * f2 + (n - 1) * f1) / ((n - 1) * f1 + 2 * f2)
-  if (N1 == "NaN" | N1 == Inf) N1 = 0
-  Chat = 1 - (1 - rho) * f1/n * (1 - N1 / N)
+  Chat = 1 - (1 - rho) * f1/n
+  
+  # N1 = (2 * (N - n + 2) * f2 + (n - 1) * f1) / ((n - 1) * f1 + 2 * f2)
+  # if (N1 == "NaN" | N1 == Inf) N1 = 0
+  # Chat = 1 - (1 - rho) * f1/n * (1 - N1 / N)
   
   lamda_hat = (1 - Chat) / sum((x / n) * (1 - rho)^(x / rho)) 
   

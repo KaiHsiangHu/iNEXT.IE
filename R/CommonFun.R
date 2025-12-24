@@ -18,7 +18,8 @@ Coverage = function(x, rho, m) {
       N1 = (2 * (N - n + 2) * f2 + (n - 1) * f1) / ((n - 1) * f1 + 2 * f2)
       if (N1 == "NaN" | N1 == Inf) N1 = 0
       
-      Chat = 1 - (1 - rho) * f1/n * (1 - N1 / N)^(ms + 1)
+      Chat = 1 - (1 - rho) * f1/n * (1 - ms / (N - n))^N1
+      # Chat = 1 - (1 - rho) * f1/n * (1 - N1 / N)^(ms + 1)
       
       if (rho == 1) Chat = 1
       if (k >= N) Chat = 1
