@@ -76,7 +76,6 @@ NULL
 #' @import dplyr
 #' @import ggplot2
 #' @import reshape2
-#' @importFrom stats rmultinom
 #' @importFrom stats qnorm
 #' @importFrom stats sd
 #' @importFrom stats optimize
